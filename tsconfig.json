@@ -19,6 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": "src" /* non-absolute한 모듈 이름을 처리할 기준 디렉토리 */,
   },
   "include": [
     "src",
