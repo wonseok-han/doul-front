@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+const App: React.FC = () => {
+  interface Test {
+    [key: string]: string;
+    name: string;
+    value: string;
+  }
+  const sum = () => {
+    const aa: Test = { name: 'aa', value: '1' };
+    const bb: Test[] = [aa];
 
-function App() {
+    for (const [item, value] of Object.entries(aa)) {
+      console.log(item, value, aa[item]);
+    }
+
+    for (const x of bb) {
+      console.log(x);
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={() => sum()}>테스트</button>
     </div>
   );
-}
+};
 
 export default App;
