@@ -12,7 +12,7 @@ const OVERRIDE_ESLINT = {
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'import', 'simple-import-sort'],
+  plugins: ['@typescript-eslint', 'prettier', 'import'],
   overrides: [OVERRIDE_ESLINT],
   extends: [
     'eslint:recommended',
@@ -27,8 +27,25 @@ module.exports = {
     'no-duplicate-imports': 'error', // 중복 Import 금지
     '@typescript-eslint/prefer-optional-chain': ['error'], // && 대신 OptionalChaining 표현식을 사용하는 것을 선호합니다.
     'react/react-in-jsx-scope': 'off', // JSX를 사용할 때 누락된 React 방지
-    'simple-import-sort/imports': 'error', // Import 정렬
     // 'no-unsafe-assignment': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', ['parent', 'sibling'], 'index'],
+        pathGroups: [
+          {
+            pattern: 'angular',
+            group: 'external',
+            position: 'before',
+          },
+        ],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        'newlines-between': 'always',
+      },
+    ],
   },
   ignorePatterns: ['node_modules/'],
   settings: {
