@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   FaBars,
   FaGem,
@@ -27,6 +27,32 @@ export type Props = {
   onCollapseChange: (checked: boolean) => void;
 };
 
+const MENU = [
+  {
+    menu_cd: '0000',
+    menu_nm: '시스템',
+    upper_menu_cd: undefined,
+    open: true,
+  },
+  { menu_cd: '0001', menu_nm: '공통', upper_menu_cd: '0000', open: true },
+  {
+    menu_cd: '0004',
+    menu_nm: '공통코드관리',
+    upper_menu_cd: '0001',
+    url: 'pages/CmnMng',
+    open: false,
+  },
+  { menu_cd: '0002', menu_nm: '권한', upper_menu_cd: '0000', open: false },
+  {
+    menu_cd: '0005',
+    menu_nm: '권한관리',
+    upper_menu_cd: '0002',
+    url: 'pages/CmnMng',
+  },
+  { menu_cd: '1000', menu_nm: '테스트', upper_menu_cd: undefined, open: true },
+  { menu_cd: '1001', menu_nm: '권한관리11', upper_menu_cd: '1000' },
+];
+
 const Sidebar: React.FC<Props> = ({
   image = false,
   collapsed,
@@ -35,6 +61,46 @@ const Sidebar: React.FC<Props> = ({
   onToggle,
   onCollapseChange,
 }: Props) => {
+  const [menuList, setMenuList] = useState(MENU);
+
+  const handleListItemClick = (item: any) => {
+    const menu = JSON.parse(JSON.stringify(menuList));
+
+    menu
+      .filter(({ menu_cd }: any) => menu_cd === item.menu_cd)
+      .forEach((menu: any) => (menu.open = !menu.open));
+
+    setMenuList(menu);
+  };
+
+  const recursiveChildMenu = useCallback(
+    (item: any): any => {
+      const filteredList = menuList.filter(
+        (menuItem) => menuItem.upper_menu_cd == item.menu_cd
+      );
+
+      return (
+        filteredList.length > 0 &&
+        filteredList.map((menuItem) => {
+          return (
+            <>
+              {menuItem?.url != undefined ? (
+                <MenuItem icon={<FaRegLaughWink />}>
+                  {menuItem.menu_nm}
+                </MenuItem>
+              ) : (
+                <SubMenu title={menuItem.menu_nm} icon={<FaRegLaughWink />}>
+                  {recursiveChildMenu(menuItem)}
+                </SubMenu>
+              )}
+            </>
+          );
+        })
+      );
+    },
+    [menuList]
+  );
+
   return (
     <ProSidebar
       image={image ? sidebarBg : ''}
@@ -63,46 +129,17 @@ const Sidebar: React.FC<Props> = ({
 
       <SidebarContent>
         <Menu iconShape="circle">
-          <MenuItem
-            icon={<FaTachometerAlt />}
-            suffix={<span className="badge red">aa</span>}
-          >
-            bb
-          </MenuItem>
-          <MenuItem icon={<FaGem />}> cc</MenuItem>
-        </Menu>
-        <Menu iconShape="circle">
-          <SubMenu
-            suffix={<span className="badge yellow">3</span>}
-            title={'dd'}
-            icon={<FaRegLaughWink />}
-          >
-            <MenuItem>{'ee'} 1</MenuItem>
-            <MenuItem>{'ff'} 2</MenuItem>
-            <MenuItem>{'gg'} 3</MenuItem>
-          </SubMenu>
-          <SubMenu
-            prefix={<span className="badge gray">3</span>}
-            title={'hh'}
-            icon={<FaHeart />}
-          >
-            <MenuItem>{'ii'} 1</MenuItem>
-            <MenuItem>{'jj'} 2</MenuItem>
-            <MenuItem>{'kk'} 3</MenuItem>
-          </SubMenu>
-          <SubMenu title={'ll'} icon={<FaList />}>
-            <MenuItem>{'mm'} 1 </MenuItem>
-            <MenuItem>{'nn'} 2 </MenuItem>
-            <SubMenu title={'oo'}>
-              <MenuItem>{'pp'} 3.1 </MenuItem>
-              <MenuItem>{'qq'} 3.2 </MenuItem>
-              <SubMenu title={'rr'}>
-                <MenuItem>{'ss'} 3.3.1 </MenuItem>
-                <MenuItem>{'tt'} 3.3.2 </MenuItem>
-                <MenuItem>{'uu'} 3.3.3 </MenuItem>
+          {menuList
+            .filter((menuItem) => !menuItem.upper_menu_cd)
+            .map((item) => (
+              <SubMenu
+                key={item.menu_cd}
+                title={item.menu_nm}
+                icon={<FaHeart />}
+              >
+                {recursiveChildMenu(item)}
               </SubMenu>
-            </SubMenu>
-          </SubMenu>
+            ))}
         </Menu>
       </SidebarContent>
 
