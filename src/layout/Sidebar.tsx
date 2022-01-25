@@ -1,12 +1,10 @@
 import { useCallback, useState } from 'react';
 import {
   FaBars,
-  FaGem,
+  FaFolder,
+  FaFolderOpen,
   FaGithub,
-  FaHeart,
-  FaList,
-  FaRegLaughWink,
-  FaTachometerAlt,
+  FaPager,
 } from 'react-icons/fa';
 
 import sidebarBg from './assets/bg2.jpg';
@@ -32,9 +30,9 @@ const MENU = [
     menu_cd: '0000',
     menu_nm: '시스템',
     upper_menu_cd: undefined,
-    open: true,
+    open: false,
   },
-  { menu_cd: '0001', menu_nm: '공통', upper_menu_cd: '0000', open: true },
+  { menu_cd: '0001', menu_nm: '공통', upper_menu_cd: '0000', open: false },
   {
     menu_cd: '0004',
     menu_nm: '공통코드관리',
@@ -49,7 +47,7 @@ const MENU = [
     upper_menu_cd: '0002',
     url: 'pages/CmnMng',
   },
-  { menu_cd: '1000', menu_nm: '테스트', upper_menu_cd: undefined, open: true },
+  { menu_cd: '1000', menu_nm: '테스트', upper_menu_cd: undefined, open: false },
   { menu_cd: '1001', menu_nm: '권한관리11', upper_menu_cd: '1000' },
 ];
 
@@ -63,12 +61,12 @@ const Sidebar: React.FC<Props> = ({
 }: Props) => {
   const [menuList, setMenuList] = useState(MENU);
 
-  const handleListItemClick = (item: any) => {
+  const handleMenuOpenChange = (item: any, closed: boolean) => {
     const menu = JSON.parse(JSON.stringify(menuList));
 
     menu
       .filter(({ menu_cd }: any) => menu_cd === item.menu_cd)
-      .forEach((menu: any) => (menu.open = !menu.open));
+      .forEach((menu: any) => (menu.open = closed));
 
     setMenuList(menu);
   };
@@ -85,11 +83,17 @@ const Sidebar: React.FC<Props> = ({
           return (
             <>
               {menuItem?.url != undefined ? (
-                <MenuItem icon={<FaRegLaughWink />}>
-                  {menuItem.menu_nm}
-                </MenuItem>
+                <MenuItem icon={<FaPager />}>{menuItem.menu_nm}</MenuItem>
               ) : (
-                <SubMenu title={menuItem.menu_nm} icon={<FaRegLaughWink />}>
+                <SubMenu
+                  title={menuItem.menu_nm}
+                  icon={true}
+                  openedIcon={<FaFolderOpen />}
+                  closedIcon={<FaFolder />}
+                  // onOpenChange={(closed: boolean) =>
+                  //   handleMenuOpenChange(menuItem, closed)
+                  // }
+                >
                   {recursiveChildMenu(menuItem)}
                 </SubMenu>
               )}
@@ -135,7 +139,9 @@ const Sidebar: React.FC<Props> = ({
               <SubMenu
                 key={item.menu_cd}
                 title={item.menu_nm}
-                icon={<FaHeart />}
+                icon={true}
+                openedIcon={<FaFolderOpen />}
+                closedIcon={<FaFolder />}
               >
                 {recursiveChildMenu(item)}
               </SubMenu>

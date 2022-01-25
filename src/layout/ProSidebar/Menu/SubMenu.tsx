@@ -16,7 +16,9 @@ import { SidebarContext } from '../ProSidebar';
 export type Props = Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> & {
   children?: React.ReactNode;
   className?: string;
-  icon?: React.ReactNode;
+  icon?: boolean;
+  openedIcon?: React.ReactNode;
+  closedIcon?: React.ReactNode;
   title?: React.ReactNode;
   defaultOpen?: boolean;
   open?: boolean;
@@ -31,6 +33,8 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   {
     children,
     icon,
+    openedIcon,
+    closedIcon,
     className,
     title,
     defaultOpen = false,
@@ -126,7 +130,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
       >
         {icon ? (
           <span className="pro-icon-wrapper">
-            <span className="pro-icon">{icon}</span>
+            <span className="pro-icon">{closed ? closedIcon : openedIcon}</span>
           </span>
         ) : null}
         {prefix ? <span className="prefix-wrapper">{prefix}</span> : null}

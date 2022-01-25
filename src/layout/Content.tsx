@@ -98,7 +98,7 @@ const Content: React.FC<Props> = ({
 
       <footer>
         <small>
-          © {new Date().getFullYear()} made with by -{' '}
+          © {new Date().getFullYear()} made by -{' '}
           <a
             target="_blank"
             rel="noopener noreferrer"
