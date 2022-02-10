@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   FaBars,
   FaFolder,
@@ -6,6 +6,7 @@ import {
   FaGithub,
   FaPager,
 } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import sidebarBg from './assets/bg2.jpg';
 import { ProSidebar } from './ProSidebar';
@@ -21,55 +22,49 @@ export type Props = {
   collapsed: boolean;
   rtl: boolean;
   toggled: boolean;
+  list: Array<any>;
   onToggle: (checked: boolean) => void;
   onCollapseChange: (checked: boolean) => void;
+  onMenuOpen: (
+    menuList: Array<any>,
+    menuItem: any,
+    menuOpened: boolean
+  ) => void;
 };
-
-const MENU = [
-  {
-    menu_cd: '0000',
-    menu_nm: '시스템',
-    upper_menu_cd: undefined,
-    open: false,
-  },
-  { menu_cd: '0001', menu_nm: '공통', upper_menu_cd: '0000', open: false },
-  {
-    menu_cd: '0004',
-    menu_nm: '공통코드관리',
-    upper_menu_cd: '0001',
-    url: 'pages/CmnMng',
-    open: false,
-  },
-  { menu_cd: '0002', menu_nm: '권한', upper_menu_cd: '0000', open: false },
-  {
-    menu_cd: '0005',
-    menu_nm: '권한관리',
-    upper_menu_cd: '0002',
-    url: 'pages/CmnMng',
-  },
-  { menu_cd: '1000', menu_nm: '테스트', upper_menu_cd: undefined, open: false },
-  { menu_cd: '1001', menu_nm: '권한관리11', upper_menu_cd: '1000' },
-];
 
 const Sidebar: React.FC<Props> = ({
   image = false,
   collapsed,
   rtl,
   toggled,
+  list,
   onToggle,
   onCollapseChange,
+  onMenuOpen,
 }: Props) => {
-  const [menuList, setMenuList] = useState(MENU);
+  const menuList = list;
 
-  const handleMenuOpenChange = (item: any, closed: boolean) => {
-    const menu = JSON.parse(JSON.stringify(menuList));
+  useEffect(() => {
+    console.log(menuList);
+  }, [menuList]);
 
-    menu
-      .filter(({ menu_cd }: any) => menu_cd === item.menu_cd)
-      .forEach((menu: any) => (menu.open = closed));
-
-    setMenuList(menu);
-  };
+  const handleMenuOnClick = useCallback(
+    (menuItem) => {
+      onMenuOpen(
+        menuList.map((item) => {
+          return item.menu_cd === menuItem.menu_cd && !item.open
+            ? {
+                ...item,
+                open: !item.open,
+              }
+            : item;
+        }),
+        menuItem,
+        menuItem.open
+      );
+    },
+    [menuList]
+  );
 
   const recursiveChildMenu = useCallback(
     (item: any): any => {
@@ -80,24 +75,24 @@ const Sidebar: React.FC<Props> = ({
       return (
         filteredList.length > 0 &&
         filteredList.map((menuItem) => {
-          return (
-            <>
-              {menuItem?.url != undefined ? (
-                <MenuItem icon={<FaPager />}>{menuItem.menu_nm}</MenuItem>
-              ) : (
-                <SubMenu
-                  title={menuItem.menu_nm}
-                  icon={true}
-                  openedIcon={<FaFolderOpen />}
-                  closedIcon={<FaFolder />}
-                  // onOpenChange={(closed: boolean) =>
-                  //   handleMenuOpenChange(menuItem, closed)
-                  // }
-                >
-                  {recursiveChildMenu(menuItem)}
-                </SubMenu>
-              )}
-            </>
+          return menuItem?.url != undefined ? (
+            <MenuItem
+              key={menuItem.menu_cd}
+              icon={<FaPager />}
+              onClick={() => handleMenuOnClick(menuItem)}
+            >
+              {menuItem.menu_nm}
+            </MenuItem>
+          ) : (
+            <SubMenu
+              key={menuItem.menu_cd}
+              title={menuItem.menu_nm}
+              icon={true}
+              openedIcon={<FaFolderOpen />}
+              closedIcon={<FaFolder />}
+            >
+              {recursiveChildMenu(menuItem)}
+            </SubMenu>
           );
         })
       );
@@ -127,7 +122,9 @@ const Sidebar: React.FC<Props> = ({
             whiteSpace: 'nowrap',
           }}
         >
-          TEST
+          <Link to="/" style={{ cursor: 'pointer' }}>
+            TEST
+          </Link>
         </div>
       </SidebarHeader>
 

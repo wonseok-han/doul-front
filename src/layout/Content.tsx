@@ -1,28 +1,33 @@
-import React from 'react';
-import { FaBars, FaHeart } from 'react-icons/fa';
-import Switch from 'react-switch';
+import TabContainer from 'components/TabContainer';
+import React, { useEffect, useState } from 'react';
+import { FaBars } from 'react-icons/fa';
+import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
 
 import reactLogo from './assets/logo.svg';
 
 export type Props = {
-  collapsed: boolean;
-  rtl: boolean;
-  image: boolean;
   handleToggleSidebar: (checked: boolean) => void;
-  handleCollapsedChange: (checked: boolean) => void;
-  handleRtlChange: (checked: boolean) => void;
-  handleImageChange: (checked: boolean) => void;
+  menu?: any;
 };
 
-const Content: React.FC<Props> = ({
-  collapsed = false,
-  rtl = false,
-  image = false,
-  handleToggleSidebar,
-  handleCollapsedChange,
-  handleRtlChange,
-  handleImageChange,
-}: Props) => {
+const Content: React.FC<Props> = ({ handleToggleSidebar, menu }: Props) => {
+  const [openedMenuList, setOpenedMenuList] = useState([]);
+
+  useEffect(() => {
+    if (!menu) return;
+
+    const filteredList = openedMenuList.filter(
+      (item: any) => item?.menu_cd === menu.menu_cd
+    );
+
+    filteredList.length === 0 &&
+      setOpenedMenuList((previous) => {
+        const prevList = previous;
+        prevList.push(filteredList[0]);
+        return [...prevList];
+      });
+  }, [menu]);
+
   return (
     <main>
       <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
@@ -56,45 +61,12 @@ const Content: React.FC<Props> = ({
           </a>
         </div>
       </header>
-      <div className="block ">
-        <Switch
-          height={16}
-          width={30}
-          checkedIcon={false}
-          uncheckedIcon={false}
-          onChange={handleCollapsedChange}
-          checked={collapsed}
-          onColor="#219de9"
-          offColor="#bbbbbb"
-        />
-        <span>Collapse</span>
-      </div>
-      <div className="block">
-        <Switch
-          height={16}
-          width={30}
-          checkedIcon={false}
-          uncheckedIcon={false}
-          onChange={handleRtlChange}
-          checked={rtl}
-          onColor="#219de9"
-          offColor="#bbbbbb"
-        />
-        <span>rtl</span>
-      </div>
-      <div className="block">
-        <Switch
-          height={16}
-          width={30}
-          checkedIcon={false}
-          uncheckedIcon={false}
-          onChange={handleImageChange}
-          checked={image}
-          onColor="#219de9"
-          offColor="#bbbbbb"
-        />
-        <span>image</span>
-      </div>
+
+      <TabContainer />
+
+      {menu?.open && (
+        <DynamicLoader key={`menu${menu.menu_cd}`} path={menu.url} />
+      )}
 
       <footer>
         <small>

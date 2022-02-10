@@ -1,3 +1,5 @@
+@import 'global/variables.scss';
+
 @mixin break-point {
   position: fixed;
   left: -$sidebar-width;

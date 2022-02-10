@@ -1,6 +1,7 @@
 import './App.scss';
 
 import Layout from 'layout/Layout';
+import { BrowserRouter } from 'react-router-dom';
 
 // import { useState } from 'react';
 
@@ -13,7 +14,9 @@ const App: React.FC = () => {
 
   return (
     // <IntlProvider locale={locale} messages={messages[locale]}>
-    <Layout />
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
     // </IntlProvider>
   );
 };
