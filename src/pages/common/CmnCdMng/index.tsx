@@ -1,6 +1,51 @@
 const CmnCdMng: React.FC = ({ path }: any) => {
   console.log(path);
-  return <div>공통코드관리</div>;
+  return (
+    <div>
+      공통코드관리
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+      <div>aa</div>
+    </div>
+  );
 };
 
 export default CmnCdMng;

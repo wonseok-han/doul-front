@@ -1,4 +1,4 @@
-import TabContainer from 'components/TabContainer';
+import TabPageContainer from 'components/TabPageContainer';
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
@@ -7,11 +7,16 @@ import reactLogo from './assets/logo.svg';
 
 export type Props = {
   handleToggleSidebar: (checked: boolean) => void;
+  mode: string;
   menu?: any;
 };
 
-const Content: React.FC<Props> = ({ handleToggleSidebar, menu }: Props) => {
-  const [openedMenuList, setOpenedMenuList] = useState([]);
+const Content: React.FC<Props> = ({
+  handleToggleSidebar,
+  mode = 'SDI',
+  menu,
+}: Props) => {
+  const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
 
   useEffect(() => {
     if (!menu) return;
@@ -22,14 +27,12 @@ const Content: React.FC<Props> = ({ handleToggleSidebar, menu }: Props) => {
 
     filteredList.length === 0 &&
       setOpenedMenuList((previous) => {
-        const prevList = previous;
-        prevList.push(filteredList[0]);
-        return [...prevList];
+        return [...previous, menu];
       });
   }, [menu]);
 
   return (
-    <main>
+    <main style={{ height: 'auto', minHeight: '100%' }}>
       <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
         <FaBars />
       </div>
@@ -62,11 +65,15 @@ const Content: React.FC<Props> = ({ handleToggleSidebar, menu }: Props) => {
         </div>
       </header>
 
-      <TabContainer />
-
-      {menu?.open && (
-        <DynamicLoader key={`menu${menu.menu_cd}`} path={menu.url} />
-      )}
+      {mode === 'SDI'
+        ? openedMenuList.length > 0 && (
+            <div style={{ overflow: 'scroll' }}>
+              <DynamicLoader key={`Menu${menu.menu_cd}`} path={menu.url} />
+            </div>
+          )
+        : openedMenuList.length > 0 && (
+            <TabPageContainer openedList={openedMenuList} openedItem={menu} />
+          )}
 
       <footer>
         <small>

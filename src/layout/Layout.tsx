@@ -34,7 +34,7 @@ const Layout: React.FC = () => {
   const image = false;
   const [collapsed, setCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
-  const [path, setPath] = useState('');
+  const [mode, setMode] = useState('MDI');
   const [menus, setMenus] = useState(MENU);
   const [menu, setMenu] = useState();
 
@@ -44,6 +44,10 @@ const Layout: React.FC = () => {
 
   const handleToggleSidebar = useCallback((checked: boolean) => {
     setToggled(checked);
+  }, []);
+
+  const handleModeChange = useCallback((selectedMode: string) => {
+    setMode(selectedMode);
   }, []);
 
   const handleMenuOpened = useCallback(
@@ -66,7 +70,11 @@ const Layout: React.FC = () => {
         onCollapseChange={handleCollapsedChange}
         onMenuOpen={handleMenuOpened}
       />
-      <Content handleToggleSidebar={handleToggleSidebar} menu={menu}></Content>
+      <Content
+        handleToggleSidebar={handleToggleSidebar}
+        mode={mode}
+        menu={menu}
+      ></Content>
     </div>
   );
 };

@@ -44,10 +44,6 @@ const Sidebar: React.FC<Props> = ({
 }: Props) => {
   const menuList = list;
 
-  useEffect(() => {
-    console.log(menuList);
-  }, [menuList]);
-
   const handleMenuOnClick = useCallback(
     (menuItem) => {
       onMenuOpen(
