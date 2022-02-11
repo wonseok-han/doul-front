@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Content from './Content';
 import Sidebar from './Sidebar';
@@ -58,6 +58,32 @@ const Layout: React.FC = () => {
     []
   );
 
+  const handleActivateTab = useCallback((item: any) => {
+    console.log('active::', item);
+    setMenu((previous: any) => ({ ...previous, ...item }));
+  }, []);
+
+  const handleMenuClosed = useCallback((closedItem) => {
+    setMenus((previous) => {
+      return [
+        ...previous.map((item) => {
+          return item.menu_cd === closedItem.menu_cd && item.open
+            ? {
+                ...item,
+                open: !item.open,
+              }
+            : item;
+        }),
+      ];
+    });
+    console.log('closed::', { ...closedItem, open: false });
+    setMenu({ ...closedItem, open: false });
+  }, []);
+
+  useEffect(() => {
+    console.log(menus);
+  }, [menus]);
+
   return (
     <div className={`app ${rtl ? 'rtl' : ''} ${toggled ? 'toggled' : ''}`}>
       <Sidebar
@@ -74,9 +100,11 @@ const Layout: React.FC = () => {
         handleToggleSidebar={handleToggleSidebar}
         mode={mode}
         menu={menu}
+        handleMenuClosed={handleMenuClosed}
+        handleActivateTab={handleActivateTab}
       ></Content>
     </div>
   );
 };
 
-export default Layout;
+export default React.memo(Layout);

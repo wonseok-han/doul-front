@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 const Second: React.FC = () => {
   const [test, setTest] = useState(0);
+
+  useEffect(() => {
+    console.log('최초');
+  }, []);
   return (
     <div>
       <div>{test}</div>

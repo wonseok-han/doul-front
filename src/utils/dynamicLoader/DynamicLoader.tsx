@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 
 export type Props = {
   path: string;
@@ -23,4 +23,4 @@ const DynamicLoader: React.FC<Props> = ({ path }: Props) => {
   );
 };
 
-export default DynamicLoader;
+export default React.memo(DynamicLoader);

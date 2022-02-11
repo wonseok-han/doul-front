@@ -6,29 +6,42 @@ import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
 import reactLogo from './assets/logo.svg';
 
 export type Props = {
-  handleToggleSidebar: (checked: boolean) => void;
   mode: string;
   menu?: any;
+  handleToggleSidebar: (checked: boolean) => void;
+  handleMenuClosed?: (item: any) => void;
+  handleActivateTab?: (item: any) => void;
 };
 
 const Content: React.FC<Props> = ({
-  handleToggleSidebar,
   mode = 'SDI',
   menu,
+  handleToggleSidebar,
+  handleMenuClosed,
+  handleActivateTab,
 }: Props) => {
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
 
   useEffect(() => {
+    console.log('이거탈텐데?::', menu);
     if (!menu) return;
 
-    const filteredList = openedMenuList.filter(
-      (item: any) => item?.menu_cd === menu.menu_cd
+    const filteredOpenList = openedMenuList.filter(
+      (item) => item.menu_cd === menu.menu_cd
     );
+    if (filteredOpenList.length > 0 && menu.open) return;
 
-    filteredList.length === 0 &&
-      setOpenedMenuList((previous) => {
-        return [...previous, menu];
-      });
+    menu.open
+      ? setOpenedMenuList((previous) => {
+          return [...previous, menu];
+        })
+      : setOpenedMenuList((previous) => {
+          const filteredPrevList = previous.filter(
+            (item) => item.menu_cd != menu.menu_cd
+          );
+
+          return filteredPrevList;
+        });
   }, [menu]);
 
   return (
@@ -72,7 +85,13 @@ const Content: React.FC<Props> = ({
             </div>
           )
         : openedMenuList.length > 0 && (
-            <TabPageContainer openedList={openedMenuList} openedItem={menu} />
+            <TabPageContainer
+              openedList={openedMenuList}
+              // openedItem={menu}
+              activeKey={menu.menu_cd}
+              handleMenuClosed={handleMenuClosed}
+              handleActivateTab={handleActivateTab}
+            />
           )}
 
       <footer>
@@ -91,4 +110,4 @@ const Content: React.FC<Props> = ({
   );
 };
 
-export default Content;
+export default React.memo(Content);

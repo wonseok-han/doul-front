@@ -55,7 +55,7 @@ const Sidebar: React.FC<Props> = ({
               }
             : item;
         }),
-        menuItem,
+        { ...menuItem, open: true },
         menuItem.open
       );
     },
