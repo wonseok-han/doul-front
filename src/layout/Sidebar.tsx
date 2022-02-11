@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import {
   FaBars,
   FaFolder,
@@ -6,7 +6,6 @@ import {
   FaGithub,
   FaPager,
 } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 import sidebarBg from './assets/bg2.jpg';
 import { ProSidebar } from './ProSidebar';
@@ -44,6 +43,7 @@ const Sidebar: React.FC<Props> = ({
 }: Props) => {
   const menuList = list;
 
+  // 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOnClick = useCallback(
     (menuItem) => {
       onMenuOpen(
@@ -62,36 +62,34 @@ const Sidebar: React.FC<Props> = ({
     [menuList]
   );
 
+  // Sidebar 메뉴를 구성하는 재귀함수
   const recursiveChildMenu = useCallback(
     (item: any): any => {
       const filteredList = menuList.filter(
         (menuItem) => menuItem.upper_menu_cd == item.menu_cd
       );
 
-      return (
-        filteredList.length > 0 &&
-        filteredList.map((menuItem) => {
-          return menuItem?.url != undefined ? (
-            <MenuItem
-              key={menuItem.menu_cd}
-              icon={<FaPager />}
-              onClick={() => handleMenuOnClick(menuItem)}
-            >
-              {menuItem.menu_nm}
-            </MenuItem>
-          ) : (
-            <SubMenu
-              key={menuItem.menu_cd}
-              title={menuItem.menu_nm}
-              icon={true}
-              openedIcon={<FaFolderOpen />}
-              closedIcon={<FaFolder />}
-            >
-              {recursiveChildMenu(menuItem)}
-            </SubMenu>
-          );
-        })
-      );
+      return filteredList.map((menuItem) => {
+        return menuItem?.url != undefined ? (
+          <MenuItem
+            key={menuItem.menu_cd}
+            icon={<FaPager />}
+            onClick={() => handleMenuOnClick(menuItem)}
+          >
+            {menuItem.menu_nm}
+          </MenuItem>
+        ) : (
+          <SubMenu
+            key={menuItem.menu_cd}
+            title={menuItem.menu_nm}
+            icon={true}
+            openedIcon={<FaFolderOpen />}
+            closedIcon={<FaFolder />}
+          >
+            {recursiveChildMenu(menuItem)}
+          </SubMenu>
+        );
+      });
     },
     [menuList]
   );
@@ -118,9 +116,12 @@ const Sidebar: React.FC<Props> = ({
             whiteSpace: 'nowrap',
           }}
         >
-          <Link to="/" style={{ cursor: 'pointer' }}>
-            TEST
-          </Link>
+          <span
+            style={{ cursor: 'pointer' }}
+            onClick={() => window.location.replace('/')}
+          >
+            <h2>테스트 시스템</h2>
+          </span>
         </div>
       </SidebarHeader>
 

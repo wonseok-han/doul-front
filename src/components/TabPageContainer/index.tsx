@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import {
   CloseButton,
   Nav,
@@ -10,29 +10,26 @@ import {
 import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
 
 export interface Props extends TabsProps {
-  children?: Array<{ id: string; title: string; node: React.ReactNode }>;
   openedList: Array<any>;
-  // openedItem: any;
   activeKey: string;
-  handleMenuClosed?: (item: any) => void;
+  handleMenuClosed?: (item: any, openedList: Array<any>) => void;
   handleActivateTab?: (item: any) => void;
 }
 
 const TabPageContainer: React.FC<Props> = ({
-  children,
   openedList,
-  // openedItem,
+
   activeKey,
   handleMenuClosed,
   handleActivateTab,
 }: Props) => {
-  useEffect(() => {
-    console.log('openedList::', openedList);
-  }, [openedList]);
-
-  const handleExtraOnClick = useCallback((item) => {
-    handleMenuClosed?.(item);
-  }, []);
+  // 탭의 Extra 버튼 클릭 이벤트(화면 닫기)
+  const handleExtraOnClick = useCallback(
+    (item) => {
+      handleMenuClosed?.(item, openedList);
+    },
+    [openedList]
+  );
 
   return (
     <TabContainer

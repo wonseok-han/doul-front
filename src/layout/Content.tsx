@@ -9,7 +9,7 @@ export type Props = {
   mode: string;
   menu?: any;
   handleToggleSidebar: (checked: boolean) => void;
-  handleMenuClosed?: (item: any) => void;
+  handleMenuClosed?: (item: any, openedList: Array<any>) => void;
   handleActivateTab?: (item: any) => void;
 };
 
@@ -23,13 +23,12 @@ const Content: React.FC<Props> = ({
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    console.log('이거탈텐데?::', menu);
     if (!menu) return;
 
-    const filteredOpenList = openedMenuList.filter(
+    const openItem = openedMenuList.find(
       (item) => item.menu_cd === menu.menu_cd
     );
-    if (filteredOpenList.length > 0 && menu.open) return;
+    if (openItem && menu.open) return;
 
     menu.open
       ? setOpenedMenuList((previous) => {
@@ -87,8 +86,7 @@ const Content: React.FC<Props> = ({
         : openedMenuList.length > 0 && (
             <TabPageContainer
               openedList={openedMenuList}
-              // openedItem={menu}
-              activeKey={menu.menu_cd}
+              activeKey={menu.moveItem?.menu_cd || menu.menu_cd}
               handleMenuClosed={handleMenuClosed}
               handleActivateTab={handleActivateTab}
             />

@@ -38,18 +38,22 @@ const Layout: React.FC = () => {
   const [menus, setMenus] = useState(MENU);
   const [menu, setMenu] = useState();
 
+  // Sidebar 접음/펼침 이벤트
   const handleCollapsedChange = useCallback((checked: boolean) => {
     setCollapsed(checked);
   }, []);
 
+  // Sidebar 접혔을 때 Collapse 버튼 Show/Hide 토클 이벤트
   const handleToggleSidebar = useCallback((checked: boolean) => {
     setToggled(checked);
   }, []);
 
+  // SDI/MDI 모드 전환 이벤트
   const handleModeChange = useCallback((selectedMode: string) => {
     setMode(selectedMode);
   }, []);
 
+  // Sidebar 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOpened = useCallback(
     (menuList: Array<any>, menuItem: any, menuOpened: boolean) => {
       setMenu((previous: any) => ({ ...previous, ...menuItem }));
@@ -58,27 +62,50 @@ const Layout: React.FC = () => {
     []
   );
 
+  // Open된 탭메뉴 화면의 탭 전환시 발생하는 이벤트
   const handleActivateTab = useCallback((item: any) => {
-    console.log('active::', item);
     setMenu((previous: any) => ({ ...previous, ...item }));
   }, []);
 
-  const handleMenuClosed = useCallback((closedItem) => {
-    setMenus((previous) => {
-      return [
-        ...previous.map((item) => {
-          return item.menu_cd === closedItem.menu_cd && item.open
-            ? {
-                ...item,
-                open: !item.open,
-              }
-            : item;
-        }),
-      ];
-    });
-    console.log('closed::', { ...closedItem, open: false });
-    setMenu({ ...closedItem, open: false });
-  }, []);
+  // Open된 탭메뉴 화면의 Close 이벤트
+  const handleMenuClosed = useCallback(
+    (closedItem: any, openedList: Array<any>) => {
+      setMenus((previous) => {
+        return [
+          ...previous.map((item) => {
+            return item.menu_cd === closedItem.menu_cd && item.open
+              ? {
+                  ...item,
+                  open: !item.open,
+                }
+              : item;
+          }),
+        ];
+      });
+
+      const foundItem = openedList.filter(
+        (item) => item.menu_cd === closedItem.menu_cd
+      );
+      if (openedList.length >= openedList.length - foundItem.length) {
+        const foundIndex = openedList.findIndex(
+          (item) => item.menu_cd === closedItem.menu_cd
+        );
+
+        let moveItem;
+        // 마지막 탭 Close
+        if (foundIndex === openedList.length - 1)
+          moveItem = foundIndex > -1 && openedList[foundIndex - 1];
+        // 첫번째 탭, 중간 탭 Close
+        else if (foundIndex === 0)
+          moveItem = foundIndex > -1 && openedList[foundIndex + 1];
+
+        setMenu({ ...closedItem, open: false, moveItem: moveItem });
+      } else {
+        setMenu({ ...closedItem, open: false });
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     console.log(menus);
