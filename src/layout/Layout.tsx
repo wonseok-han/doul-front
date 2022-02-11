@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Content from './Content';
 import Sidebar from './Sidebar';
@@ -56,16 +56,23 @@ const Layout: React.FC = () => {
   // Sidebar 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOpened = useCallback(
     (menuList: Array<any>, menuItem: any, menuOpened: boolean) => {
-      setMenu((previous: any) => ({ ...previous, ...menuItem }));
+      setMenu((previous: any) => ({
+        ...previous,
+        ...menuItem,
+        moveItem: undefined,
+      }));
       !menuOpened && setMenus(menuList);
     },
-    []
+    [menu]
   );
 
   // Open된 탭메뉴 화면의 탭 전환시 발생하는 이벤트
-  const handleActivateTab = useCallback((item: any) => {
-    setMenu((previous: any) => ({ ...previous, ...item }));
-  }, []);
+  const handleActivateTab = useCallback(
+    (item: any) => {
+      setMenu((previous: any) => ({ ...previous, ...item }));
+    },
+    [menu]
+  );
 
   // Open된 탭메뉴 화면의 Close 이벤트
   const handleMenuClosed = useCallback(
@@ -104,12 +111,8 @@ const Layout: React.FC = () => {
         setMenu({ ...closedItem, open: false });
       }
     },
-    []
+    [menus, menu]
   );
-
-  useEffect(() => {
-    console.log(menus);
-  }, [menus]);
 
   return (
     <div className={`app ${rtl ? 'rtl' : ''} ${toggled ? 'toggled' : ''}`}>
@@ -127,6 +130,7 @@ const Layout: React.FC = () => {
         handleToggleSidebar={handleToggleSidebar}
         mode={mode}
         menu={menu}
+        menus={menus}
         handleMenuClosed={handleMenuClosed}
         handleActivateTab={handleActivateTab}
       ></Content>

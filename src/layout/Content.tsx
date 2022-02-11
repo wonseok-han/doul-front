@@ -1,13 +1,13 @@
 import TabPageContainer from 'components/TabPageContainer';
+import Header from 'layout/Header';
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
 
-import reactLogo from './assets/logo.svg';
-
 export type Props = {
   mode: string;
-  menu?: any;
+  menu: any;
+  menus?: Array<any>;
   handleToggleSidebar: (checked: boolean) => void;
   handleMenuClosed?: (item: any, openedList: Array<any>) => void;
   handleActivateTab?: (item: any) => void;
@@ -16,6 +16,7 @@ export type Props = {
 const Content: React.FC<Props> = ({
   mode = 'SDI',
   menu,
+  menus,
   handleToggleSidebar,
   handleMenuClosed,
   handleActivateTab,
@@ -44,67 +45,55 @@ const Content: React.FC<Props> = ({
   }, [menu]);
 
   return (
-    <main style={{ height: 'auto', minHeight: '100%' }}>
-      <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
-        <FaBars />
-      </div>
-      <header>
-        <h1>
-          <img width={80} src={reactLogo} alt="react logo" /> Title
-        </h1>
-        <p>Description</p>
-        <div className="social-bagdes">
-          <a
-            href="https://github.com/azouaoui-med/react-pro-sidebar"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              alt="GitHub stars"
-              src="https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social"
-            />
-          </a>
-          <a
-            href="https://github.com/azouaoui-med/react-pro-sidebar"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              alt="GitHub forks"
-              src="https://img.shields.io/github/forks/azouaoui-med/react-pro-sidebar?style=social"
-            />
-          </a>
-        </div>
-      </header>
+    <>
+      {openedMenuList.length > 0 ? (
+        <main style={{ height: 'auto', minHeight: '100%' }}>
+          <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
+            <FaBars />
+          </div>
 
-      {mode === 'SDI'
-        ? openedMenuList.length > 0 && (
-            <div style={{ overflow: 'scroll' }}>
-              <DynamicLoader key={`Menu${menu.menu_cd}`} path={menu.url} />
-            </div>
-          )
-        : openedMenuList.length > 0 && (
-            <TabPageContainer
-              openedList={openedMenuList}
-              activeKey={menu.moveItem?.menu_cd || menu.menu_cd}
-              handleMenuClosed={handleMenuClosed}
-              handleActivateTab={handleActivateTab}
-            />
-          )}
+          <header>
+            <Header title={menu?.menu_nm} menus={menus} menu={menu} />
+          </header>
 
-      <footer>
-        <small>
-          © {new Date().getFullYear()} made by -{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/wonseok-han/doul-front"
-          >
-            wonseok-han
-          </a>
-        </small>
-      </footer>
-    </main>
+          <article>
+            {openedMenuList.length > 0 &&
+              (mode === 'SDI' ? (
+                <div style={{ overflow: 'scroll' }}>
+                  <DynamicLoader key={`Menu${menu.menu_cd}`} path={menu.url} />
+                </div>
+              ) : (
+                <TabPageContainer
+                  openedList={openedMenuList}
+                  activeKey={menu.moveItem?.menu_cd || menu.menu_cd}
+                  handleMenuClosed={handleMenuClosed}
+                  handleActivateTab={handleActivateTab}
+                />
+              ))}
+          </article>
+
+          <footer>
+            <small>
+              © {new Date().getFullYear()} made by -{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/wonseok-han/doul-front"
+              >
+                wonseok-han
+              </a>
+            </small>
+          </footer>
+        </main>
+      ) : (
+        <main style={{ height: 'auto', minHeight: '100%' }}>
+          <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
+            <FaBars />
+          </div>
+          <DynamicLoader key={'Home'} path={'Home'} />
+        </main>
+      )}
+    </>
   );
 };
 

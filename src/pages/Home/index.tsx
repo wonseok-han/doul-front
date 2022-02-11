@@ -1,5 +1,5 @@
 const Home: React.FC = () => {
-  return <div>여긴 홈이다!</div>;
+  return <div style={{ textAlign: 'center' }}>여긴 홈이다!</div>;
 };
 
 export default Home;
