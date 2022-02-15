@@ -35,15 +35,15 @@ const TabPageContainer: React.FC<Props> = ({
     <TabContainer
       activeKey={activeKey}
       onSelect={(key) => {
-        const foundItem = openedList.find((item) => item.menu_cd === key);
+        const foundItem = openedList.find((item) => item.menuCode === key);
         if (handleActivateTab) handleActivateTab(foundItem);
       }}
     >
       <Nav variant="tabs">
         {openedList.map((item) => (
-          <Nav.Item key={`Nav${item.menu_cd}`} style={{ cursor: 'pointer' }}>
-            <Nav.Link eventKey={item.menu_cd}>
-              {item.menu_nm}
+          <Nav.Item key={`Nav${item.menuCode}`} style={{ cursor: 'pointer' }}>
+            <Nav.Link eventKey={item.menuCode}>
+              {item.menuName}
               <CloseButton
                 style={{
                   marginLeft: '5px',
@@ -64,11 +64,11 @@ const TabPageContainer: React.FC<Props> = ({
         <TabContent>
           {openedList.map((item) => (
             <TabPane
-              key={`Tab${item.menu_cd}`}
-              eventKey={item.menu_cd}
-              title={item.menu_nm}
+              key={`Tab${item.menuCode}`}
+              eventKey={item.menuCode}
+              title={item.menuName}
             >
-              <DynamicLoader key={`Menu${item.menu_cd}`} path={item.url} />
+              <DynamicLoader key={`Menu${item.menuCode}`} path={item.url} />
             </TabPane>
           ))}
         </TabContent>

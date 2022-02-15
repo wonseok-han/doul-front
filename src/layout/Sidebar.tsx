@@ -48,7 +48,7 @@ const Sidebar: React.FC<Props> = ({
     (menuItem) => {
       onMenuOpen(
         menuList.map((item) => {
-          return item.menu_cd === menuItem.menu_cd && !item.open
+          return item.menuCode === menuItem.menuCode && !item.open
             ? {
                 ...item,
                 open: !item.open,
@@ -66,22 +66,22 @@ const Sidebar: React.FC<Props> = ({
   const recursiveChildMenu = useCallback(
     (item: any): any => {
       const filteredList = menuList.filter(
-        (menuItem) => menuItem.upper_menu_cd == item.menu_cd
+        (menuItem) => menuItem.parentMenu == item.menuCode
       );
 
       return filteredList.map((menuItem) => {
         return menuItem?.url != undefined ? (
           <MenuItem
-            key={menuItem.menu_cd}
+            key={menuItem.menuCode}
             icon={<FaPager />}
             onClick={() => handleMenuOnClick(menuItem)}
           >
-            {menuItem.menu_nm}
+            {menuItem.menuName}
           </MenuItem>
         ) : (
           <SubMenu
-            key={menuItem.menu_cd}
-            title={menuItem.menu_nm}
+            key={menuItem.menuCode}
+            title={menuItem.menuName}
             icon={true}
             openedIcon={<FaFolderOpen />}
             closedIcon={<FaFolder />}
@@ -138,11 +138,11 @@ const Sidebar: React.FC<Props> = ({
       <SidebarContent>
         <Menu iconShape="circle">
           {menuList
-            .filter((menuItem) => !menuItem.upper_menu_cd)
+            .filter((menuItem) => !menuItem.parentMenu)
             .map((item) => (
               <SubMenu
-                key={item.menu_cd}
-                title={item.menu_nm}
+                key={item.menuCode}
+                title={item.menuName}
                 icon={true}
                 openedIcon={<FaFolderOpen />}
                 closedIcon={<FaFolder />}

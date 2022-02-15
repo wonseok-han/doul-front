@@ -30,7 +30,7 @@ const Content: React.FC<Props> = ({
     }
 
     const openItem = openedMenuList.find(
-      (item) => item.menu_cd === menu.menu_cd
+      (item) => item.menuCode === menu.menuCode
     );
     if (openItem && menu.open) return;
 
@@ -40,7 +40,7 @@ const Content: React.FC<Props> = ({
         })
       : setOpenedMenuList((previous) => {
           const filteredPrevList = previous.filter(
-            (item) => item.menu_cd != menu.menu_cd
+            (item) => item.menuCode != menu.menuCode
           );
 
           return filteredPrevList;
@@ -62,7 +62,7 @@ const Content: React.FC<Props> = ({
 
           <header>
             <Header
-              title={menu?.moveItem?.menu_nm || menu.menu_nm}
+              title={menu?.moveItem?.menuName || menu.menuName}
               menus={menus}
               menu={menu}
             />
@@ -70,12 +70,12 @@ const Content: React.FC<Props> = ({
 
           {mode === 'SDI' ? (
             <div style={{ overflow: 'scroll' }}>
-              <DynamicLoader key={`Menu${menu.menu_cd}`} path={menu.url} />
+              <DynamicLoader key={`Menu${menu.menuCode}`} path={menu.url} />
             </div>
           ) : (
             <TabPageContainer
               openedList={openedMenuList}
-              activeKey={menu?.moveItem?.menu_cd || menu.menu_cd}
+              activeKey={menu?.moveItem?.menuCode || menu.menuCode}
               handleMenuClosed={handleMenuClosed}
               handleActivateTab={handleActivateTab}
             />

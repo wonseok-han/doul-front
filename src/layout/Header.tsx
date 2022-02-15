@@ -18,19 +18,19 @@ const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
       .reverse()
       .reduce((previous, current) => {
         const foundItem = previous.find(
-          (item: any) => item.upper_menu_cd === current.menu_cd
+          (item: any) => item.parentMenu === current.menuCode
         );
 
         if (
-          current.menu_cd === (menu?.moveItem?.menu_cd || menu.menu_cd) ||
+          current.menuCode === (menu?.moveItem?.menuCode || menu.menuCode) ||
           foundItem
         ) {
           return [
             ...previous,
             {
-              menu_cd: current.menu_cd,
-              menu_nm: current.menu_nm,
-              upper_menu_cd: current.upper_menu_cd,
+              menuCode: current.menuCode,
+              menuName: current.menuName,
+              parentMenu: current.parentMenu,
             },
           ];
         } else {
@@ -50,8 +50,8 @@ const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
           </h2>
           <Breadcrumb>
             {breadCrumbList?.map((item) => (
-              <Breadcrumb.Item key={item.menu_nm} active>
-                {item.menu_nm}
+              <Breadcrumb.Item key={item.menuName} active>
+                {item.menuName}
               </Breadcrumb.Item>
             ))}
           </Breadcrumb>
