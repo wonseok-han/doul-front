@@ -1,7 +1,7 @@
-import './App.scss';
+import "./App.scss";
 
-import Layout from 'layout/Layout';
-import { BrowserRouter } from 'react-router-dom';
+import Layout from "layout/Layout";
+import { BrowserRouter } from "react-router-dom";
 
 // import { useState } from 'react';
 
