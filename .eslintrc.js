@@ -22,7 +22,7 @@ module.exports = {
   ],
   rules: {
     'react/jsx-filename-extension': ['error', { extensions: ['.ts', '.tsx'] }],
-    'no-unused-vars': 'warn', // 사용하지 않는 변수 선언 금지
+    '@typescript-eslint/no-unused-vars': 'error', // 사용하지 않는 변수 선언 금지
     '@typescript-eslint/no-implied-eval': 'error', // eval 사용금지
     'no-duplicate-imports': 'error', // 중복 Import 금지
     '@typescript-eslint/prefer-optional-chain': ['error'], // && 대신 OptionalChaining 표현식을 사용하는 것을 선호합니다.

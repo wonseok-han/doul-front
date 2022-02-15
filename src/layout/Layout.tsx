@@ -57,6 +57,7 @@ const Layout: React.FC = () => {
   const handleModeChange = useCallback((selectedMode: string) => {
     setMode(selectedMode);
   }, []);
+  handleModeChange && console.log(handleModeChange);
 
   // Sidebar 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOpened = useCallback(

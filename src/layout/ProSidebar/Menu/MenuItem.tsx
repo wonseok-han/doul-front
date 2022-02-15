@@ -20,8 +20,8 @@ const MenuItem: React.ForwardRefRenderFunction<unknown, Props> = (
     active,
     prefix,
     suffix,
-    firstchild,
-    popperarrow,
+    // firstchild,
+    // popperarrow,
     ...rest
   },
   ref

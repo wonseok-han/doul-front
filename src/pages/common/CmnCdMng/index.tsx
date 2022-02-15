@@ -1,4 +1,5 @@
 const CmnCdMng: React.FC = ({ path }: any) => {
+  path && console.log(path);
   return (
     <div>
       공통코드관리
