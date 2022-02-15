@@ -5,17 +5,17 @@
 * bootstrap5
 
 ## Settings
-1. <span style="color: red">n</span> Package Install
+1. ***n*** Package Install
     ```shell
     npm install -g n
     n 16.13.2
     n   # 엔터 후 ο node/16.13.2 선택
     ```
-2. <span style="color: red">yarn</span> Package Install
+2. ***yarn*** Package Install
     ```shell
     npm install -g yarn
     ```
-3. <span style="color: red">node_modules</span> Install
+3. ***node_modules*** Install
     ```shell
     yarn
     ```
