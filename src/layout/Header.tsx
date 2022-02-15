@@ -21,7 +21,10 @@ const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
           (item: any) => item.upper_menu_cd === current.menu_cd
         );
 
-        if (current.menu_cd === menu.menu_cd || foundItem) {
+        if (
+          current.menu_cd === (menu?.moveItem?.menu_cd || menu.menu_cd) ||
+          foundItem
+        ) {
           return [
             ...previous,
             {
@@ -47,7 +50,7 @@ const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
           </h2>
           <Breadcrumb>
             {breadCrumbList?.map((item) => (
-              <Breadcrumb.Item key={item.menu_nm} style={{ cursor: 'default' }}>
+              <Breadcrumb.Item key={item.menu_nm} active>
                 {item.menu_nm}
               </Breadcrumb.Item>
             ))}

@@ -45,32 +45,38 @@ const Content: React.FC<Props> = ({
   }, [menu]);
 
   return (
-    <>
+    <main
+      style={{
+        height: 'auto',
+        minHeight: '100%',
+      }}
+    >
       {openedMenuList.length > 0 ? (
-        <main style={{ height: 'auto', minHeight: '100%' }}>
+        <>
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
             <FaBars />
           </div>
 
           <header>
-            <Header title={menu?.menu_nm} menus={menus} menu={menu} />
+            <Header
+              title={menu?.moveItem?.menu_nm || menu.menu_nm}
+              menus={menus}
+              menu={menu}
+            />
           </header>
 
-          <article>
-            {openedMenuList.length > 0 &&
-              (mode === 'SDI' ? (
-                <div style={{ overflow: 'scroll' }}>
-                  <DynamicLoader key={`Menu${menu.menu_cd}`} path={menu.url} />
-                </div>
-              ) : (
-                <TabPageContainer
-                  openedList={openedMenuList}
-                  activeKey={menu.moveItem?.menu_cd || menu.menu_cd}
-                  handleMenuClosed={handleMenuClosed}
-                  handleActivateTab={handleActivateTab}
-                />
-              ))}
-          </article>
+          {mode === 'SDI' ? (
+            <div style={{ overflow: 'scroll' }}>
+              <DynamicLoader key={`Menu${menu.menu_cd}`} path={menu.url} />
+            </div>
+          ) : (
+            <TabPageContainer
+              openedList={openedMenuList}
+              activeKey={menu?.moveItem?.menu_cd || menu.menu_cd}
+              handleMenuClosed={handleMenuClosed}
+              handleActivateTab={handleActivateTab}
+            />
+          )}
 
           <footer>
             <small>
@@ -84,16 +90,18 @@ const Content: React.FC<Props> = ({
               </a>
             </small>
           </footer>
-        </main>
+        </>
       ) : (
-        <main style={{ height: 'auto', minHeight: '100%' }}>
+        <>
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
             <FaBars />
           </div>
-          <DynamicLoader key={'Home'} path={'Home'} />
-        </main>
+          <div style={{ overflow: 'scroll' }}>
+            <DynamicLoader key={'Home'} path={'Home'} />
+          </div>
+        </>
       )}
-    </>
+    </main>
   );
 };
 
