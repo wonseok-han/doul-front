@@ -56,12 +56,14 @@ const Layout: React.FC = () => {
   // Sidebar 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOpened = useCallback(
     (menuList: Array<any>, menuItem: any, menuOpened: boolean) => {
-      setMenu((previous: any) => ({
-        ...previous,
-        ...menuItem,
-        moveItem: undefined,
-      }));
-      !menuOpened && setMenus(menuList);
+      menuItem
+        ? setMenu((previous: any) => ({
+            ...previous,
+            ...menuItem,
+            moveItem: undefined,
+          }))
+        : setMenu(undefined);
+      !menuOpened && setMenus([...menuList]);
     },
     [menu]
   );

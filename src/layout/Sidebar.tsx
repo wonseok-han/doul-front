@@ -118,7 +118,17 @@ const Sidebar: React.FC<Props> = ({
         >
           <span
             style={{ cursor: 'pointer' }}
-            onClick={() => window.location.replace('/')}
+            // onClick={() => window.location.replace('/')}
+            onClick={() => {
+              onMenuOpen(
+                menuList.map((item) => ({
+                  ...item,
+                  open: false,
+                })),
+                undefined,
+                false
+              );
+            }}
           >
             <h2>테스트 시스템</h2>
           </span>

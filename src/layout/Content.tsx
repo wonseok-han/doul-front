@@ -24,7 +24,10 @@ const Content: React.FC<Props> = ({
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    if (!menu) return;
+    if (!menu) {
+      setOpenedMenuList([]);
+      return;
+    }
 
     const openItem = openedMenuList.find(
       (item) => item.menu_cd === menu.menu_cd
@@ -51,7 +54,7 @@ const Content: React.FC<Props> = ({
         minHeight: '100%',
       }}
     >
-      {openedMenuList.length > 0 ? (
+      {openedMenuList.length > 0 && menu ? (
         <>
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
             <FaBars />
