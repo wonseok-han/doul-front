@@ -1,5 +1,6 @@
+import Button from "components/Button";
 import React from "react";
-import { ButtonGroup as BootStrapButtonGroup, Button } from "react-bootstrap";
+import { ButtonGroup as BootStrapButtonGroup } from "react-bootstrap";
 
 export interface Props {
   search: boolean;
