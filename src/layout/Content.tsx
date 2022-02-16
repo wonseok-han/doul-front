@@ -2,6 +2,7 @@ import TabPageContainer from "components/TabPageContainer";
 import Header from "layout/Header";
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
+import useAppContext from "utils/context/Reducer";
 import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
 export interface Props {
@@ -22,12 +23,15 @@ const Content: React.FC<Props> = ({
   handleActivateTab,
 }: Props) => {
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
+  const { dispatch } = useAppContext();
 
   useEffect(() => {
     if (!menu) {
       setOpenedMenuList([]);
       return;
     }
+
+    dispatch({ type: "SET_ACTIVE_MENU", payload: menu?.moveItem || menu });
 
     const openItem = openedMenuList.find(
       (item) => item.menuCode === menu.menuCode
@@ -43,7 +47,7 @@ const Content: React.FC<Props> = ({
             (item) => item.menuCode != menu.menuCode
           );
 
-          return filteredPrevList;
+          return [...filteredPrevList];
         });
   }, [menu]);
 

@@ -2,22 +2,15 @@ import "./App.scss";
 
 import Layout from "layout/Layout";
 import { BrowserRouter } from "react-router-dom";
-
-// import { useState } from 'react';
-
-// import { IntlProvider } from 'react-intl';
-
-// import messages from './messages';
+import { AppProvider } from "utils/context/Reducer";
 
 const App: React.FC = () => {
-  // const [locale, setLocale] = useState('en');
-
   return (
-    // <IntlProvider locale={locale} messages={messages[locale]}>
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-    // </IntlProvider>
+    <AppProvider>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </AppProvider>
   );
 };
 
