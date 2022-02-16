@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Breadcrumb } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Breadcrumb } from "react-bootstrap";
 
-import reactLogo from './assets/logo.svg';
+import reactLogo from "./assets/logo.svg";
 
-export type Props = {
+export interface Props {
   title: string;
   menus?: Array<any>;
   menu: any;
-};
+}
 
 const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
   const [breadCrumbList, setBreadCrumbList] = useState<Array<any>>();

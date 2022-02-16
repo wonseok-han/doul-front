@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 const Second: React.FC = () => {
   const [test, setTest] = useState(0);
 
@@ -10,4 +10,4 @@ const Second: React.FC = () => {
   );
 };
 
-export default Second;
+export default React.memo(Second);

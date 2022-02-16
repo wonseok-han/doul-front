@@ -1,22 +1,22 @@
-import { useCallback } from 'react';
+import React, { useCallback } from "react";
 import {
   FaBars,
   FaFolder,
   FaFolderOpen,
   FaGithub,
   FaPager,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
-import sidebarBg from './assets/bg2.jpg';
-import { ProSidebar } from './ProSidebar';
+import sidebarBg from "./assets/bg2.jpg";
+import { ProSidebar } from "./ProSidebar";
 import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-} from './ProSidebar/Layout';
-import { Menu, MenuItem, SubMenu } from './ProSidebar/Menu';
+} from "./ProSidebar/Layout";
+import { Menu, MenuItem, SubMenu } from "./ProSidebar/Menu";
 
-export type Props = {
+export interface Props {
   image?: boolean;
   collapsed: boolean;
   rtl: boolean;
@@ -29,7 +29,7 @@ export type Props = {
     menuItem: any,
     menuOpened: boolean
   ) => void;
-};
+}
 
 const Sidebar: React.FC<Props> = ({
   image = false,
@@ -43,7 +43,7 @@ const Sidebar: React.FC<Props> = ({
 }: Props) => {
   const menuList = list;
 
-  // 메뉴 클릭시 메뉴를 Open하는 이벤트
+  // NOTE: 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOnClick = useCallback(
     (menuItem) => {
       onMenuOpen(
@@ -62,7 +62,7 @@ const Sidebar: React.FC<Props> = ({
     [menuList]
   );
 
-  // Sidebar 메뉴를 구성하는 재귀함수
+  // NOTE: Sidebar 메뉴를 구성하는 재귀함수
   const recursiveChildMenu = useCallback(
     (item: any): any => {
       const filteredList = menuList.filter(
@@ -96,7 +96,7 @@ const Sidebar: React.FC<Props> = ({
 
   return (
     <ProSidebar
-      image={image ? sidebarBg : ''}
+      image={image ? sidebarBg : ""}
       rtl={rtl}
       collapsed={collapsed}
       toggled={toggled}
@@ -106,18 +106,18 @@ const Sidebar: React.FC<Props> = ({
       <SidebarHeader>
         <div
           style={{
-            padding: '24px',
-            textTransform: 'uppercase',
-            fontWeight: 'bold',
+            padding: "24px",
+            textTransform: "uppercase",
+            fontWeight: "bold",
             fontSize: 14,
-            letterSpacing: '1px',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
+            letterSpacing: "1px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
           }}
         >
           <span
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
             // onClick={() => window.location.replace('/')}
             onClick={() => {
               onMenuOpen(
@@ -153,11 +153,11 @@ const Sidebar: React.FC<Props> = ({
         </Menu>
       </SidebarContent>
 
-      <SidebarFooter style={{ textAlign: 'center' }}>
+      <SidebarFooter style={{ textAlign: "center" }}>
         <div
           className="sidebar-btn-wrapper"
           style={{
-            padding: '20px 24px',
+            padding: "20px 24px",
           }}
         >
           <a
@@ -169,9 +169,9 @@ const Sidebar: React.FC<Props> = ({
             <FaGithub />
             <span
               style={{
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
               }}
             >
               한원석
@@ -181,22 +181,22 @@ const Sidebar: React.FC<Props> = ({
         <div
           className="sidebar-btn-wrapper"
           style={{
-            padding: '20px 24px',
+            padding: "20px 24px",
           }}
         >
           <div
             style={{
-              cursor: 'pointer',
-              width: '35px',
-              height: '35px',
-              background: '#353535',
-              color: '#fff',
-              textAlign: 'center',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '15px',
+              cursor: "pointer",
+              width: "35px",
+              height: "35px",
+              background: "#353535",
+              color: "#fff",
+              textAlign: "center",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "15px",
             }}
             onClick={() => onCollapseChange(!collapsed)}
           >
@@ -208,4 +208,4 @@ const Sidebar: React.FC<Props> = ({
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

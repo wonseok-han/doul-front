@@ -1,7 +1,32 @@
-const CmnCdMng: React.FC = ({ path }: any) => {
-  path && console.log(path);
+import PageHeader from "components/PageHeader";
+import React from "react";
+import { PageProps } from "utils/types";
+
+import PageProvider, { usePageContext } from "./context";
+
+const CmnCdMng: React.FC<PageProps> = ({ info }: PageProps) => {
+  const {
+    actions: {
+      handleSearchButtonClick,
+      handleAddButtonClick,
+      handleDeleteButtonClick,
+      handleSaveButtonClick,
+      handleExcelButtonClick,
+      handleReportButtonClick,
+    },
+  } = usePageContext();
+
   return (
-    <div>
+    <>
+      <PageHeader
+        info={info}
+        handleSearchButtonClick={handleSearchButtonClick}
+        handleAddButtonClick={handleAddButtonClick}
+        handleDeleteButtonClick={handleDeleteButtonClick}
+        handleSaveButtonClick={handleSaveButtonClick}
+        handleExcelButtonClick={handleExcelButtonClick}
+        handleReportButtonClick={handleReportButtonClick}
+      />
       공통코드관리
       <div>aa</div>
       <div>aa</div>
@@ -55,8 +80,16 @@ const CmnCdMng: React.FC = ({ path }: any) => {
       <div>aa</div>
       <div>aa</div>
       <div>aa</div>
-    </div>
+    </>
   );
 };
 
-export default CmnCdMng;
+// export default React.memo(CmnCdMng);
+
+const Index: React.FC = (props) => (
+  <PageProvider>
+    <CmnCdMng {...props} />
+  </PageProvider>
+);
+
+export default React.memo(Index);

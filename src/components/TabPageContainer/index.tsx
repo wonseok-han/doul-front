@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 import {
   CloseButton,
   Nav,
@@ -6,8 +6,8 @@ import {
   TabContent,
   TabPane,
   TabsProps,
-} from 'react-bootstrap';
-import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
+} from "react-bootstrap";
+import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
 export interface Props extends TabsProps {
   openedList: Array<any>;
@@ -18,12 +18,11 @@ export interface Props extends TabsProps {
 
 const TabPageContainer: React.FC<Props> = ({
   openedList,
-
   activeKey,
   handleMenuClosed,
   handleActivateTab,
 }: Props) => {
-  // 탭의 Extra 버튼 클릭 이벤트(화면 닫기)
+  // NOTE: 탭의 Extra 버튼 클릭 이벤트(화면 닫기)
   const handleExtraOnClick = useCallback(
     (item) => {
       handleMenuClosed?.(item, openedList);
@@ -39,17 +38,17 @@ const TabPageContainer: React.FC<Props> = ({
         if (handleActivateTab) handleActivateTab(foundItem);
       }}
     >
-      <Nav variant="tabs">
+      <Nav variant="tabs" navbar={true}>
         {openedList.map((item) => (
-          <Nav.Item key={`Nav${item.menuCode}`} style={{ cursor: 'pointer' }}>
+          <Nav.Item key={`Nav${item.menuCode}`} style={{ cursor: "pointer" }}>
             <Nav.Link eventKey={item.menuCode}>
               {item.menuName}
               <CloseButton
                 style={{
-                  marginLeft: '5px',
-                  width: '5px',
-                  height: '5px',
-                  verticalAlign: 'middle',
+                  marginLeft: "5px",
+                  width: "5px",
+                  height: "5px",
+                  verticalAlign: "middle",
                 }}
                 onClick={(event) => {
                   event.stopPropagation();
@@ -60,7 +59,7 @@ const TabPageContainer: React.FC<Props> = ({
           </Nav.Item>
         ))}
       </Nav>
-      <div style={{ overflow: 'scroll' }}>
+      <div style={{ overflow: "scroll" }}>
         <TabContent>
           {openedList.map((item) => (
             <TabPane
@@ -68,7 +67,11 @@ const TabPageContainer: React.FC<Props> = ({
               eventKey={item.menuCode}
               title={item.menuName}
             >
-              <DynamicLoader key={`Menu${item.menuCode}`} path={item.url} />
+              <DynamicLoader
+                key={`Menu${item.menuCode}`}
+                path={item.url}
+                info={item}
+              />
             </TabPane>
           ))}
         </TabContent>

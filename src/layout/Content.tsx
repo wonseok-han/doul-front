@@ -1,20 +1,20 @@
-import TabPageContainer from 'components/TabPageContainer';
-import Header from 'layout/Header';
-import React, { useEffect, useState } from 'react';
-import { FaBars } from 'react-icons/fa';
-import DynamicLoader from 'utils/dynamicLoader/DynamicLoader';
+import TabPageContainer from "components/TabPageContainer";
+import Header from "layout/Header";
+import React, { useEffect, useState } from "react";
+import { FaBars } from "react-icons/fa";
+import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
-export type Props = {
+export interface Props {
   mode: string;
   menu: any;
   menus?: Array<any>;
   handleToggleSidebar: (checked: boolean) => void;
   handleMenuClosed?: (item: any, openedList: Array<any>) => void;
   handleActivateTab?: (item: any) => void;
-};
+}
 
 const Content: React.FC<Props> = ({
-  mode = 'SDI',
+  mode = "SDI",
   menu,
   menus,
   handleToggleSidebar,
@@ -50,8 +50,8 @@ const Content: React.FC<Props> = ({
   return (
     <main
       style={{
-        height: 'auto',
-        minHeight: '100%',
+        height: "auto",
+        minHeight: "100%",
       }}
     >
       {openedMenuList.length > 0 && menu ? (
@@ -68,9 +68,13 @@ const Content: React.FC<Props> = ({
             />
           </header>
 
-          {mode === 'SDI' ? (
-            <div style={{ overflow: 'scroll' }}>
-              <DynamicLoader key={`Menu${menu.menuCode}`} path={menu.url} />
+          {mode === "SDI" ? (
+            <div style={{ overflow: "scroll" }}>
+              <DynamicLoader
+                key={`Menu${menu.menuCode}`}
+                path={menu.url}
+                info={menu}
+              />
             </div>
           ) : (
             <TabPageContainer
@@ -83,7 +87,7 @@ const Content: React.FC<Props> = ({
 
           <footer>
             <small>
-              © {new Date().getFullYear()} made by -{' '}
+              © {new Date().getFullYear()} made by -{" "}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -99,8 +103,8 @@ const Content: React.FC<Props> = ({
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
             <FaBars />
           </div>
-          <div style={{ overflow: 'scroll' }}>
-            <DynamicLoader key={'Home'} path={'Home'} />
+          <div style={{ overflow: "scroll" }}>
+            <DynamicLoader key={"Home"} path={"Home"} />
           </div>
         </>
       )}
