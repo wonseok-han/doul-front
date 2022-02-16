@@ -4,7 +4,9 @@ import {
   ButtonProps as BootStrapButtonProps,
 } from "react-bootstrap";
 
-export type ButtonProps = BootStrapButtonProps;
+export interface ButtonProps extends BootStrapButtonProps {
+  hidden?: boolean;
+}
 
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -12,6 +14,7 @@ const Button: React.FC<ButtonProps> = ({
   size = "sm",
   type = "button",
   variant = "primary",
+  hidden = false,
   style,
   onClick,
 }: ButtonProps) => {
@@ -33,16 +36,20 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <BootStrapButton
-      disabled={disabled}
-      size={size}
-      type={type}
-      variant={variant}
-      style={style}
-      onClick={handleClick}
-    >
-      {children}
-    </BootStrapButton>
+    <>
+      {!hidden && (
+        <BootStrapButton
+          disabled={disabled}
+          size={size}
+          type={type}
+          variant={variant}
+          style={style}
+          onClick={handleClick}
+        >
+          {children}
+        </BootStrapButton>
+      )}
+    </>
   );
 };
 

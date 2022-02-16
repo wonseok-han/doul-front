@@ -9,7 +9,9 @@ const DynamicLoader: React.FC<Props> = ({ path, info }: Props) => {
   const LazyComponent = lazy(() => import(`pages/${path}`));
   return (
     <Suspense fallback={<div>loading...</div>}>
-      <LazyComponent info={info} />
+      <div style={{ marginTop: "15px" }}>
+        <LazyComponent info={info} />
+      </div>
     </Suspense>
   );
 };

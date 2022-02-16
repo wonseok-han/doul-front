@@ -15,7 +15,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   const { search, add, remove, save, excel, report } = info;
 
   return (
-    <div style={{ marginTop: "12px" }}>
+    <div>
       <Row
         xs={"auto"}
         style={{

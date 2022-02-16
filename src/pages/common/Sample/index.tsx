@@ -1,4 +1,5 @@
 import Button from "components/Button";
+import InputBox from "components/InputBox";
 import PageHeader from "components/PageHeader";
 import Row from "components/Row";
 import React from "react";
@@ -21,6 +22,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
 
   return (
     <>
+      <h4>공통버튼그룹</h4>
       <PageHeader
         info={info}
         handleSearchButtonClick={handleSearchButtonClick}
@@ -30,6 +32,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         handleExcelButtonClick={handleExcelButtonClick}
         handleReportButtonClick={handleReportButtonClick}
       />
+      <h4>Button</h4>
       <Row xs={"auto"} style={{ justifyContent: "space-around" }}>
         <Col>
           <Button variant="primary">primary</Button>
@@ -41,7 +44,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
           <Button variant="success">success</Button>
         </Col>
         <Col>
-          <Button variant="waring">waring</Button>
+          <Button variant="warning">warning</Button>
         </Col>
         <Col>
           <Button variant="danger">danger</Button>
@@ -73,7 +76,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
           <Button variant="outline-success">success</Button>
         </Col>
         <Col>
-          <Button variant="outline-waring">waring</Button>
+          <Button variant="outline-warning">warning</Button>
         </Col>
         <Col>
           <Button variant="outline-danger">danger</Button>
@@ -88,6 +91,20 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
           <Button variant="outline-dark">dark</Button>
         </Col>
       </Row>
+      <hr />
+      <h4>InputBox</h4>
+      <Row xs={"auto"}>
+        <Col>
+          <InputBox placeholder={"입력하세요."} />
+        </Col>
+        <Col>
+          <InputBox prefix={"pre"} postfix={"post"} />
+        </Col>
+        <Col>
+          <InputBox isPassword placeholder={"Password"} />
+        </Col>
+      </Row>
+      <hr />
     </>
   );
 };
