@@ -1,5 +1,6 @@
 import CommonButtonGroup from "components/CommonButtonGroup";
-import { Col, Row } from "react-bootstrap";
+import Row from "components/Row";
+import { Col } from "react-bootstrap";
 import { PageHeaderProps } from "utils/types";
 
 const PageHeader: React.FC<PageHeaderProps> = ({
@@ -17,7 +18,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({
     <div style={{ marginTop: "12px" }}>
       <Row
         xs={"auto"}
-        className={"gx-0"}
         style={{
           justifyContent: "end",
         }}

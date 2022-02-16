@@ -12,6 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   size = "sm",
   type = "button",
   variant = "primary",
+  style,
   onClick,
 }: ButtonProps) => {
   const [doubleClick, setDoubleClick] = useState(false);
@@ -37,6 +38,7 @@ const Button: React.FC<ButtonProps> = ({
       size={size}
       type={type}
       variant={variant}
+      style={style}
       onClick={handleClick}
     >
       {children}

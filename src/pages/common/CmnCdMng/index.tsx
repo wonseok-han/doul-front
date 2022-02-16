@@ -84,8 +84,6 @@ const CmnCdMng: React.FC<PageProps> = ({ info }: PageProps) => {
   );
 };
 
-// export default React.memo(CmnCdMng);
-
 const Index: React.FC = (props) => (
   <PageProvider>
     <CmnCdMng {...props} />
