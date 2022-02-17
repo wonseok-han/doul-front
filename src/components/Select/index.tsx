@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
 } from "@mui/material";
@@ -6,7 +7,7 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, styled, useTheme } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export interface SelectProps extends MuiSelectProps {
   items: Array<{
@@ -14,6 +15,7 @@ export interface SelectProps extends MuiSelectProps {
     name: string;
   }>;
   defaultValue?: string;
+  value?: Array<string>;
   selectOption?: "choose" | "all";
 }
 
@@ -52,12 +54,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 const getStyles = (
   name: string,
-  personName: readonly string[],
+  personName: readonly string[] | undefined,
   theme: Theme
 ) => {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      personName?.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -82,53 +84,96 @@ const ANOTHER_ITEMS = [
 const Select: React.FC<SelectProps> = ({
   items,
   defaultValue,
+  value,
   selectOption = "choose",
   multiple = false,
   style,
 }: SelectProps) => {
   const theme = useTheme();
-  const listItem = items.concat(ANOTHER_ITEMS);
-  const defaultSelectValues =
-    defaultValue !== undefined
-      ? [defaultValue]
-      : selectOption === "all" && multiple
-      ? undefined
-      : selectOption === "all"
-      ? ["all"]
-      : [""];
-  const [selectValues, setSelectValues] = useState<string[]>(
-    defaultSelectValues || []
-  );
+  const listItem = ANOTHER_ITEMS.filter((item) => {
+    if (selectOption === "choose") return item.code === "";
+    else if (selectOption === "all") return item.code === "all";
+  }).concat([...items]);
+  const [selectValues, setSelectValues] = useState<string[]>([]);
+  const [selectedAll, setSelectedAll] = useState(false);
 
   // NOTE: 선택값 변경 이벤트
-  const handleChange = (event: SelectChangeEvent<typeof selectValues>) => {
-    const {
-      target: { value },
-    } = event;
+  const handleChange = useCallback(
+    (event: SelectChangeEvent<typeof selectValues>) => {
+      const {
+        target: { value },
+      } = event;
 
-    if (multiple && selectOption === "choose" && value.indexOf("") > -1) {
-      setSelectValues([""]);
-    } else if (
-      multiple &&
-      selectOption === "all" &&
-      value.indexOf("all") > -1
-    ) {
-      setSelectValues(items.map((item) => item.code));
-    } else {
-      setSelectValues(typeof value === "string" ? value.split(",") : value);
-    }
-  };
+      // 멀티선택, 선택옵션
+      if (multiple && selectOption === "choose" && value.indexOf("") > -1) {
+        setSelectValues([""]);
+      }
+      // 멀티선택, 전체옵션
+      else if (multiple && selectOption === "all") {
+        // 이전 값에 all이 있고, 다른 값을 선택했을 경우
+        if (
+          selectValues.indexOf("all") > -1 &&
+          value.indexOf("all") > -1 &&
+          value.length !== listItem.length
+        ) {
+          const removeAllList =
+            typeof value === "string"
+              ? value.split(",").filter((item) => item !== "all")
+              : value.filter((item) => item !== "all");
+          setSelectValues(removeAllList);
+        }
+        // 전체 선택된 상태에서 전체를 재선택했을 경우 Clear
+        else if (selectValues.indexOf("all") > -1 && value.indexOf("all") < 0) {
+          setSelectValues([]);
+        }
+        // 전체를 선택했을 경우
+        else if (value.indexOf("all") > -1) {
+          setSelectValues(listItem.map((item) => item.code));
+        }
+        // 전체이외에 모든 항목을 선택할 경우
+        else if (value.indexOf("all") < 0 && value.length === items.length) {
+          setSelectValues(listItem.map((item) => item.code));
+        } else {
+          setSelectValues(typeof value === "string" ? value.split(",") : value);
+        }
+
+        setSelectedAll((previous) => !previous);
+      }
+      // Normal 상태
+      else {
+        setSelectValues(typeof value === "string" ? value.split(",") : value);
+      }
+    },
+    [selectValues, selectedAll]
+  );
 
   // NOTE: InputBox에 선택된 데이터의 명칭 셋팅
-  const setInputRender = (selected: any) => {
+  const setInputRender = useCallback((selected: any) => {
     const selectedNames = listItem
       .filter((item) => {
-        return selected.indexOf(item.code) > -1;
+        return (
+          selected.indexOf(item.code) > -1 &&
+          item.code !== "" &&
+          item.code !== "all"
+        );
       })
       .map((item) => item.name);
 
     return selectedNames.join(", ");
-  };
+  }, []);
+
+  useEffect(() => {
+    const defaultSelectValues =
+      defaultValue !== undefined
+        ? [defaultValue]
+        : selectOption === "all" && multiple
+        ? undefined
+        : selectOption === "all"
+        ? ["all"]
+        : [""];
+
+    setSelectValues(value || defaultSelectValues || []);
+  }, [defaultValue, value]);
 
   return (
     <div>
@@ -157,6 +202,9 @@ const Select: React.FC<SelectProps> = ({
             value={"all"}
             style={getStyles("전체", selectValues, theme)}
           >
+            {multiple && (
+              <Checkbox checked={selectValues.indexOf("all") > -1} />
+            )}
             {"전체"}
           </MenuItem>
         )}
@@ -166,6 +214,9 @@ const Select: React.FC<SelectProps> = ({
             value={item.code}
             style={getStyles(item.name, selectValues, theme)}
           >
+            {multiple && (
+              <Checkbox checked={selectValues.indexOf(item.code) > -1} />
+            )}
             {item.name}
           </MenuItem>
         ))}

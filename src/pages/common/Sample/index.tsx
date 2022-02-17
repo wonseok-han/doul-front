@@ -24,7 +24,7 @@ const SELECT_ITEMS = [
   },
   {
     code: "03",
-    name: "twothree",
+    name: "three",
   },
   {
     code: "04",
