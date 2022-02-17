@@ -22,6 +22,26 @@ const SELECT_ITEMS = [
     code: "02",
     name: "two",
   },
+  {
+    code: "03",
+    name: "twothree",
+  },
+  {
+    code: "04",
+    name: "four",
+  },
+  {
+    code: "05",
+    name: "five",
+  },
+  {
+    code: "06",
+    name: "six",
+  },
+  {
+    code: "07",
+    name: "seven",
+  },
 ];
 
 const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
@@ -123,7 +143,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       <hr />
       <Row
         xs={"auto"}
-        style={{ justifyContent: "space-around", marginTop: "10px" }}
+        style={{ justifyContent: "space-start", marginTop: "10px" }}
       >
         <Col>
           <Select items={SELECT_ITEMS} />

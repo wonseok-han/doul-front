@@ -2,7 +2,6 @@ import {
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
 } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -85,6 +84,7 @@ const Select: React.FC<SelectProps> = ({
   defaultValue,
   selectOption = "choose",
   multiple = false,
+  style,
 }: SelectProps) => {
   const theme = useTheme();
   const listItem = items.concat(ANOTHER_ITEMS);
@@ -132,41 +132,44 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: "100%" }}>
-        <MuiSelect
-          displayEmpty
-          multiple={multiple}
-          value={selectValues}
-          onChange={handleChange}
-          input={<BootstrapInput />}
-          renderValue={setInputRender}
-          MenuProps={MenuProps}
-          inputProps={{ "aria-label": "Without label" }}
-        >
-          {selectOption === "choose" && (
-            <MenuItem value={""} style={getStyles("선택", selectValues, theme)}>
-              {"선택"}
-            </MenuItem>
-          )}
-          {selectOption === "all" && (
-            <MenuItem
-              value={"all"}
-              style={getStyles("전체", selectValues, theme)}
-            >
-              {"전체"}
-            </MenuItem>
-          )}
-          {items?.map((item) => (
-            <MenuItem
-              key={item.code}
-              value={item.code}
-              style={getStyles(item.name, selectValues, theme)}
-            >
-              {item.name}
-            </MenuItem>
-          ))}
-        </MuiSelect>
-      </FormControl>
+      <MuiSelect
+        displayEmpty
+        multiple={multiple}
+        value={selectValues}
+        onChange={handleChange}
+        input={<BootstrapInput />}
+        renderValue={setInputRender}
+        MenuProps={MenuProps}
+        inputProps={{ "aria-label": "Without label" }}
+        style={{
+          minWidth: 100,
+          maxWidth: 300,
+          ...style,
+        }}
+      >
+        {selectOption === "choose" && (
+          <MenuItem value={""} style={getStyles("선택", selectValues, theme)}>
+            {"선택"}
+          </MenuItem>
+        )}
+        {selectOption === "all" && (
+          <MenuItem
+            value={"all"}
+            style={getStyles("전체", selectValues, theme)}
+          >
+            {"전체"}
+          </MenuItem>
+        )}
+        {items?.map((item) => (
+          <MenuItem
+            key={item.code}
+            value={item.code}
+            style={getStyles(item.name, selectValues, theme)}
+          >
+            {item.name}
+          </MenuItem>
+        ))}
+      </MuiSelect>
     </div>
   );
 };
