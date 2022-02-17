@@ -2,11 +2,27 @@ import Button from "components/Button";
 import InputBox from "components/InputBox";
 import PageHeader from "components/PageHeader";
 import Row from "components/Row";
+import Select from "components/Select";
 import React from "react";
 import { Col } from "react-bootstrap";
 import { PageProps } from "utils/types";
 
 import PageProvider, { usePageContext } from "./context";
+
+const SELECT_ITEMS = [
+  {
+    code: "00",
+    name: "zero",
+  },
+  {
+    code: "01",
+    name: "one",
+  },
+  {
+    code: "02",
+    name: "two",
+  },
+];
 
 const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
   const {
@@ -105,6 +121,17 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         </Col>
       </Row>
       <hr />
+      <Row
+        xs={"auto"}
+        style={{ justifyContent: "space-around", marginTop: "10px" }}
+      >
+        <Col>
+          <Select items={SELECT_ITEMS} />
+        </Col>
+        <Col>
+          <Select items={SELECT_ITEMS} selectOption={"all"} multiple />
+        </Col>
+      </Row>
     </>
   );
 };

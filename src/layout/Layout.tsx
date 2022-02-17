@@ -1,64 +1,8 @@
 import React, { useCallback, useState } from "react";
+import { MENU } from "TestLayoutData";
 
 import Content from "./Content";
 import Sidebar from "./Sidebar";
-
-const MENU = [
-  {
-    menuCode: "0000",
-    menuName: "시스템",
-    parentMenu: undefined,
-    open: false,
-  },
-  { menuCode: "0001", menuName: "공통", parentMenu: "0000", open: false },
-  {
-    menuCode: "0006",
-    menuName: "샘플화면",
-    parentMenu: "0001",
-    url: "common/Sample",
-    open: false,
-    search: true,
-    add: true,
-    remove: true,
-    save: true,
-    excel: true,
-    report: true,
-  },
-  {
-    menuCode: "0004",
-    menuName: "공통코드관리",
-    parentMenu: "0001",
-    url: "common/CmnCdMng",
-    open: false,
-    search: true,
-    add: true,
-    remove: true,
-    save: true,
-    excel: false,
-    report: true,
-  },
-  { menuCode: "0002", menuName: "권한", parentMenu: "0000", open: false },
-  {
-    menuCode: "0005",
-    menuName: "권한관리",
-    parentMenu: "0002",
-    url: "common/Second",
-    open: false,
-    search: true,
-    add: true,
-    remove: true,
-    save: false,
-    excel: true,
-    report: true,
-  },
-  {
-    menuCode: "1000",
-    menuName: "테스트",
-    parentMenu: undefined,
-    open: false,
-  },
-  { menuCode: "1001", menuName: "권한관리11", parentMenu: "1000" },
-];
 
 const Layout: React.FC = () => {
   const rtl = false;

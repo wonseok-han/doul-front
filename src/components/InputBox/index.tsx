@@ -9,8 +9,7 @@ export interface InputBoxProps extends InputGroupProps {
   prefix?: string | undefined;
   postfix?: string | undefined;
   hidden?: boolean;
-  isValid?: boolean;
-  isInValid?: boolean;
+  isValid?: boolean | undefined;
 }
 
 const InputBox: React.FC<InputBoxProps> = ({
@@ -21,8 +20,8 @@ const InputBox: React.FC<InputBoxProps> = ({
   prefix,
   postfix,
   hidden = false,
-  isValid = false,
-  isInValid = false,
+  isValid,
+
   style,
 }: InputBoxProps) => {
   return (
@@ -36,7 +35,7 @@ const InputBox: React.FC<InputBoxProps> = ({
             placeholder={placeholder}
             value={value}
             isValid={isValid}
-            isInvalid={isInValid}
+            isInvalid={isValid !== undefined ? !isValid : false}
           />
           {postfix && <InputGroup.Text>{postfix}</InputGroup.Text>}
         </InputGroup>
