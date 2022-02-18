@@ -21,7 +21,6 @@ const InputBox: React.FC<InputBoxProps> = ({
   postfix,
   hidden = false,
   isValid,
-
   style,
 }: InputBoxProps) => {
   return (

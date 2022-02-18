@@ -1,4 +1,5 @@
 import Button from "components/Button";
+import DateTimePicker from "components/DateTimePicker";
 import InputBox from "components/InputBox";
 import PageHeader from "components/PageHeader";
 import Row from "components/Row";
@@ -131,7 +132,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       <h4>InputBox</h4>
       <Row xs={"auto"}>
         <Col>
-          <InputBox placeholder={"입력하세요."} />
+          <InputBox placeholder={"입력하세요."} isValid={false} />
         </Col>
         <Col>
           <InputBox prefix={"pre"} postfix={"post"} />
@@ -141,6 +142,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         </Col>
       </Row>
       <hr />
+      <h4>SelectBox</h4>
       <Row
         xs={"auto"}
         style={{ justifyContent: "space-start", marginTop: "10px" }}
@@ -150,6 +152,25 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         </Col>
         <Col>
           <Select items={SELECT_ITEMS} selectOption={"all"} multiple />
+        </Col>
+      </Row>
+      <hr />
+      <h5>Date/TimePicker</h5>
+      <Row
+        xs={"auto"}
+        style={{ justifyContent: "space-start", marginTop: "10px" }}
+      >
+        <Col>
+          <DateTimePicker name={"date"} defaultValue={new Date()} />
+        </Col>
+        <Col>
+          <DateTimePicker name={"year"} type={"year"} />
+        </Col>
+        <Col>
+          <DateTimePicker name={"yearMonth"} type={"yearMonth"} />
+        </Col>
+        <Col>
+          <DateTimePicker name={"datetime"} type={"datetime"} />
         </Col>
       </Row>
     </>
