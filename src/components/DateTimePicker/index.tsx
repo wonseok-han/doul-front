@@ -1,4 +1,6 @@
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
+
+import "./index.scss";
 
 import Select from "components/Select";
 import { ko } from "date-fns/esm/locale";
@@ -36,7 +38,8 @@ export interface DatePickerProps {
   handleChangeFiledValues?: (value: any) => void;
 }
 
-const range = (start: number, end: number, value: number) => {
+// NOTE: 시작년도, 종료년도, 증가값을 받아 시작년도~종료년도까지의 모든 년도를 Array로 리턴
+const getYeaRange = (start: number, end: number, value: number) => {
   return new Array(end - start)
     .fill(0)
     .reduce(
@@ -52,7 +55,7 @@ const range = (start: number, end: number, value: number) => {
     .map((item: any) => ({ code: String(item.code), name: String(item.name) }));
 };
 
-const YEARS = range(1990, new Date().getFullYear() + 1, 1);
+const YEARS = getYeaRange(1990, new Date().getFullYear() + 1, 1);
 const MONTHS = new Array(12).fill(0).map((item, index) => {
   return { code: String(index), name: index + 1 + "월" };
 });
@@ -198,17 +201,20 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
               <button
                 onClick={decreaseYear}
                 disabled={prevYearButtonDisabled}
-                style={{ border: "0px" }}
+                style={{ border: "0px", backgroundColor: "#353535" }}
               >
-                <FaAngleDoubleLeft size={15} />
+                <FaAngleDoubleLeft size={15} color={"white"} />
               </button>
-              <button
-                onClick={decreaseMonth}
-                disabled={prevMonthButtonDisabled}
-                style={{ border: "0px" }}
-              >
-                <FaAngleLeft size={15} />
-              </button>
+              {type != "year" && (
+                <button
+                  onClick={decreaseMonth}
+                  disabled={prevMonthButtonDisabled}
+                  style={{ border: "0px", backgroundColor: "#353535" }}
+                >
+                  <FaAngleLeft size={15} color={"white"} />
+                </button>
+              )}
+
               <Select
                 value={YEARS.filter(
                   (item: any) => item.code == date.getFullYear()
@@ -224,33 +230,39 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                   paddingRight: 2,
                 }}
               />
-              <Select
-                value={MONTHS.filter(
-                  (item: any) => item.code == date.getMonth()
-                ).map((item: any) => item.code)}
-                items={MONTHS}
-                onChange={({ target: { value } }) => changeMonth(Number(value))}
-                style={{
-                  paddingTop: 2,
-                  paddingBottom: 2,
-                  paddingLeft: 2,
-                  paddingRight: 2,
-                }}
-              />
+              {type != "year" && (
+                <Select
+                  value={MONTHS.filter(
+                    (item: any) => item.code == date.getMonth()
+                  ).map((item: any) => item.code)}
+                  items={MONTHS}
+                  onChange={({ target: { value } }) =>
+                    changeMonth(Number(value))
+                  }
+                  style={{
+                    paddingTop: 2,
+                    paddingBottom: 2,
+                    paddingLeft: 2,
+                    paddingRight: 2,
+                  }}
+                />
+              )}
 
-              <button
-                onClick={increaseMonth}
-                disabled={nextMonthButtonDisabled}
-                style={{ border: "0px" }}
-              >
-                <FaAngleRight size={15} />
-              </button>
+              {type != "year" && (
+                <button
+                  onClick={increaseMonth}
+                  disabled={nextMonthButtonDisabled}
+                  style={{ border: "0px", backgroundColor: "#353535" }}
+                >
+                  <FaAngleRight size={15} color={"white"} />
+                </button>
+              )}
               <button
                 onClick={increaseYear}
                 disabled={nextYearButtonDisabled}
-                style={{ border: "0px" }}
+                style={{ border: "0px", backgroundColor: "#353535" }}
               >
-                <FaAngleDoubleRight size={15} />
+                <FaAngleDoubleRight size={15} color={"white"} />
               </button>
             </div>
           );
