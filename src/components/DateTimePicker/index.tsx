@@ -6,7 +6,6 @@ import Select from "components/Select";
 import { ko } from "date-fns/esm/locale";
 import React, { useEffect, useState } from "react";
 import { FormControl } from "react-bootstrap";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import DatePicker, { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import {
   FaAngleDoubleLeft,
@@ -34,6 +33,8 @@ export interface DatePickerProps {
   format?: string;
   /** 유효성여부 */
   isValid?: boolean;
+  /** 스타일 */
+  style?: any;
   /** Form Data 값 변경 */
   handleChangeFiledValues?: (value: any) => void;
 }
@@ -75,30 +76,11 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
     ? "yyyy"
     : "yyyy-MM-dd",
   isValid,
+  style,
   handleChangeFiledValues,
 }: DatePickerProps) => {
   const [parseValue, setParseValue] = useState<Date>();
   const [dateValue, setDateValue] = useState(value);
-  // const [show, setShow] = useState(false);
-
-  // const handleOverlayShow = () => {
-  //   setShow((previous) => !previous);
-  // };
-  useEffect(() => {
-    if (value) {
-      if (typeof value == "string") {
-        setParseValue(new Date(value));
-      } else {
-        setParseValue(value);
-      }
-    } else if (defaultValue) {
-      if (typeof defaultValue == "string") {
-        setParseValue(new Date(defaultValue));
-      } else {
-        setParseValue(defaultValue);
-      }
-    }
-  }, [defaultValue, value]);
 
   // NOTE: Date -> String 변환 함수
   const parseDateToString = (dateValue: Date) => {
@@ -142,13 +124,34 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
       };
       handleChangeFiledValues?.(fieldValue);
     } else {
-      setDateValue((previous) => previous);
+      setDateValue(undefined);
     }
   };
 
   useEffect(() => {
-    if (dateValue) setParseValue(new Date(dateValue));
-    else setParseValue((previous) => previous);
+    if (value) {
+      if (typeof value == "string") {
+        setParseValue(new Date(value));
+      } else {
+        setParseValue(value);
+      }
+      setDateValue(value);
+    } else if (defaultValue) {
+      if (typeof defaultValue == "string") {
+        setParseValue(new Date(defaultValue));
+      } else {
+        setParseValue(defaultValue);
+      }
+      setDateValue(String(defaultValue));
+    }
+  }, [defaultValue, value]);
+
+  useEffect(() => {
+    if (dateValue) {
+      setParseValue(new Date(dateValue));
+    } else {
+      setParseValue(undefined);
+    }
   }, [dateValue]);
 
   return (
@@ -166,21 +169,22 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
         showTimeInput={type === "datetime"}
         showMonthYearPicker={type === "yearMonth"}
         showYearPicker={type === "year"}
-        value={dateValue}
+        maxDate={new Date("9999-12-31")}
         selected={parseValue}
         onChange={handleChange}
+        isClearable={true}
         customInput={
+          // TODO: Input 뒤에 Calendar 아이콘 추가
           <FormControl
             isValid={isValid}
             isInvalid={isValid !== undefined ? !isValid : false}
+            style={style}
           />
         }
         renderCustomHeader={({
           date,
           changeYear,
           changeMonth,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          customHeaderCount,
           decreaseMonth,
           increaseMonth,
           prevMonthButtonDisabled,

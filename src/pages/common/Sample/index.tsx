@@ -164,7 +164,11 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
           <DateTimePicker name={"date"} defaultValue={new Date()} />
         </Col>
         <Col>
-          <DateTimePicker name={"year"} type={"year"} />
+          <DateTimePicker
+            name={"year"}
+            type={"year"}
+            style={{ width: "100px" }}
+          />
         </Col>
         <Col>
           <DateTimePicker name={"yearMonth"} type={"yearMonth"} />
