@@ -1,9 +1,17 @@
 import "react-datepicker/dist/react-datepicker.css";
 
+import Select from "components/Select";
 import { ko } from "date-fns/esm/locale";
 import React, { useEffect, useState } from "react";
 import { FormControl } from "react-bootstrap";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import DatePicker, { ReactDatePickerCustomHeaderProps } from "react-datepicker";
+import {
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaAngleLeft,
+  FaAngleRight,
+} from "react-icons/fa";
 
 export interface DatePickerProps {
   /** 컴포넌트명 */
@@ -27,6 +35,27 @@ export interface DatePickerProps {
   /** Form Data 값 변경 */
   handleChangeFiledValues?: (value: any) => void;
 }
+
+const range = (start: number, end: number, value: number) => {
+  return new Array(end - start)
+    .fill(0)
+    .reduce(
+      (previous, current, index) => [
+        ...previous,
+        {
+          code: previous[index].code + value,
+          name: previous[index].name + value,
+        },
+      ],
+      [{ code: start, name: start }]
+    )
+    .map((item: any) => ({ code: String(item.code), name: String(item.name) }));
+};
+
+const YEARS = range(1990, new Date().getFullYear() + 1, 1);
+const MONTHS = new Array(12).fill(0).map((item, index) => {
+  return { code: String(index), name: index + 1 + "월" };
+});
 
 const DateTimePicker: React.FC<DatePickerProps> = ({
   name,
@@ -122,12 +151,12 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
   return (
     <>
       <DatePicker
-        // className={"form-control"}
         name={name}
         locale={ko}
         showYearDropdown
         showMonthDropdown
         showPopperArrow={false}
+        dropdownMode="select"
         dateFormat={format}
         disabled={disabled}
         readOnly={readOnly}
@@ -144,22 +173,88 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
           />
         }
         renderCustomHeader={({
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           date,
-        }: // changeYear,
-        // changeMonth,
-        // customHeaderCount,
-        // decreaseMonth,
-        // increaseMonth,
-        // prevMonthButtonDisabled,
-        // nextMonthButtonDisabled,
-        // decreaseYear,
-        // increaseYear,
-        // prevYearButtonDisabled,
-        // nextYearButtonDisabled,
-        ReactDatePickerCustomHeaderProps) => (
-          <div>{/* <button>a</button> */}</div>
-        )}
+          changeYear,
+          changeMonth,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          customHeaderCount,
+          decreaseMonth,
+          increaseMonth,
+          prevMonthButtonDisabled,
+          nextMonthButtonDisabled,
+          decreaseYear,
+          increaseYear,
+          prevYearButtonDisabled,
+          nextYearButtonDisabled,
+        }: ReactDatePickerCustomHeaderProps) => {
+          return (
+            <div
+              style={{
+                margin: 10,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                onClick={decreaseYear}
+                disabled={prevYearButtonDisabled}
+                style={{ border: "0px" }}
+              >
+                <FaAngleDoubleLeft size={15} />
+              </button>
+              <button
+                onClick={decreaseMonth}
+                disabled={prevMonthButtonDisabled}
+                style={{ border: "0px" }}
+              >
+                <FaAngleLeft size={15} />
+              </button>
+              <Select
+                value={YEARS.filter(
+                  (item: any) => item.code == date.getFullYear()
+                ).map((item: any) => item.code)}
+                items={YEARS}
+                onChange={({ target: { value } }) => {
+                  changeYear(Number(value));
+                }}
+                style={{
+                  paddingTop: 2,
+                  paddingBottom: 2,
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                }}
+              />
+              <Select
+                value={MONTHS.filter(
+                  (item: any) => item.code == date.getMonth()
+                ).map((item: any) => item.code)}
+                items={MONTHS}
+                onChange={({ target: { value } }) => changeMonth(Number(value))}
+                style={{
+                  paddingTop: 2,
+                  paddingBottom: 2,
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                }}
+              />
+
+              <button
+                onClick={increaseMonth}
+                disabled={nextMonthButtonDisabled}
+                style={{ border: "0px" }}
+              >
+                <FaAngleRight size={15} />
+              </button>
+              <button
+                onClick={increaseYear}
+                disabled={nextYearButtonDisabled}
+                style={{ border: "0px" }}
+              >
+                <FaAngleDoubleRight size={15} />
+              </button>
+            </div>
+          );
+        }}
       />
       {/* <OverlayTrigger
         show={show}

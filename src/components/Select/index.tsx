@@ -7,7 +7,7 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, styled, useTheme } from "@mui/material/styles";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 export interface SelectProps extends MuiSelectProps {
   items: Array<{
@@ -17,6 +17,8 @@ export interface SelectProps extends MuiSelectProps {
   defaultValue?: string;
   value?: Array<string>;
   selectOption?: "choose" | "all";
+  displaySize?: number;
+  onChange?: (event: any) => void;
 }
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -52,50 +54,67 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const getStyles = (
-  name: string,
-  personName: readonly string[] | undefined,
-  theme: Theme
-) => {
-  return {
-    fontWeight:
-      personName?.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-};
-
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 36;
 const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const ANOTHER_ITEMS = [
   { code: "", name: "선택" },
   { code: "all", name: "전체" },
 ];
 
+const getStyles = (
+  name: string,
+  selectValues: readonly string[] | undefined,
+  theme: Theme
+) => {
+  return {
+    fontWeight:
+      selectValues instanceof Array && selectValues?.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+    height: ITEM_HEIGHT,
+  };
+};
+
 const Select: React.FC<SelectProps> = ({
   items,
   defaultValue,
   value,
-  selectOption = "choose",
+  selectOption,
   multiple = false,
+  displaySize = 5,
   style,
+  onChange,
 }: SelectProps) => {
   const theme = useTheme();
   const listItem = ANOTHER_ITEMS.filter((item) => {
     if (selectOption === "choose") return item.code === "";
     else if (selectOption === "all") return item.code === "all";
   }).concat([...items]);
-  const [selectValues, setSelectValues] = useState<string[]>([]);
+  const [selectValues, setSelectValues] = useState<string[]>(() => {
+    const defaultSelectValues =
+      defaultValue !== undefined
+        ? [defaultValue]
+        : selectOption === "all" && multiple
+        ? undefined
+        : selectOption === "all"
+        ? ["all"]
+        : selectOption === "choose"
+        ? [""]
+        : [listItem[0].code];
+
+    return value || defaultSelectValues || [];
+  });
   const [selectedAll, setSelectedAll] = useState(false);
+
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * displaySize + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
 
   // NOTE: 선택값 변경 이벤트
   const handleChange = useCallback(
@@ -143,8 +162,10 @@ const Select: React.FC<SelectProps> = ({
       else {
         setSelectValues(typeof value === "string" ? value.split(",") : value);
       }
+
+      onChange?.(event);
     },
-    [selectValues, selectedAll]
+    [selectValues, selectedAll, onChange]
   );
 
   // NOTE: InputBox에 선택된 데이터의 명칭 셋팅
@@ -152,7 +173,8 @@ const Select: React.FC<SelectProps> = ({
     const selectedNames = listItem
       .filter((item) => {
         return (
-          selected.indexOf(item.code) > -1 &&
+          selected instanceof Array &&
+          selected?.indexOf(item.code) > -1 &&
           item.code !== "" &&
           item.code !== "all"
         );
@@ -162,19 +184,6 @@ const Select: React.FC<SelectProps> = ({
     return selectedNames.join(", ");
   }, []);
 
-  useEffect(() => {
-    const defaultSelectValues =
-      defaultValue !== undefined
-        ? [defaultValue]
-        : selectOption === "all" && multiple
-        ? undefined
-        : selectOption === "all"
-        ? ["all"]
-        : [""];
-
-    setSelectValues(value || defaultSelectValues || []);
-  }, [defaultValue, value]);
-
   return (
     <div>
       <MuiSelect
@@ -182,14 +191,16 @@ const Select: React.FC<SelectProps> = ({
         multiple={multiple}
         value={selectValues}
         onChange={handleChange}
+        // FIXME: DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
+        onMouseDown={(event) => event.stopPropagation()}
         input={<BootstrapInput />}
         renderValue={setInputRender}
         MenuProps={MenuProps}
         inputProps={{ "aria-label": "Without label" }}
+        SelectDisplayProps={{ style: { ...style } }}
         style={{
           minWidth: 100,
           maxWidth: 300,
-          ...style,
         }}
       >
         {selectOption === "choose" && (
