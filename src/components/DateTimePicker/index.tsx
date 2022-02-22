@@ -36,7 +36,7 @@ export interface DatePickerProps {
   /** 스타일 */
   style?: any;
   /** Form Data 값 변경 */
-  handleChangeFiledValues?: (value: any) => void;
+  handleChangeField?: (value: any) => void;
 }
 
 // NOTE: 시작년도, 종료년도, 증가값을 받아 시작년도~종료년도까지의 모든 년도를 Array로 리턴
@@ -77,7 +77,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
     : "yyyy-MM-dd",
   isValid,
   style,
-  handleChangeFiledValues,
+  handleChangeField,
 }: DatePickerProps) => {
   const [parseValue, setParseValue] = useState<Date>();
   const [dateValue, setDateValue] = useState(value);
@@ -122,7 +122,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
           value: parsedDateValue,
         },
       };
-      handleChangeFiledValues?.(fieldValue);
+      handleChangeField?.(fieldValue);
     } else {
       setDateValue(undefined);
     }
@@ -220,6 +220,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
               )}
 
               <Select
+                name={"datepicker_year"}
                 value={YEARS.filter(
                   (item: any) => item.code == date.getFullYear()
                 ).map((item: any) => item.code)}
@@ -236,6 +237,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
               />
               {type != "year" && (
                 <Select
+                  name={"datepicker_month"}
                   value={MONTHS.filter(
                     (item: any) => item.code == date.getMonth()
                   ).map((item: any) => item.code)}

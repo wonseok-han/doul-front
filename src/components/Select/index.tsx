@@ -7,9 +7,10 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, styled, useTheme } from "@mui/material/styles";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export interface SelectProps extends MuiSelectProps {
+  name: string;
   items: Array<{
     code: string;
     name: string;
@@ -18,7 +19,7 @@ export interface SelectProps extends MuiSelectProps {
   value?: Array<string>;
   selectOption?: "choose" | "all";
   displaySize?: number;
-  onChange?: (event: any) => void;
+  handleChangeField?: (event: any) => void;
 }
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -77,6 +78,7 @@ const getStyles = (
 };
 
 const Select: React.FC<SelectProps> = ({
+  name,
   items,
   defaultValue,
   value,
@@ -84,7 +86,7 @@ const Select: React.FC<SelectProps> = ({
   multiple = false,
   displaySize = 5,
   style,
-  onChange,
+  handleChangeField,
 }: SelectProps) => {
   const theme = useTheme();
   const listItem = ANOTHER_ITEMS.filter((item) => {
@@ -162,31 +164,38 @@ const Select: React.FC<SelectProps> = ({
       else {
         setSelectValues(typeof value === "string" ? value.split(",") : value);
       }
-
-      onChange?.(event);
     },
-    [selectValues, selectedAll, onChange]
+    [selectValues, selectedAll, handleChangeField]
   );
 
   // NOTE: InputBox에 선택된 데이터의 명칭 셋팅
   const setInputRender = useCallback((selected: any) => {
     const selectedNames = listItem
       .filter((item) => {
-        return (
-          selected instanceof Array &&
-          selected?.indexOf(item.code) > -1 &&
-          item.code !== "" &&
-          item.code !== "all"
-        );
+        return multiple && selectOption === "all"
+          ? selected?.indexOf(item.code) > -1 && item.code !== "all"
+          : selected?.indexOf(item.code) > -1;
       })
       .map((item) => item.name);
 
     return selectedNames.join(", ");
   }, []);
 
+  useEffect(() => {
+    const fieldValue = {
+      target: {
+        name: name,
+        value:
+          selectValues instanceof Array ? selectValues.join(",") : selectValues,
+      },
+    };
+    handleChangeField?.(fieldValue);
+  }, [selectValues]);
+
   return (
     <div>
       <MuiSelect
+        name={name}
         displayEmpty
         multiple={multiple}
         value={selectValues}

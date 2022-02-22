@@ -1,4 +1,5 @@
 import Button from "components/Button";
+import Check from "components/Check";
 import DateTimePicker from "components/DateTimePicker";
 import InputBox from "components/InputBox";
 import PageHeader from "components/PageHeader";
@@ -6,44 +7,66 @@ import Row from "components/Row";
 import Select from "components/Select";
 import React from "react";
 import { Col } from "react-bootstrap";
+import useFieldValues from "utils/hooks/useFieldValues";
 import { PageProps } from "utils/types";
 
 import PageProvider, { usePageContext } from "./context";
 
-const SELECT_ITEMS = [
+const POSITON_ITEMS = [
   {
     code: "00",
-    name: "zero",
+    name: "사원",
   },
   {
     code: "01",
-    name: "one",
+    name: "대리",
   },
   {
     code: "02",
-    name: "two",
+    name: "과장",
   },
   {
     code: "03",
-    name: "three",
+    name: "차장",
   },
   {
     code: "04",
-    name: "four",
+    name: "부장",
   },
   {
     code: "05",
-    name: "five",
+    name: "이사",
   },
   {
     code: "06",
-    name: "six",
-  },
-  {
-    code: "07",
-    name: "seven",
+    name: "사장",
   },
 ];
+
+const SKILL_ITEMS = [
+  {
+    code: "00",
+    name: "JavaScript",
+  },
+  {
+    code: "01",
+    name: "Java",
+  },
+  {
+    code: "02",
+    name: "Python",
+  },
+];
+
+const FIELDS = {
+  name: "한원석",
+  email: "oshan1112@gmail.com",
+  position: "01",
+  skills: "00,02",
+  join_date: "2018-07-02",
+  register_date: "2022-02-22 13:00",
+  use_yn: "Y",
+};
 
 const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
   const {
@@ -56,6 +79,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       handleReportButtonClick,
     },
   } = usePageContext();
+  const [fieldValues, handleChangeField] = useFieldValues(FIELDS);
 
   return (
     <>
@@ -129,16 +153,30 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         </Col>
       </Row>
       <hr />
+      <Row>{JSON.stringify(fieldValues)}</Row>
+      <hr />
       <h4>InputBox</h4>
       <Row xs={"auto"}>
         <Col>
-          <InputBox placeholder={"입력하세요."} isValid={false} />
+          <InputBox
+            name={"name"}
+            placeholder={"성명"}
+            isValid={false}
+            value={fieldValues.name}
+            handleChangeField={handleChangeField}
+          />
         </Col>
         <Col>
-          <InputBox prefix={"pre"} postfix={"post"} />
+          <InputBox
+            name={"email"}
+            prefix={"pre"}
+            postfix={"post"}
+            value={fieldValues.email}
+            handleChangeField={handleChangeField}
+          />
         </Col>
         <Col>
-          <InputBox isPassword placeholder={"Password"} />
+          <InputBox name={"password"} isPassword placeholder={"Password"} />
         </Col>
       </Row>
       <hr />
@@ -148,10 +186,23 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         style={{ justifyContent: "space-start", marginTop: "10px" }}
       >
         <Col>
-          <Select items={SELECT_ITEMS} />
+          <Select
+            name={"position"}
+            items={POSITON_ITEMS}
+            selectOption={"choose"}
+            value={fieldValues.position.split(",")}
+            handleChangeField={handleChangeField}
+          />
         </Col>
         <Col>
-          <Select items={SELECT_ITEMS} selectOption={"all"} multiple />
+          <Select
+            name={"skills"}
+            items={SKILL_ITEMS}
+            selectOption={"all"}
+            multiple
+            value={fieldValues.skills.split(",")}
+            handleChangeField={handleChangeField}
+          />
         </Col>
       </Row>
       <hr />
@@ -161,7 +212,12 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         style={{ justifyContent: "space-start", marginTop: "10px" }}
       >
         <Col>
-          <DateTimePicker name={"date"} defaultValue={new Date()} />
+          <DateTimePicker
+            name={"join_date"}
+            defaultValue={new Date()}
+            value={fieldValues.join_date}
+            handleChangeField={handleChangeField}
+          />
         </Col>
         <Col>
           <DateTimePicker
@@ -174,7 +230,30 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
           <DateTimePicker name={"yearMonth"} type={"yearMonth"} />
         </Col>
         <Col>
-          <DateTimePicker name={"datetime"} type={"datetime"} />
+          <DateTimePicker
+            name={"register_date"}
+            type={"datetime"}
+            value={fieldValues.register_date}
+            handleChangeField={handleChangeField}
+          />
+        </Col>
+      </Row>
+      <hr />
+      <h5>Check/Radio Box</h5>
+      <Row
+        xs={"auto"}
+        style={{ justifyContent: "space-start", marginTop: "10px" }}
+      >
+        <Col>
+          <Check
+            name={"use_yn"}
+            choices={[
+              { code: "Y", name: "사용" },
+              { code: "N", name: "미사용" },
+            ]}
+            value={fieldValues.use_yn}
+            handleChangeField={handleChangeField}
+          />
         </Col>
       </Row>
     </>
