@@ -21,8 +21,6 @@ export interface DatePickerProps {
    * 'date' | 'year' | 'yearMonth' | 'datetime'
    */
   type?: "date" | "year" | "yearMonth" | "datetime";
-  /** Default값 */
-  defaultValue?: string | Date;
   /** 값 */
   value?: string;
   /** 비활성화여부 */
@@ -64,7 +62,6 @@ const MONTHS = new Array(12).fill(0).map((item, index) => {
 const DateTimePicker: React.FC<DatePickerProps> = ({
   name,
   type = "date",
-  defaultValue,
   value,
   disabled,
   readOnly,
@@ -134,15 +131,8 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
         setParseValue(value);
       }
       setDateValue(value);
-    } else if (defaultValue) {
-      if (typeof defaultValue == "string") {
-        setParseValue(new Date(defaultValue));
-      } else {
-        setParseValue(defaultValue);
-      }
-      setDateValue(String(defaultValue));
     }
-  }, [defaultValue, value]);
+  }, [value]);
 
   useEffect(() => {
     if (dateValue) {
