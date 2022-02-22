@@ -7,6 +7,7 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, styled, useTheme } from "@mui/material/styles";
+import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
 
 export interface SelectProps extends MuiSelectProps {
@@ -194,6 +195,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div>
+      <RenderIndicator />
       <MuiSelect
         name={name}
         displayEmpty

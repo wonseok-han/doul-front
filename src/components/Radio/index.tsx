@@ -1,3 +1,4 @@
+import RenderIndicator from "components/RenderIndicator";
 import React, { useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
 
@@ -43,6 +44,7 @@ const Radio: React.FC<RadioProps> = ({
 
   return (
     <>
+      <RenderIndicator />
       {choices.map((item) => (
         <FormCheck
           inline={inline}

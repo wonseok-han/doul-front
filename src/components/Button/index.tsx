@@ -1,3 +1,4 @@
+import RenderIndicator from "components/RenderIndicator";
 import React, { useState } from "react";
 import {
   Button as BootStrapButton,
@@ -37,6 +38,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <>
+      <RenderIndicator />
       {!hidden && (
         <BootStrapButton
           disabled={disabled}

@@ -1,3 +1,4 @@
+import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
 
@@ -43,6 +44,7 @@ const InputBox: React.FC<InputBoxProps> = ({
 
   return (
     <>
+      <RenderIndicator />
       {!hidden && (
         <InputGroup style={style} hasValidation={true}>
           {prefix && <InputGroup.Text>{prefix}</InputGroup.Text>}

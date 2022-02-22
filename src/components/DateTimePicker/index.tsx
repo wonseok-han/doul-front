@@ -2,6 +2,7 @@
 
 import "./index.scss";
 
+import RenderIndicator from "components/RenderIndicator";
 import Select from "components/Select";
 import { ko } from "date-fns/esm/locale";
 import React, { useEffect, useState } from "react";
@@ -144,6 +145,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
 
   return (
     <>
+      <RenderIndicator />
       <DatePicker
         name={name}
         locale={ko}

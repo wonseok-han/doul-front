@@ -1,3 +1,4 @@
+import RenderIndicator from "components/RenderIndicator";
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
 
@@ -51,19 +52,22 @@ const Check: React.FC<CheckProps> = ({
   }, [value]);
 
   return (
-    <FormCheck name={name} id={name}>
-      <FormCheck.Input
-        checked={isChecked}
-        value={value}
-        disabled={disabled}
-        isValid={isValid}
-        isInvalid={isValid !== undefined ? !isValid : false}
-        onChange={handleChange}
-      />
-      <FormCheck.Label>
-        {choices.find((item) => item.code === value)?.name}
-      </FormCheck.Label>
-    </FormCheck>
+    <>
+      <RenderIndicator />
+      <FormCheck name={name} id={name}>
+        <FormCheck.Input
+          checked={isChecked}
+          value={value}
+          disabled={disabled}
+          isValid={isValid}
+          isInvalid={isValid !== undefined ? !isValid : false}
+          onChange={handleChange}
+        />
+        <FormCheck.Label>
+          {choices.find((item) => item.code === value)?.name}
+        </FormCheck.Label>
+      </FormCheck>
+    </>
   );
 };
 

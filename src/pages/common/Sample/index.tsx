@@ -13,7 +13,12 @@ import { PageProps } from "utils/types";
 
 import PageProvider, { usePageContext } from "./context";
 
-const POSITON_ITEMS = [
+const USE_YN_ITEMS = [
+  { code: "Y", name: "사용" },
+  { code: "N", name: "미사용" },
+];
+
+const POSITION_ITEMS = [
   {
     code: "00",
     name: "사원",
@@ -201,7 +206,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         <Col>
           <Select
             name={"position"}
-            items={POSITON_ITEMS}
+            items={POSITION_ITEMS}
             selectOption={"choose"}
             value={fieldValues.position.split(",")}
             handleChangeField={handleChangeField}
@@ -259,10 +264,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         <Col>
           <Check
             name={"use_yn"}
-            choices={[
-              { code: "Y", name: "사용" },
-              { code: "N", name: "미사용" },
-            ]}
+            choices={USE_YN_ITEMS}
             value={fieldValues.use_yn}
             handleChangeField={handleChangeField}
           />
