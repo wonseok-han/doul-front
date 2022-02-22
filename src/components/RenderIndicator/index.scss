@@ -1,0 +1,16 @@
+.render-indicator {
+  padding: 0;
+  margin: 0;
+  margin-top: -10px;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  line-height: 18px;
+  text-align: center;
+  font-size: 9px;
+  background-color: yellow;
+  transition: background-color 1s ease-out;
+  position: absolute;
+  z-index: 9999;
+}
