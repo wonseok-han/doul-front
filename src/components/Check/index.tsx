@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import FormCheckInput, {
-  FormCheckInputProps,
-} from "react-bootstrap/esm/FormCheckInput";
+import { FormCheck, FormCheckProps } from "react-bootstrap";
 
-export interface CheckProps extends FormCheckInputProps {
+export interface CheckProps extends FormCheckProps {
   /** 컴포넌트명 */
   name: string;
   /** 값 리스트 */
@@ -11,7 +9,6 @@ export interface CheckProps extends FormCheckInputProps {
     code: string;
     name: string;
   }>;
-  defaultChecked?: boolean;
   /** 체크될 때의 값 */
   trueValue?: string | boolean;
   /** 체크되지 않을 때의 값 */
@@ -21,15 +18,17 @@ export interface CheckProps extends FormCheckInputProps {
 }
 const Check: React.FC<CheckProps> = ({
   name,
-  defaultChecked = false,
   choices = [],
   value,
   trueValue = choices?.length > 0 ? choices[0].code : true,
   falseValue = choices?.length > 1 ? choices[1].code : false,
+  disabled = false,
   isValid,
   handleChangeField,
 }: CheckProps) => {
-  const [isChecked, setIsChecked] = useState(defaultChecked);
+  const [isChecked, setIsChecked] = useState(
+    value === trueValue ? true : false
+  );
 
   // NOTE: 체크 값 변경 이벤트
   const handleChange = (event: any) => {
@@ -52,17 +51,19 @@ const Check: React.FC<CheckProps> = ({
   }, [value]);
 
   return (
-    <>
-      <FormCheckInput
-        name={name}
+    <FormCheck name={name} id={name}>
+      <FormCheck.Input
         checked={isChecked}
         value={value}
+        disabled={disabled}
         isValid={isValid}
         isInvalid={isValid !== undefined ? !isValid : false}
         onChange={handleChange}
       />
-      {choices.find((item) => item.code === value)?.name}
-    </>
+      <FormCheck.Label>
+        {choices.find((item) => item.code === value)?.name}
+      </FormCheck.Label>
+    </FormCheck>
   );
 };
 

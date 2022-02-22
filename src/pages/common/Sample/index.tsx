@@ -3,6 +3,7 @@ import Check from "components/Check";
 import DateTimePicker from "components/DateTimePicker";
 import InputBox from "components/InputBox";
 import PageHeader from "components/PageHeader";
+import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
 import React from "react";
@@ -58,6 +59,17 @@ const SKILL_ITEMS = [
   },
 ];
 
+const LOCATION_ITEMS = [
+  {
+    code: "00",
+    name: "부산",
+  },
+  {
+    code: "01",
+    name: "서울",
+  },
+];
+
 const FIELDS = {
   name: "한원석",
   email: "oshan1112@gmail.com",
@@ -66,6 +78,7 @@ const FIELDS = {
   join_date: "2018-07-02",
   register_date: "2022-02-22 13:00",
   use_yn: "Y",
+  location: "01",
 };
 
 const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
@@ -214,7 +227,6 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
         <Col>
           <DateTimePicker
             name={"join_date"}
-            defaultValue={new Date()}
             value={fieldValues.join_date}
             handleChangeField={handleChangeField}
           />
@@ -252,6 +264,14 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
               { code: "N", name: "미사용" },
             ]}
             value={fieldValues.use_yn}
+            handleChangeField={handleChangeField}
+          />
+        </Col>
+        <Col>
+          <Radio
+            name={"location"}
+            choices={LOCATION_ITEMS}
+            value={fieldValues.location}
             handleChangeField={handleChangeField}
           />
         </Col>
