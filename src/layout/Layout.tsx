@@ -1,3 +1,4 @@
+import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useState } from "react";
 import { MENU } from "TestLayoutData";
 
@@ -94,6 +95,7 @@ const Layout: React.FC = () => {
 
   return (
     <div className={`app ${rtl ? "rtl" : ""} ${toggled ? "toggled" : ""}`}>
+      <RenderIndicator style={{ marginTop: "10px" }} />
       <Sidebar
         image={image}
         collapsed={collapsed}
