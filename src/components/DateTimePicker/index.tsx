@@ -107,25 +107,23 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
             }`;
 
       return stringValue;
+    } else {
+      return undefined;
     }
   };
 
   // NOTE: Date Value 변경 이벤트
   const handleChange = (changedValue: any) => {
-    if (changedValue) {
-      const parsedDateValue = parseDateToString(changedValue);
-      setDateValue(parsedDateValue);
+    const parsedDateValue = parseDateToString(changedValue);
+    setDateValue(parsedDateValue);
 
-      const fieldValue = {
-        target: {
-          name,
-          value: parsedDateValue,
-        },
-      };
-      handleChangeField?.(fieldValue);
-    } else {
-      setDateValue(undefined);
-    }
+    const fieldValue = {
+      target: {
+        name,
+        value: parsedDateValue,
+      },
+    };
+    handleChangeField?.(fieldValue);
   };
 
   useEffect(() => {
