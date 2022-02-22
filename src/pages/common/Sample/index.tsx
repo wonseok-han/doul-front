@@ -2,12 +2,13 @@ import Button from "components/Button";
 import Check from "components/Check";
 import DateTimePicker from "components/DateTimePicker";
 import InputBox from "components/InputBox";
+import Label from "components/Label";
 import PageHeader from "components/PageHeader";
 import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
 import React from "react";
-import { Col } from "react-bootstrap";
+import { Col, Form, FormGroup } from "react-bootstrap";
 import useFieldValues from "utils/hooks/useFieldValues";
 import { PageProps } from "utils/types";
 
@@ -174,29 +175,46 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       <Row>{JSON.stringify(fieldValues)}</Row>
       <hr />
       <h4>InputBox</h4>
-      <Row xs={"auto"}>
-        <Col>
-          <InputBox
-            name={"name"}
-            placeholder={"성명"}
-            isValid={false}
-            value={fieldValues.name}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-        <Col>
-          <InputBox
-            name={"email"}
-            prefix={"pre"}
-            postfix={"post"}
-            value={fieldValues.email}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-        <Col>
-          <InputBox name={"password"} isPassword placeholder={"Password"} />
-        </Col>
-      </Row>
+      <Form>
+        <Row xs={"1"} sm={"1"} md={"2"} lg={"2"} xl={"3"} xxl={"3"}>
+          <FormGroup as={Row}>
+            <Label column sm={"4"} required>
+              성명
+            </Label>
+            <Col sm={"8"}>
+              <InputBox
+                name={"name"}
+                placeholder={"성명"}
+                isValid={false}
+                value={fieldValues.name}
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label column sm={"4"}>
+              이메일
+            </Label>
+            <Col sm={"8"}>
+              <InputBox
+                name={"email"}
+                prefix={"pre"}
+                postfix={"post"}
+                value={fieldValues.email}
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label column sm={"4"}>
+              패스워드
+            </Label>
+            <Col sm={"8"}>
+              <InputBox name={"password"} isPassword placeholder={"Password"} />
+            </Col>
+          </FormGroup>
+        </Row>
+      </Form>
       <hr />
       <h4>SelectBox</h4>
       <Row
