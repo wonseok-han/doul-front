@@ -69,7 +69,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
   disabled,
   readOnly,
   format = type === "datetime"
-    ? "yyyy-MM-dd hh:mm"
+    ? "yyyy-MM-dd HH:mm"
     : type === "yearMonth"
     ? "yyyy-MM"
     : type === "year"
