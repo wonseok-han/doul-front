@@ -7,8 +7,10 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, styled, useTheme } from "@mui/material/styles";
+import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
+import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface SelectProps extends MuiSelectProps {
   name: string;
@@ -23,17 +25,19 @@ export interface SelectProps extends MuiSelectProps {
   handleChangeField?: (event: any) => void;
 }
 
+// NOTE: Select InputBox Component
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
     marginTop: theme.spacing(3),
   },
   "& .MuiInputBase-input": {
+    cursor: "auto",
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
     border: "1px solid #ced4da",
     fontSize: 16,
-    padding: "10px 26px 10px 12px",
+    padding: "6px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
@@ -64,6 +68,11 @@ const ANOTHER_ITEMS = [
   { code: "all", name: "전체" },
 ];
 
+const STYLE = {
+  width: "100%",
+};
+
+// NOTE: Select Items Style
 const getStyles = (
   name: string,
   selectValues: readonly string[] | undefined,
@@ -196,53 +205,62 @@ const Select: React.FC<SelectProps> = ({
   return (
     <div>
       <RenderIndicator />
-      <MuiSelect
-        name={name}
-        displayEmpty
-        multiple={multiple}
-        value={selectValues}
-        onChange={handleChange}
-        // FIXME: DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
-        onMouseDown={(event) => event.stopPropagation()}
-        input={<BootstrapInput />}
-        renderValue={setInputRender}
-        MenuProps={MenuProps}
-        inputProps={{ "aria-label": "Without label" }}
-        SelectDisplayProps={{ style: { ...style } }}
-        style={{
-          minWidth: 100,
-          maxWidth: 300,
-        }}
+      <OverlayTrigger
+        render={renderTooltip}
+        renderChildren={listItem
+          .filter((item) => {
+            return multiple && selectOption === "all"
+              ? selectValues?.indexOf(item.code) > -1 && item.code !== "all"
+              : selectValues?.indexOf(item.code) > -1;
+          })
+          .map((item) => item.name)
+          .join(", ")}
       >
-        {selectOption === "choose" && (
-          <MenuItem value={""} style={getStyles("선택", selectValues, theme)}>
-            {"선택"}
-          </MenuItem>
-        )}
-        {selectOption === "all" && (
-          <MenuItem
-            value={"all"}
-            style={getStyles("전체", selectValues, theme)}
-          >
-            {multiple && (
-              <Checkbox checked={selectValues.indexOf("all") > -1} />
-            )}
-            {"전체"}
-          </MenuItem>
-        )}
-        {items?.map((item) => (
-          <MenuItem
-            key={item.code}
-            value={item.code}
-            style={getStyles(item.name, selectValues, theme)}
-          >
-            {multiple && (
-              <Checkbox checked={selectValues.indexOf(item.code) > -1} />
-            )}
-            {item.name}
-          </MenuItem>
-        ))}
-      </MuiSelect>
+        <MuiSelect
+          name={name}
+          displayEmpty
+          multiple={multiple}
+          value={selectValues}
+          onChange={handleChange}
+          // FIXME: DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
+          onMouseDown={(event) => event.stopPropagation()}
+          input={<BootstrapInput />}
+          renderValue={setInputRender}
+          MenuProps={MenuProps}
+          inputProps={{ "aria-label": "Without label" }}
+          SelectDisplayProps={{ style: { ...style } }}
+          style={STYLE}
+        >
+          {selectOption === "choose" && (
+            <MenuItem value={""} style={getStyles("선택", selectValues, theme)}>
+              {"선택"}
+            </MenuItem>
+          )}
+          {selectOption === "all" && (
+            <MenuItem
+              value={"all"}
+              style={getStyles("전체", selectValues, theme)}
+            >
+              {multiple && (
+                <Checkbox checked={selectValues.indexOf("all") > -1} />
+              )}
+              {"전체"}
+            </MenuItem>
+          )}
+          {items?.map((item) => (
+            <MenuItem
+              key={item.code}
+              value={item.code}
+              style={getStyles(item.name, selectValues, theme)}
+            >
+              {multiple && (
+                <Checkbox checked={selectValues.indexOf(item.code) > -1} />
+              )}
+              {item.name}
+            </MenuItem>
+          ))}
+        </MuiSelect>
+      </OverlayTrigger>
     </div>
   );
 };

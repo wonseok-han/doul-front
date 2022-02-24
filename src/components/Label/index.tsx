@@ -17,7 +17,8 @@ type ColSizeProps =
   | "9"
   | "10"
   | "11"
-  | "12";
+  | "12"
+  | "auto";
 
 export interface LabelProps {
   xs?: ColSizeProps;
@@ -25,6 +26,7 @@ export interface LabelProps {
   md?: ColSizeProps;
   lg?: ColSizeProps;
   xl?: ColSizeProps;
+  xxl?: ColSizeProps;
   style?: any;
   required?: boolean;
   column?: boolean;
@@ -37,9 +39,10 @@ const Label: React.FC<LabelProps> = ({
   md,
   lg,
   xl,
+  xxl,
   style,
   required,
-  column,
+  column = true,
   children,
 }: LabelProps) => {
   return (
@@ -52,6 +55,7 @@ const Label: React.FC<LabelProps> = ({
         md={md}
         lg={lg}
         xl={xl}
+        xxl={xxl}
         style={{ ...style }}
         className={classnames("title")}
       >

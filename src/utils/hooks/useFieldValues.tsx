@@ -7,6 +7,7 @@ const useFieldValues = (initial: any) => {
     setFieldValues((previous: any) => ({
       ...previous,
       [event?.target?.name]: event?.target?.value,
+      previous: { ...previous, previous: undefined },
     }));
   }, []);
 

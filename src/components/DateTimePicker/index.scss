@@ -249,11 +249,12 @@
   display: flex;
   flex-wrap: wrap;
   max-width: 180px;
+
 }
 .react-datepicker__year .react-datepicker__year-text {
   display: inline-block;
   width: 4rem;
-  margin: 2px;
+  margin: 0.5rem;
 }
 
 .react-datepicker__month {
@@ -264,7 +265,7 @@
 .react-datepicker__month .react-datepicker__quarter-text {
   display: inline-block;
   width: 4rem;
-  margin: 2px;
+  margin: 0.7rem;
 }
 
 .react-datepicker__input-time-container {

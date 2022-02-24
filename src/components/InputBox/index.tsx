@@ -1,6 +1,8 @@
+import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
+import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface InputBoxProps extends InputGroupProps {
   name: string;
@@ -14,6 +16,10 @@ export interface InputBoxProps extends InputGroupProps {
   isValid?: boolean | undefined;
   handleChangeField?: (event: any) => void;
 }
+
+const STYLE = {
+  textOverflow: "ellipsis",
+};
 
 const InputBox: React.FC<InputBoxProps> = ({
   name,
@@ -46,20 +52,23 @@ const InputBox: React.FC<InputBoxProps> = ({
     <>
       <RenderIndicator />
       {!hidden && (
-        <InputGroup style={style} hasValidation={true}>
-          {prefix && <InputGroup.Text>{prefix}</InputGroup.Text>}
-          <FormControl
-            name={name}
-            type={(isPassword && "password") || ""}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            value={value}
-            isValid={isValid}
-            isInvalid={isValid !== undefined ? !isValid : false}
-            onChange={handleChange}
-          />
-          {postfix && <InputGroup.Text>{postfix}</InputGroup.Text>}
-        </InputGroup>
+        <OverlayTrigger render={renderTooltip} renderChildren={value}>
+          <InputGroup style={style} hasValidation={true}>
+            {prefix && <InputGroup.Text>{prefix}</InputGroup.Text>}
+            <FormControl
+              name={name}
+              type={(isPassword && "password") || ""}
+              readOnly={readOnly}
+              placeholder={placeholder}
+              value={value}
+              isValid={isValid}
+              isInvalid={isValid !== undefined ? !isValid : false}
+              onChange={handleChange}
+              style={STYLE}
+            />
+            {postfix && <InputGroup.Text>{postfix}</InputGroup.Text>}
+          </InputGroup>
+        </OverlayTrigger>
       )}
     </>
   );

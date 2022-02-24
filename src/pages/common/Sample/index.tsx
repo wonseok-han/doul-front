@@ -1,6 +1,7 @@
 import Button from "components/Button";
 import Check from "components/Check";
 import DateTimePicker from "components/DateTimePicker";
+import FormRow from "components/FormRow";
 import InputBox from "components/InputBox";
 import Label from "components/Label";
 import PageHeader from "components/PageHeader";
@@ -9,6 +10,7 @@ import Row from "components/Row";
 import Select from "components/Select";
 import React from "react";
 import { Col, Form, FormGroup } from "react-bootstrap";
+import { getCurrentDate } from "utils/functions/date";
 import useFieldValues from "utils/hooks/useFieldValues";
 import { PageProps } from "utils/types";
 
@@ -176,9 +178,9 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       <hr />
       <h4>InputBox</h4>
       <Form>
-        <Row xs={"1"} sm={"1"} md={"2"} lg={"2"} xl={"3"} xxl={"3"}>
+        <FormRow>
           <FormGroup as={Row}>
-            <Label column sm={"4"} required>
+            <Label sm={"4"} required>
               성명
             </Label>
             <Col sm={"8"}>
@@ -192,9 +194,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
             </Col>
           </FormGroup>
           <FormGroup as={Row}>
-            <Label column sm={"4"}>
-              이메일
-            </Label>
+            <Label sm={"4"}>이메일</Label>
             <Col sm={"8"}>
               <InputBox
                 name={"email"}
@@ -206,73 +206,97 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
             </Col>
           </FormGroup>
           <FormGroup as={Row}>
-            <Label column sm={"4"}>
-              패스워드
-            </Label>
+            <Label sm={"4"}>패스워드</Label>
             <Col sm={"8"}>
               <InputBox name={"password"} isPassword placeholder={"Password"} />
             </Col>
           </FormGroup>
-        </Row>
+        </FormRow>
       </Form>
       <hr />
       <h4>SelectBox</h4>
-      <Row
-        xs={"auto"}
-        style={{ justifyContent: "space-start", marginTop: "10px" }}
-      >
-        <Col>
-          <Select
-            name={"position"}
-            items={POSITION_ITEMS}
-            selectOption={"choose"}
-            value={fieldValues.position.split(",")}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-        <Col>
-          <Select
-            name={"skills"}
-            items={SKILL_ITEMS}
-            selectOption={"all"}
-            multiple
-            value={fieldValues.skills.split(",")}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-      </Row>
+      <Form>
+        <FormRow>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>직위</Label>
+            <Col sm={"8"}>
+              <Select
+                name={"position"}
+                items={POSITION_ITEMS}
+                selectOption={"choose"}
+                value={
+                  fieldValues?.previous?.position != fieldValues.position &&
+                  fieldValues.position.split(",")
+                }
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>언어</Label>
+            <Col sm={"8"}>
+              <Select
+                name={"skills"}
+                items={SKILL_ITEMS}
+                selectOption={"all"}
+                multiple
+                value={
+                  fieldValues?.previous?.skills != fieldValues.skills &&
+                  fieldValues.skills.split(",")
+                }
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+        </FormRow>
+      </Form>
       <hr />
       <h5>Date/TimePicker</h5>
-      <Row
-        xs={"auto"}
-        style={{ justifyContent: "space-start", marginTop: "10px" }}
-      >
-        <Col>
-          <DateTimePicker
-            name={"join_date"}
-            value={fieldValues.join_date}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-        <Col>
-          <DateTimePicker
-            name={"year"}
-            type={"year"}
-            style={{ width: "100px" }}
-          />
-        </Col>
-        <Col>
-          <DateTimePicker name={"yearMonth"} type={"yearMonth"} />
-        </Col>
-        <Col>
-          <DateTimePicker
-            name={"register_date"}
-            type={"datetime"}
-            value={fieldValues.register_date}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-      </Row>
+      <Form>
+        <FormRow>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>입사일자</Label>
+            <Col sm={"8"}>
+              <DateTimePicker
+                name={"join_date"}
+                value={fieldValues.join_date}
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>현재년도</Label>
+            <Col sm={"8"}>
+              <DateTimePicker
+                name={"year"}
+                type={"year"}
+                value={getCurrentDate("year")}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>현재년월</Label>
+            <Col sm={"8"}>
+              <DateTimePicker
+                name={"yearMonth"}
+                type={"yearMonth"}
+                value={getCurrentDate("yearMonth")}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>등록일시</Label>
+            <Col sm={"8"}>
+              <DateTimePicker
+                name={"register_date"}
+                type={"datetime"}
+                value={fieldValues.register_date}
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+        </FormRow>
+      </Form>
       <hr />
       <h5>Check/Radio Box</h5>
       <Row

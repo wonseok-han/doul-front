@@ -2,10 +2,11 @@
 
 import "./index.scss";
 
+import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import Select from "components/Select";
 import { ko } from "date-fns/esm/locale";
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { FormControl } from "react-bootstrap";
 import DatePicker, { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import {
@@ -14,6 +15,7 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
+import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface DatePickerProps {
   /** 컴포넌트명 */
@@ -79,6 +81,24 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
 }: DatePickerProps) => {
   const [parseValue, setParseValue] = useState<Date>();
   const [dateValue, setDateValue] = useState(value);
+  const [open, setOpen] = useState(false);
+
+  // eslint-disable-next-line react/display-name
+  const ExampleCustomInput = forwardRef(({ ...props }: any, ref: any) => {
+    props.name === "join_date" && console.log(props);
+    return (
+      <OverlayTrigger render={renderTooltip} renderChildren={value}>
+        <FormControl
+          ref={ref}
+          {...props}
+          autoFocus={open}
+          isValid={isValid}
+          isInvalid={isValid !== undefined ? !isValid : false}
+          style={{ ...style, textOverflow: "ellipsis" }}
+        />
+      </OverlayTrigger>
+    );
+  });
 
   // NOTE: Date -> String 변환 함수
   const parseDateToString = (dateValue: Date) => {
@@ -124,6 +144,16 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
     handleChangeField?.(fieldValue);
   };
 
+  // NOTE: DatePicker Input Click 이벤트
+  const handleInputClick = () => {
+    setOpen((previous) => !previous);
+  };
+
+  // NOTE: DatePicker Input 바깥 Click 이벤트
+  const handleInputOutClick = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (value) {
       if (typeof value == "string") {
@@ -146,6 +176,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
   return (
     <>
       <RenderIndicator />
+
       <DatePicker
         name={name}
         locale={ko}
@@ -162,14 +193,19 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
         maxDate={new Date("9999-12-31")}
         selected={parseValue}
         onChange={handleChange}
+        onInputClick={handleInputClick}
+        onClickOutside={handleInputOutClick}
         isClearable={true}
+        open={open}
         customInput={
+          <ExampleCustomInput />
           // TODO: Input 뒤에 Calendar 아이콘 추가
-          <FormControl
-            isValid={isValid}
-            isInvalid={isValid !== undefined ? !isValid : false}
-            style={style}
-          />
+
+          // <FormControl
+          //   isValid={isValid}
+          //   isInvalid={isValid !== undefined ? !isValid : false}
+          //   style={{ ...style, textOverflow: "ellipsis" }}
+          // />
         }
         renderCustomHeader={({
           date,
@@ -223,6 +259,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                   paddingBottom: 2,
                   paddingLeft: 2,
                   paddingRight: 2,
+                  width: "90px",
                 }}
               />
               {type != "year" && (
@@ -240,6 +277,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                     paddingBottom: 2,
                     paddingLeft: 2,
                     paddingRight: 2,
+                    width: "80px",
                   }}
                 />
               )}
@@ -264,6 +302,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
           );
         }}
       />
+
       {/* <OverlayTrigger
         show={show}
         placement={"auto-start"}
