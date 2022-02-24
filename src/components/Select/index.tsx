@@ -202,6 +202,10 @@ const Select: React.FC<SelectProps> = ({
     handleChangeField?.(fieldValue);
   }, [selectValues]);
 
+  useEffect(() => {
+    value && setSelectValues([...value]);
+  }, [value]);
+
   return (
     <div>
       <RenderIndicator />

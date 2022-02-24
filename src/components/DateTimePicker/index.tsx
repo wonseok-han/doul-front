@@ -83,9 +83,9 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
   const [dateValue, setDateValue] = useState(value);
   const [open, setOpen] = useState(false);
 
+  // TODO: Input 뒤에 Calendar 아이콘 추가
   // eslint-disable-next-line react/display-name
-  const ExampleCustomInput = forwardRef(({ ...props }: any, ref: any) => {
-    props.name === "join_date" && console.log(props);
+  const CustomInput = forwardRef(({ ...props }: any, ref: any) => {
     return (
       <OverlayTrigger render={renderTooltip} renderChildren={value}>
         <FormControl
@@ -197,16 +197,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
         onClickOutside={handleInputOutClick}
         isClearable={true}
         open={open}
-        customInput={
-          <ExampleCustomInput />
-          // TODO: Input 뒤에 Calendar 아이콘 추가
-
-          // <FormControl
-          //   isValid={isValid}
-          //   isInvalid={isValid !== undefined ? !isValid : false}
-          //   style={{ ...style, textOverflow: "ellipsis" }}
-          // />
-        }
+        customInput={<CustomInput />}
         renderCustomHeader={({
           date,
           changeYear,
