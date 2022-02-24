@@ -1,4 +1,8 @@
-// NOTE: 현재일자를 String으로 받는 함수
+/**
+ * NOTE: 현재일자를 String으로 받는 함수
+ * @param returnType 년도, 년월, 일자, 일시타입
+ * @returns "2022" or "2022-02" or "2022-02-24" or "2022-02-24 13:25"
+ */
 export const getCurrentDate = (
   returnType: "year" | "yearMonth" | "date" | "datetime" = "date"
 ): string => {
@@ -33,7 +37,12 @@ export const getCurrentDate = (
   }
 };
 
-// NOTE: Date -> String 변환 함수
+/**
+ * NOTE: Date -> String 변환 함수
+ * @param dateValue Date 타입 값
+ * @param returnType 년도, 년월, 일자, 일시타입
+ * @returns "2022" or "2022-02" or "2022-02-24" or "2022-02-24 13:25"
+ */
 export const parseDateToString = (
   dateValue: Date,
   returnType: "year" | "yearMonth" | "date" | "datetime" = "date"
