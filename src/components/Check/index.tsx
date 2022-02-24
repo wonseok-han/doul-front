@@ -52,7 +52,9 @@ const Check: React.FC<CheckProps> = ({
   }, [value]);
 
   return (
-    <>
+    <div
+      style={{ display: "inline-block", height: "100%", verticalAlign: "sub" }}
+    >
       <RenderIndicator />
       <FormCheck name={name} id={name}>
         <FormCheck.Input
@@ -67,7 +69,7 @@ const Check: React.FC<CheckProps> = ({
           {choices.find((item) => item.code === value)?.name}
         </FormCheck.Label>
       </FormCheck>
-    </>
+    </div>
   );
 };
 

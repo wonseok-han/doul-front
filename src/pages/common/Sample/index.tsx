@@ -299,27 +299,32 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       </Form>
       <hr />
       <h5>Check/Radio Box</h5>
-      <Row
-        xs={"auto"}
-        style={{ justifyContent: "space-start", marginTop: "10px" }}
-      >
-        <Col>
-          <Check
-            name={"use_yn"}
-            choices={USE_YN_ITEMS}
-            value={fieldValues.use_yn}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-        <Col>
-          <Radio
-            name={"location"}
-            choices={LOCATION_ITEMS}
-            value={fieldValues.location}
-            handleChangeField={handleChangeField}
-          />
-        </Col>
-      </Row>
+      <Form>
+        <FormRow>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>사용여부</Label>
+            <Col sm={"8"}>
+              <Check
+                name={"use_yn"}
+                choices={USE_YN_ITEMS}
+                value={fieldValues.use_yn}
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>지역</Label>
+            <Col sm={"8"}>
+              <Radio
+                name={"location"}
+                choices={LOCATION_ITEMS}
+                value={fieldValues.location}
+                handleChangeField={handleChangeField}
+              />
+            </Col>
+          </FormGroup>
+        </FormRow>
+      </Form>
     </>
   );
 };

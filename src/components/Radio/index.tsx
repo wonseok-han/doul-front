@@ -43,7 +43,9 @@ const Radio: React.FC<RadioProps> = ({
   };
 
   return (
-    <>
+    <div
+      style={{ display: "inline-block", height: "100%", verticalAlign: "sub" }}
+    >
       <RenderIndicator />
       {choices.map((item) => (
         <FormCheck
@@ -64,7 +66,7 @@ const Radio: React.FC<RadioProps> = ({
           <FormCheck.Label>{item.name}</FormCheck.Label>
         </FormCheck>
       ))}
-    </>
+    </div>
   );
 };
 
