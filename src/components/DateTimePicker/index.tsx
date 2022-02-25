@@ -238,9 +238,10 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
 
               <Select
                 name={"datepicker_year"}
-                value={YEARS.filter(
-                  (item: any) => item.code == date.getFullYear()
-                ).map((item: any) => item.code)}
+                value={
+                  YEARS.find((item: any) => item.code == date.getFullYear())
+                    ?.code
+                }
                 items={YEARS}
                 onChange={({ target: { value } }) => {
                   changeYear(Number(value));
@@ -256,9 +257,10 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
               {type != "year" && (
                 <Select
                   name={"datepicker_month"}
-                  value={MONTHS.filter(
-                    (item: any) => item.code == date.getMonth()
-                  ).map((item: any) => item.code)}
+                  value={
+                    MONTHS.find((item: any) => item.code == date.getMonth())
+                      ?.code
+                  }
                   items={MONTHS}
                   onChange={({ target: { value } }) =>
                     changeMonth(Number(value))

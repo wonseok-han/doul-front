@@ -224,10 +224,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
                 name={"position"}
                 items={POSITION_ITEMS}
                 selectOption={"choose"}
-                value={
-                  fieldValues?.previous?.position != fieldValues.position &&
-                  fieldValues.position.split(",")
-                }
+                value={fieldValues.position}
                 handleChangeField={handleChangeField}
               />
             </Col>
@@ -240,10 +237,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
                 items={SKILL_ITEMS}
                 selectOption={"all"}
                 multiple
-                value={
-                  fieldValues?.previous?.skills != fieldValues.skills &&
-                  fieldValues.skills.split(",")
-                }
+                value={fieldValues.skills}
                 handleChangeField={handleChangeField}
               />
             </Col>

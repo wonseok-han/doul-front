@@ -19,7 +19,7 @@ export interface SelectProps extends MuiSelectProps {
     name: string;
   }>;
   defaultValue?: string;
-  value?: Array<string>;
+  value?: string | undefined;
   selectOption?: "choose" | "all";
   displaySize?: number;
   handleChangeField?: (event: any) => void;
@@ -115,7 +115,7 @@ const Select: React.FC<SelectProps> = ({
         ? [""]
         : [listItem[0].code];
 
-    return value || defaultSelectValues || [];
+    return value?.split(",") || defaultSelectValues || [];
   });
   const [selectedAll, setSelectedAll] = useState(false);
 
@@ -203,7 +203,7 @@ const Select: React.FC<SelectProps> = ({
   }, [selectValues]);
 
   useEffect(() => {
-    value && setSelectValues([...value]);
+    value && setSelectValues(value.split(","));
   }, [value]);
 
   return (
