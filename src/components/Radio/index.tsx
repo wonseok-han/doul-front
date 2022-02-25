@@ -1,6 +1,8 @@
+import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
+import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface RadioProps extends FormCheckProps {
   /** 컴포넌트명 */
@@ -47,25 +49,32 @@ const Radio: React.FC<RadioProps> = ({
       style={{ display: "inline-block", height: "100%", verticalAlign: "sub" }}
     >
       <RenderIndicator />
-      {choices.map((item) => (
-        <FormCheck
-          inline={inline}
-          key={`radio-${item.code}`}
-          id={`radio-${item.code}`}
-          type={"radio"}
-        >
-          <FormCheck.Input
-            type={"radio"}
-            checked={selected === item.code}
-            value={item.code}
-            disabled={disabled}
-            isValid={isValid}
-            isInvalid={isValid !== undefined ? !isValid : false}
-            onChange={handleChange}
-          />
-          <FormCheck.Label>{item.name}</FormCheck.Label>
-        </FormCheck>
-      ))}
+      <OverlayTrigger
+        render={renderTooltip}
+        renderChildren={choices.find((item) => item.code === value)?.name}
+      >
+        <div>
+          {choices.map((item) => (
+            <FormCheck
+              inline={inline}
+              key={`radio-${item.code}`}
+              id={`radio-${item.code}`}
+              type={"radio"}
+            >
+              <FormCheck.Input
+                type={"radio"}
+                checked={selected === item.code}
+                value={item.code}
+                disabled={disabled}
+                isValid={isValid}
+                isInvalid={isValid !== undefined ? !isValid : false}
+                onChange={handleChange}
+              />
+              <FormCheck.Label>{item.name}</FormCheck.Label>
+            </FormCheck>
+          ))}
+        </div>
+      </OverlayTrigger>
     </div>
   );
 };

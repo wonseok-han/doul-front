@@ -1,6 +1,8 @@
+import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
+import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface CheckProps extends FormCheckProps {
   /** 컴포넌트명 */
@@ -52,24 +54,35 @@ const Check: React.FC<CheckProps> = ({
   }, [value]);
 
   return (
-    <div
-      style={{ display: "inline-block", height: "100%", verticalAlign: "sub" }}
-    >
+    <>
       <RenderIndicator />
-      <FormCheck name={name} id={name}>
-        <FormCheck.Input
-          checked={isChecked}
-          value={value}
-          disabled={disabled}
-          isValid={isValid}
-          isInvalid={isValid !== undefined ? !isValid : false}
-          onChange={handleChange}
-        />
-        <FormCheck.Label>
-          {choices.find((item) => item.code === value)?.name}
-        </FormCheck.Label>
-      </FormCheck>
-    </div>
+      <OverlayTrigger
+        render={renderTooltip}
+        renderChildren={choices.find((item) => item.code === value)?.name}
+      >
+        <div
+          style={{
+            display: "inline-block",
+            height: "100%",
+            verticalAlign: "sub",
+          }}
+        >
+          <FormCheck name={name} id={name}>
+            <FormCheck.Input
+              checked={isChecked}
+              value={value}
+              disabled={disabled}
+              isValid={isValid}
+              isInvalid={isValid !== undefined ? !isValid : false}
+              onChange={handleChange}
+            />
+            <FormCheck.Label>
+              {choices.find((item) => item.code === value)?.name}
+            </FormCheck.Label>
+          </FormCheck>
+        </div>
+      </OverlayTrigger>
+    </>
   );
 };
 
