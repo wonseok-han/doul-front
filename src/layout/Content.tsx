@@ -73,7 +73,7 @@ const Content: React.FC<Props> = ({
           </header>
 
           {mode === "SDI" ? (
-            <div style={{ overflow: "scroll" }}>
+            <div style={{ overflow: "scroll", height: "100%" }}>
               <DynamicLoader
                 key={`Menu${menu.menuCode}`}
                 path={menu.url}
