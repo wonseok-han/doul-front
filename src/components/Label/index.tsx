@@ -56,11 +56,18 @@ const Label: React.FC<LabelProps> = ({
         lg={lg}
         xl={xl}
         xxl={xxl}
-        style={{ ...style }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          ...style,
+        }}
         className={classnames("title")}
       >
-        {required && <span className={classnames("required")}>*</span>}
-        {children}
+        <label>
+          {required && <span className={classnames("required")}>*</span>}
+          {children}
+        </label>
       </FormLabel>
     </>
   );

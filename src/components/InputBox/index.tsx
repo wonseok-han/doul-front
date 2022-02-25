@@ -9,6 +9,7 @@ export interface InputBoxProps extends InputGroupProps {
   isPassword?: boolean;
   value?: string | undefined;
   readOnly?: boolean;
+  disabled?: boolean;
   placeholder?: string | undefined;
   prefix?: string | undefined;
   postfix?: string | undefined;
@@ -26,6 +27,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   isPassword = false,
   value,
   readOnly = false,
+  disabled = false,
   placeholder,
   prefix,
   postfix,
@@ -34,6 +36,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   style,
   handleChangeField,
 }: InputBoxProps) => {
+  // NOTE: 값 변경 이벤트
   const handleChange = (event: any) => {
     const {
       target: { name, value },
@@ -59,6 +62,7 @@ const InputBox: React.FC<InputBoxProps> = ({
               name={name}
               type={(isPassword && "password") || ""}
               readOnly={readOnly}
+              disabled={disabled}
               placeholder={placeholder}
               value={value}
               isValid={isValid}

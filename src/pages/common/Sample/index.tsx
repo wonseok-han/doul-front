@@ -8,6 +8,7 @@ import PageHeader from "components/PageHeader";
 import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
+import Textarea from "components/Textarea";
 import React from "react";
 import { Col, Form, FormGroup } from "react-bootstrap";
 import { getCurrentDate } from "utils/functions/date";
@@ -87,6 +88,7 @@ const FIELDS = {
   register_date: "2022-02-22 13:00",
   use_yn: "Y",
   location: "01",
+  comment: "",
 };
 
 const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
@@ -209,6 +211,22 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
             <Label sm={"4"}>패스워드</Label>
             <Col sm={"8"}>
               <InputBox name={"password"} isPassword placeholder={"Password"} />
+            </Col>
+          </FormGroup>
+        </FormRow>
+      </Form>
+      <hr />
+      <h4>Textarea</h4>
+      <Form>
+        <FormRow xs={"1"} sm={"2"} md={"2"} lg={"2"} xl={"2"} xxl={"2"}>
+          <FormGroup as={Row}>
+            <Label sm={"4"}>비고</Label>
+            <Col sm={"8"}>
+              <Textarea
+                name={"comment"}
+                value={fieldValues.comment}
+                handleChangeField={handleChangeField}
+              />
             </Col>
           </FormGroup>
         </FormRow>
