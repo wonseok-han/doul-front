@@ -295,43 +295,6 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
           );
         }}
       />
-
-      {/* <OverlayTrigger
-        show={show}
-        placement={"auto-start"}
-        overlay={
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          ({ placement, arrowProps, show: _show, popper, ...props }) => {
-            return (
-              <div
-                {...props}
-                style={{
-                  position: "absolute",
-                  ...props.style,
-                }}
-              >
-                
-                <FormControl
-                  type={type === "datetime" ? "datetime-local" : type}
-                  defaultValue={defaultValue}
-                  value={value}
-                  disabled={disabled}
-                  readOnly={readOnly}
-                  isValid={isValid}
-                  isInvalid={isValid !== undefined ? !isValid : false}
-                  onBlur={handleOverlayShow}
-                />
-              </div>
-            );
-          }
-        }
-      >
-        <FormControl
-          value={value}
-          onClick={handleOverlayShow}
-          style={{ border: "1px solid black" }}
-        />
-      </OverlayTrigger> */}
     </>
   );
 };
