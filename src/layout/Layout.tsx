@@ -1,16 +1,17 @@
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useState } from "react";
 import { MENU } from "TestLayoutData";
+import useAppContext from "utils/context/Reducer";
 
 import Content from "./Content";
 import Sidebar from "./Sidebar";
 
 const Layout: React.FC = () => {
+  const { store } = useAppContext();
   const rtl = false;
   const image = false;
   const [collapsed, setCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
-  const [mode, setMode] = useState("MDI");
   const [menus, setMenus] = useState(MENU);
   const [menu, setMenu] = useState();
 
@@ -23,12 +24,6 @@ const Layout: React.FC = () => {
   const handleToggleSidebar = useCallback((checked: boolean) => {
     setToggled(checked);
   }, []);
-
-  // NOTE: SDI/MDI 모드 전환 이벤트
-  const handleModeChange = useCallback((selectedMode: string) => {
-    setMode(selectedMode);
-  }, []);
-  handleModeChange && console.log(handleModeChange);
 
   // NOTE: Sidebar 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOpened = useCallback(
@@ -108,7 +103,7 @@ const Layout: React.FC = () => {
       />
       <Content
         handleToggleSidebar={handleToggleSidebar}
-        mode={mode}
+        mode={store?.toggledInterface || "MDI"}
         menu={menu}
         menus={menus}
         handleMenuClosed={handleMenuClosed}

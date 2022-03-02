@@ -22,6 +22,8 @@ const reducer = (state: any, action: ActionProps) => {
       return { ...state, activeIndicator: payload };
     case "SET_ACTIVE_DARKMODE":
       return { ...state, darkMode: payload };
+    case "SET_TOGGLED_INTERFACE":
+      return { ...state, toggledInterface: payload };
     default:
       throw new Error("Unsupported action type:" + type);
   }
@@ -34,6 +36,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({
   const [store, dispatch]: [AppStoreProps, any] = useReducer(reducer, {
     ...initialStore,
     darkMode: true,
+    toggledInterface: "MDI",
   });
 
   return (

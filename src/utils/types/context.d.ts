@@ -3,6 +3,7 @@ export interface AppStoreProps {
   activeMenu?: any; // NOTE: 선택되어 활성화된 메뉴
   activeIndicator?: boolean; // NOTE: RenderIndicator 활성화 여부
   darkMode?: boolean; // NOTE: 다크모드 활성화 여부
+  toggledInterface?: string; // NOTE: SDI/MDI 여부
 }
 
 export interface AppContextProps {
