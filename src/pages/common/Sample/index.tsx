@@ -4,6 +4,7 @@ import DateTimePicker from "components/DateTimePicker";
 import FormRow from "components/FormRow";
 import InputBox from "components/InputBox";
 import Label from "components/Label";
+import Loading from "components/Loading";
 import PageHeader from "components/PageHeader";
 import Radio from "components/Radio";
 import Row from "components/Row";
@@ -337,6 +338,9 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
           </FormGroup>
         </FormRow>
       </Form>
+      <hr />
+      <h5>Loading</h5>
+      <Loading />
     </>
   );
 };
