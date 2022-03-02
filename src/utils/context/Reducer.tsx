@@ -18,6 +18,10 @@ const reducer = (state: any, action: ActionProps) => {
       return { ...state, userInfo: payload };
     case "SET_ACTIVE_MENU":
       return { ...state, activeMenu: payload };
+    case "SET_ACTIVE_INDICATOR":
+      return { ...state, activeIndicator: payload };
+    case "SET_ACTIVE_DARKMODE":
+      return { ...state, darkMode: payload };
     default:
       throw new Error("Unsupported action type:" + type);
   }
@@ -29,6 +33,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({
 }: AppProviderProps) => {
   const [store, dispatch]: [AppStoreProps, any] = useReducer(reducer, {
     ...initialStore,
+    darkMode: true,
   });
 
   return (

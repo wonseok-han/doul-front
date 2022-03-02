@@ -1,13 +1,16 @@
-import React, { useCallback } from "react";
+import React, { forwardRef, useCallback } from "react";
+import { Dropdown as BootStrapDropdown, OverlayTrigger } from "react-bootstrap";
 import {
-  FaBars,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
   FaFolder,
   FaFolderOpen,
-  FaGithub,
   FaPager,
+  FaUserAlt,
 } from "react-icons/fa";
 
 import sidebarBg from "./assets/bg2.jpg";
+import Dropdown from "./Dropdown";
 import { ProSidebar } from "./ProSidebar";
 import {
   SidebarContent,
@@ -42,6 +45,47 @@ const Sidebar: React.FC<Props> = ({
   onMenuOpen,
 }: Props) => {
   const menuList = list;
+
+  // NOTE: 커스텀 Overlay Dropdown
+  const CustomOverlayDropdown = ({ ...props }: any) => {
+    return (
+      <div
+        style={{
+          ...props.style,
+          position: "absolute",
+          zIndex: 9999,
+        }}
+      >
+        <Dropdown />
+      </div>
+    );
+  };
+
+  // NOTE: 커스텀 Dropdown 토글
+  // eslint-disable-next-line react/display-name
+  const CustomDropdownToggle = forwardRef(({ ...props }: any, ref: any) => (
+    <div
+      ref={ref}
+      style={{ ...props.style, cursor: "pointer" }}
+      onClick={(event) => {
+        props.onClick(event);
+      }}
+    >
+      <FaUserAlt />
+      {!collapsed && (
+        <span
+          style={{
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            marginLeft: "10px",
+          }}
+        >
+          한원석
+        </span>
+      )}
+    </div>
+  ));
 
   // NOTE: 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOnClick = useCallback(
@@ -118,7 +162,6 @@ const Sidebar: React.FC<Props> = ({
         >
           <span
             style={{ cursor: "pointer" }}
-            // onClick={() => window.location.replace('/')}
             onClick={() => {
               onMenuOpen(
                 menuList.map((item) => ({
@@ -130,9 +173,28 @@ const Sidebar: React.FC<Props> = ({
               );
             }}
           >
-            <h2>테스트 시스템</h2>
+            {!collapsed && <h2>테스트 시스템</h2>}
           </span>
         </div>
+      </SidebarHeader>
+      <SidebarHeader>
+        <BootStrapDropdown align={"start"} autoClose={"outside"}>
+          <div
+            className="sidebar-btn-wrapper"
+            style={{
+              padding: "8px 35px 8px 30px",
+              justifyContent: "left",
+            }}
+          >
+            <OverlayTrigger
+              placement={"right-end"}
+              overlay={(props) => CustomOverlayDropdown(props)}
+              show
+            >
+              <BootStrapDropdown.Toggle as={CustomDropdownToggle} />
+            </OverlayTrigger>
+          </div>
+        </BootStrapDropdown>
       </SidebarHeader>
 
       <SidebarContent>
@@ -160,30 +222,6 @@ const Sidebar: React.FC<Props> = ({
             padding: "20px 24px",
           }}
         >
-          <a
-            href="https://github.com/wonseok-han/doul-front"
-            target="_blank"
-            className="sidebar-btn"
-            rel="noopener noreferrer"
-          >
-            <FaGithub />
-            <span
-              style={{
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-              }}
-            >
-              한원석
-            </span>
-          </a>
-        </div>
-        <div
-          className="sidebar-btn-wrapper"
-          style={{
-            padding: "20px 24px",
-          }}
-        >
           <div
             style={{
               cursor: "pointer",
@@ -200,7 +238,7 @@ const Sidebar: React.FC<Props> = ({
             }}
             onClick={() => onCollapseChange(!collapsed)}
           >
-            <FaBars />
+            {collapsed ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}
           </div>
         </div>
       </SidebarFooter>

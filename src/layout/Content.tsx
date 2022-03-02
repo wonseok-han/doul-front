@@ -1,7 +1,7 @@
 import TabPageContainer from "components/TabPageContainer";
 import Header from "layout/Header";
 import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaExchangeAlt } from "react-icons/fa";
 import useAppContext from "utils/context/Reducer";
 import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
@@ -61,7 +61,7 @@ const Content: React.FC<Props> = ({
       {openedMenuList.length > 0 && menu ? (
         <>
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
-            <FaBars />
+            <FaExchangeAlt />
           </div>
 
           <header>
@@ -105,7 +105,7 @@ const Content: React.FC<Props> = ({
       ) : (
         <>
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
-            <FaBars />
+            <FaExchangeAlt />
           </div>
           <div style={{ overflow: "scroll" }}>
             <DynamicLoader key={"Home"} path={"Home"} />
