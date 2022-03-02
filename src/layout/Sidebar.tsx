@@ -1,3 +1,5 @@
+import "./styles.scss";
+
 import React, { forwardRef, useCallback } from "react";
 import { Dropdown as BootStrapDropdown, OverlayTrigger } from "react-bootstrap";
 import {
@@ -71,7 +73,12 @@ const Sidebar: React.FC<Props> = ({
         props.onClick(event);
       }}
     >
-      <FaUserAlt />
+      {/* <span className="pro-icon-wrapper"> */}
+      <span className="pro-icon">
+        <FaUserAlt />
+      </span>
+      {/* </span> */}
+
       {!collapsed && (
         <span
           style={{

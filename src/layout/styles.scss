@@ -1,0 +1,11 @@
+@import 'global/variables.scss';
+@import 'layout/ProSidebar/scss/partials/animation.scss';
+
+.sidebar-btn-wrapper {
+  div {
+    &:hover {
+      color: $highlight-color;
+      animation: swing ease-in-out 0.5s 1 alternate;
+    }
+  }
+}
