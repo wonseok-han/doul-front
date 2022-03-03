@@ -1,3 +1,4 @@
+import Loading from "components/Loading";
 import React, { Suspense, lazy } from "react";
 
 export type Props = {
@@ -8,7 +9,7 @@ export type Props = {
 const DynamicLoader: React.FC<Props> = ({ path, info }: Props) => {
   const LazyComponent = lazy(() => import(`pages/${path}`));
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<Loading loading={true} />}>
       <div
         style={{ marginTop: "15px", marginLeft: "10px", marginRight: "10px" }}
       >

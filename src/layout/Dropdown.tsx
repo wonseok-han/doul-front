@@ -1,3 +1,4 @@
+import { USE_RENDER_INDICATOR } from "Constants";
 import React, { useCallback } from "react";
 import { Dropdown as BootStrapDropdown, FormCheck } from "react-bootstrap";
 import useAppContext from "utils/context/Reducer";
@@ -85,25 +86,29 @@ const Dropdown: React.FC = () => {
           onClick={(event) => event.stopPropagation()}
         />
       </BootStrapDropdown.Item>
-      <BootStrapDropdown.Item
-        onClick={() =>
-          handleActiveIndicator({
-            target: {
-              checked: !store?.activeIndicator || false,
-            },
-          })
-        }
-      >
-        <FormCheck
-          inline
-          type={"switch"}
-          label={"인디케이터"}
-          checked={store?.activeIndicator}
-          onChange={handleActiveIndicator}
-          onClick={(event) => event.stopPropagation()}
-        />
+      {USE_RENDER_INDICATOR && (
+        <BootStrapDropdown.Item
+          onClick={() =>
+            handleActiveIndicator({
+              target: {
+                checked: !store?.activeIndicator || false,
+              },
+            })
+          }
+        >
+          <FormCheck
+            inline
+            type={"switch"}
+            label={"인디케이터"}
+            checked={store?.activeIndicator}
+            onChange={handleActiveIndicator}
+            onClick={(event) => event.stopPropagation()}
+          />
+        </BootStrapDropdown.Item>
+      )}
+      <BootStrapDropdown.Item onClick={() => window.location.reload()}>
+        로그아웃
       </BootStrapDropdown.Item>
-      <BootStrapDropdown.Item>로그아웃</BootStrapDropdown.Item>
     </BootStrapDropdown.Menu>
   );
 };

@@ -10,7 +10,7 @@ import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
 import Textarea from "components/Textarea";
-import React from "react";
+import React, { useState } from "react";
 import { Col, Form, FormGroup } from "react-bootstrap";
 import { getCurrentDate } from "utils/functions/date";
 import useFieldValues from "utils/hooks/useFieldValues";
@@ -104,6 +104,9 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
     },
   } = usePageContext();
   const [fieldValues, handleChangeField] = useFieldValues(FIELDS);
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(() => setLoading(false), 2000);
 
   return (
     <>
@@ -340,7 +343,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
       </Form>
       <hr />
       <h5>Loading</h5>
-      <Loading />
+      <Loading loading={loading} />
     </>
   );
 };
