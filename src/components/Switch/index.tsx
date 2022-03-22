@@ -28,6 +28,7 @@ const Switch: React.FC<SwitchProps> = ({
   falseValue = choices?.length > 1 ? choices[1].code : false,
   disabled = false,
   isValid,
+  style,
   handleChangeField,
 }: SwitchProps) => {
   const [isChecked, setIsChecked] = useState(
@@ -63,6 +64,7 @@ const Switch: React.FC<SwitchProps> = ({
       >
         <div
           style={{
+            ...style,
             display: "inline-block",
             height: "100%",
             verticalAlign: "sub",

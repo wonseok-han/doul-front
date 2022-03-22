@@ -27,6 +27,7 @@ const Check: React.FC<CheckProps> = ({
   falseValue = choices?.length > 1 ? choices[1].code : false,
   disabled = false,
   isValid,
+  style,
   handleChangeField,
 }: CheckProps) => {
   const [isChecked, setIsChecked] = useState(
@@ -62,6 +63,7 @@ const Check: React.FC<CheckProps> = ({
       >
         <div
           style={{
+            ...style,
             display: "inline-block",
             height: "100%",
             verticalAlign: "sub",

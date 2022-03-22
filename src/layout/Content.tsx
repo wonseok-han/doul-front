@@ -23,7 +23,7 @@ const Content: React.FC<Props> = ({
   handleActivateTab,
 }: Props) => {
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
-  const { dispatch } = useAppContext();
+  const { store, dispatch } = useAppContext();
 
   // NOTE: 일반 메뉴 오픈시 hook
   useEffect(() => {
@@ -51,6 +51,13 @@ const Content: React.FC<Props> = ({
           return [...filteredPrevList];
         });
   }, [menu]);
+
+  // NOTE: 인터페이스모드가 SDI로 설정될 경우 열린 열린 페이지 삭제
+  useEffect(() => {
+    if (store?.toggledInterface === "SDI") {
+      setOpenedMenuList([menu]);
+    }
+  }, [store?.toggledInterface]);
 
   return (
     <main

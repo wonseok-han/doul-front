@@ -75,7 +75,6 @@ const Settings: React.FC = () => {
 
   return (
     <Form>
-      {JSON.stringify(store)}
       <FormGroup as={Row}>
         <Label sm={"4"}>인터페이스</Label>
         <Col sm={"8"}>
@@ -85,6 +84,9 @@ const Settings: React.FC = () => {
             choices={INTERFACE_ITEMS}
             value={store?.toggledInterface}
             handleChangeField={handleToggledInterface}
+            style={{
+              marginLeft: 10,
+            }}
           />
         </Col>
       </FormGroup>
@@ -97,6 +99,9 @@ const Settings: React.FC = () => {
             choices={THEME_ITEMS}
             value={themeStore?.darkMode ? "activate" : "deactivate"}
             handleChangeField={handleActiveDarkMode}
+            style={{
+              marginLeft: 10,
+            }}
           />
         </Col>
       </FormGroup>
@@ -110,6 +115,9 @@ const Settings: React.FC = () => {
               choices={INDICATOR_ITEMS}
               value={store?.activeIndicator ? "activate" : "deactivate"}
               handleChangeField={handleActiveIndicator}
+              style={{
+                marginLeft: 10,
+              }}
             />
           </Col>
         </FormGroup>

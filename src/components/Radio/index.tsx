@@ -23,6 +23,7 @@ const Radio: React.FC<RadioProps> = ({
   inline = true,
   disabled = false,
   isValid,
+  style,
   handleChangeField,
 }: RadioProps) => {
   const [selected, setSelected] = useState(value);
@@ -46,7 +47,12 @@ const Radio: React.FC<RadioProps> = ({
 
   return (
     <div
-      style={{ display: "inline-block", height: "100%", verticalAlign: "sub" }}
+      style={{
+        ...style,
+        display: "inline-block",
+        height: "100%",
+        verticalAlign: "sub",
+      }}
     >
       <RenderIndicator />
       <OverlayTrigger
