@@ -15,7 +15,7 @@ const APP_CONTEXT_INITIAL = {
 
 // NOTE: Theme Context 초기값
 const THEME_CONTEXT_INITIAL = {
-  darkMode: true,
+  darkMode: getLocalStorage("darkMode") === "true",
 };
 
 const App: React.FC = () => {

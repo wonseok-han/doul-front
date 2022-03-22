@@ -59,7 +59,7 @@ const TabPageContainer: React.FC<Props> = ({
           </Nav.Item>
         ))}
       </Nav>
-      <div style={{ overflow: "scroll", height: "100%" }}>
+      <div style={{ overflow: "auto", height: "100%" }}>
         <TabContent>
           {openedList.map((item) => (
             <TabPane

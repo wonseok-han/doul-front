@@ -52,6 +52,8 @@ const Settings: React.FC = () => {
         type: "SET_ACTIVE_DARKMODE",
         payload: value === "activate" ? true : false,
       });
+
+      setLocalStorage("darkMode", value === "activate" ? "true" : "false");
     },
     [themeStore?.darkMode]
   );
@@ -76,11 +78,10 @@ const Settings: React.FC = () => {
   return (
     <Form>
       <FormGroup as={Row}>
-        <Label sm={"4"}>인터페이스</Label>
+        <Label sm={"4"}>MDI 모드</Label>
         <Col sm={"8"}>
           <Switch
             name={"interface"}
-            label={"MDI 모드"}
             choices={INTERFACE_ITEMS}
             value={store?.toggledInterface}
             handleChangeField={handleToggledInterface}
@@ -95,7 +96,6 @@ const Settings: React.FC = () => {
         <Col sm={"8"}>
           <Switch
             name={"darkmode"}
-            label={"다크모드"}
             choices={THEME_ITEMS}
             value={themeStore?.darkMode ? "activate" : "deactivate"}
             handleChangeField={handleActiveDarkMode}
@@ -111,7 +111,6 @@ const Settings: React.FC = () => {
           <Col sm={"8"}>
             <Switch
               name={"indicator"}
-              label={"인디케이터 활성화"}
               choices={INDICATOR_ITEMS}
               value={store?.activeIndicator ? "activate" : "deactivate"}
               handleChangeField={handleActiveIndicator}

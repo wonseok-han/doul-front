@@ -81,7 +81,7 @@ const Content: React.FC<Props> = ({
           </header>
 
           {mode === "SDI" ? (
-            <div style={{ overflow: "scroll", height: "100%" }}>
+            <div style={{ overflow: "auto", height: "100%" }}>
               <DynamicLoader
                 key={`Menu${menu.menuCode}`}
                 path={menu.url}
@@ -115,7 +115,7 @@ const Content: React.FC<Props> = ({
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
             <FaExchangeAlt />
           </div>
-          <div style={{ overflow: "scroll" }}>
+          <div style={{ overflow: "auto" }}>
             <DynamicLoader key={"Home"} path={"Home"} />
           </div>
         </>
