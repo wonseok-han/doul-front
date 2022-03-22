@@ -24,7 +24,7 @@
 ## .env
 1. ***Local or Development Server*** dotEnv Setting
     ```env
-    # .env.dev 파일 생성
+    # .env.local/.env.development 파일 생성
     
     # 렌더링 인디케이터 활성/비활성화
     REACT_APP_USE_RENDER_INDICATOR=true
@@ -38,7 +38,7 @@
 
 2. ***Production Server*** dotEnv Setting
     ```env
-    # .env.prod 파일 생성
+    # .env.production 파일 생성
     
     # 렌더링 인디케이터 활성/비활성화
     REACT_APP_USE_RENDER_INDICATOR=false

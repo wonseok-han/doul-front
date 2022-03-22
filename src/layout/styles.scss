@@ -2,10 +2,13 @@
 @import 'layout/ProSidebar/scss/partials/animation.scss';
 
 .sidebar-btn-wrapper {
-  div {
+  .sidebar-icon-wrapper {
     &:hover {
-      color: $highlight-color;
+      color: $highlight-color-light;
       animation: swing ease-in-out 0.5s 1 alternate;
+      &.darkMode {
+        color: $highlight-color-dark;
+      }
     }
   }
 }

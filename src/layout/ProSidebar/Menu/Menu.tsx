@@ -1,7 +1,9 @@
-import classNames from 'classnames';
-import React, { LegacyRef, forwardRef } from 'react';
+import classNames from "classnames";
+import React, { LegacyRef, forwardRef, useContext } from "react";
 
-export type IconShape = 'square' | 'round' | 'circle';
+import { SidebarContext } from "../ProSidebar";
+
+export type IconShape = "square" | "round" | "circle";
 
 export type Props = React.HTMLAttributes<HTMLElement> & {
   className?: string;
@@ -16,7 +18,7 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
   {
     children,
     className,
-    iconShape = '',
+    iconShape = "",
     popperArrow = false,
     subMenuBullets = false,
     innerSubMenuArrows = true,
@@ -26,14 +28,17 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
 ) => {
   const menuRef: LegacyRef<HTMLElement> =
     (ref as any) || React.createRef<HTMLElement>();
+  const { darkMode } = useContext(SidebarContext);
+
   return (
     <nav
       ref={menuRef}
-      className={classNames('pro-menu', className, {
+      className={classNames("pro-menu", className, {
         [`shaped ${iconShape}`]:
-          ['square', 'round', 'circle'].indexOf(iconShape) >= 0,
-        'submenu-bullets': subMenuBullets,
-        'inner-submenu-arrows': innerSubMenuArrows,
+          ["square", "round", "circle"].indexOf(iconShape) >= 0,
+        "submenu-bullets": subMenuBullets,
+        "inner-submenu-arrows": innerSubMenuArrows,
+        darkMode,
       })}
       {...rest}
     >

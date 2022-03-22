@@ -1,5 +1,7 @@
-import classNames from 'classnames';
-import React, { LegacyRef, forwardRef } from 'react';
+import classNames from "classnames";
+import React, { LegacyRef, forwardRef, useContext } from "react";
+
+import { SidebarContext } from "../ProSidebar";
 
 export type Props = React.HTMLAttributes<HTMLElement> & {
   className?: string;
@@ -12,10 +14,14 @@ const SidebarContent: React.ForwardRefRenderFunction<unknown, Props> = (
 ) => {
   const sidebarContentRef: LegacyRef<HTMLDivElement> =
     (ref as any) || React.createRef<HTMLDivElement>();
+  const { darkMode } = useContext(SidebarContext);
+
   return (
     <div
       ref={sidebarContentRef}
-      className={classNames('pro-sidebar-content', className)}
+      className={classNames("pro-sidebar-content", className, {
+        darkMode,
+      })}
       {...rest}
     >
       {children}

@@ -7,12 +7,19 @@
     width: 4px;
     min-width: 4px;
     height: 4px;
-    border: 1px solid $submenu-bg-color;
+    border: 1px solid $submenu-bg-color-light;
+    &.darkMode {
+      border: 1px solid $submenu-bg-color-dark;
+    }
     border-radius: 50%;
     margin-right: 15px;
     position: relative;
-    box-shadow: 1px 0px 0px $sidebar-color, 0px -1px 0px $sidebar-color, 0px 1px 0px $sidebar-color,
-      -1px 0px 0px $sidebar-color;
+    box-shadow: 1px 0px 0px $sidebar-color-light, 0px -1px 0px $sidebar-color-light, 0px 1px 0px $sidebar-color-light,
+      -1px 0px 0px $sidebar-color-light;
+    &.darkMode {
+      box-shadow: 1px 0px 0px $sidebar-color-dark, 0px -1px 0px $sidebar-color-dark, 0px 1px 0px $sidebar-color-dark,
+      -1px 0px 0px $sidebar-color-dark;
+    }
   }
 }
 
@@ -31,7 +38,10 @@
       > .pro-sub-menu {
         > .pro-inner-list-item {
           position: relative;
-          background-color: $submenu-bg-color;
+          background-color: $submenu-bg-color-light;
+          &.darkMode {
+            background-color: $submenu-bg-color-dark;
+          }
 
           > div > ul {
             padding-top: 15px;
@@ -42,7 +52,10 @@
     }
     a {
       text-decoration: none;
-      color: $sidebar-color;
+      color: $sidebar-color-light;
+      &.darkMode {
+        color: $sidebar-color-dark;
+      }
       &:before {
         content: '';
         position: absolute;
@@ -53,13 +66,19 @@
         background-color: transparent;
       }
       &:hover {
-        color: $highlight-color;
+        color: $highlight-color-light;
+        &.darkMode {
+          color: $highlight-color-dark;
+        }
       }
     }
     .pro-menu-item {
       font-size: 15px;
       &.active {
-        color: $highlight-color;
+        color: $highlight-color-light;
+        &.darkMode {
+          color: $highlight-color-dark;
+        }
       }
 
       .suffix-wrapper {
@@ -82,7 +101,10 @@
 
         &:focus {
           outline: none;
-          color: $highlight-color;
+          color: $highlight-color-light;
+          &.darkMode {
+            color: $highlight-color-dark;
+          }
         }
         > .pro-icon-wrapper {
           margin-right: 10px;
@@ -110,7 +132,10 @@
         }
 
         &:hover {
-          color: $highlight-color;
+          color: $highlight-color-light;
+          &.darkMode {
+            color: $highlight-color-dark;
+          }
           .pro-icon-wrapper {
             .pro-icon {
               animation: swing ease-in-out 0.5s 1 alternate;
@@ -122,7 +147,10 @@
       &.pro-sub-menu {
         > .pro-inner-item {
           &:before {
-            background: $sidebar-color;
+            background: $sidebar-color-light;
+            &.darkMode {
+              background: $sidebar-color-dark;
+            }
           }
 
           > .pro-arrow-wrapper {
@@ -134,7 +162,10 @@
             .pro-arrow {
               display: inline-block;
               border-style: solid;
-              border-color: $sidebar-color;
+              border-color: $sidebar-color-light;
+              &.darkMode {
+                border-color: $sidebar-color-dark;
+              }
               border-width: 0 2px 2px 0;
               padding: 2.5px;
               vertical-align: middle;
@@ -190,7 +221,10 @@
       .pro-menu-item {
         > .pro-inner-item {
           > .pro-icon-wrapper {
-            background-color: $icon-bg-color;
+            background-color: $icon-bg-color-light;
+            &.darkMode {
+              background-color: $icon-bg-color-dark;
+            }
           }
         }
       }
@@ -238,7 +272,10 @@
             }
           }
           > .pro-inner-list-item {
-            background-color: $submenu-bg-color-collapsed;
+            background-color: $submenu-bg-color-collapsed-light;
+            &.darkMode {
+              background-color: $submenu-bg-color-collapsed-dark;
+            }
             z-index: 111;
           }
           position: relative;
@@ -277,7 +314,10 @@
               > .popper-inner {
                 max-height: 100vh;
                 overflow-y: auto;
-                background-color: $submenu-bg-color-collapsed;
+                background-color: $submenu-bg-color-collapsed-light;
+                &.darkMode {
+                  background-color: $submenu-bg-color-collapsed-dark;
+                }
                 padding-left: 20px;
                 border-radius: 4px;
               }

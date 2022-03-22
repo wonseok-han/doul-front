@@ -1,5 +1,5 @@
-import { createPopper } from '@popperjs/core';
-import classNames from 'classnames';
+import { createPopper } from "@popperjs/core";
+import classNames from "classnames";
 import React, {
   LegacyRef,
   forwardRef,
@@ -7,13 +7,13 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from 'react';
-import SlideDown from 'react-slidedown';
-import ResizeObserver from 'resize-observer-polyfill';
+} from "react";
+import SlideDown from "react-slidedown";
+import ResizeObserver from "resize-observer-polyfill";
 
-import { SidebarContext } from '../ProSidebar';
+import { SidebarContext } from "../ProSidebar";
 
-export type Props = Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> & {
+export type Props = Omit<React.LiHTMLAttributes<HTMLLIElement>, "prefix"> & {
   children?: React.ReactNode;
   className?: string;
   icon?: boolean;
@@ -49,7 +49,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   ref
 ) => {
   let popperInstance: any;
-  const { collapsed, rtl, toggled } = useContext(SidebarContext);
+  const { collapsed, rtl, toggled, darkMode } = useContext(SidebarContext);
   const [closed, setClosed] = useState(!defaultOpen);
   const popperElRef = useRef(null);
   const referenceElement = useRef(null);
@@ -68,11 +68,11 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
             referenceElement.current,
             popperElement.current,
             {
-              placement: 'right',
-              strategy: 'fixed',
+              placement: "right",
+              strategy: "fixed",
               modifiers: [
                 {
-                  name: 'computeStyles',
+                  name: "computeStyles",
                   options: {
                     adaptive: false,
                   },
@@ -115,50 +115,70 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   return (
     <li
       ref={subMenuRef}
-      className={classNames('pro-menu-item pro-sub-menu', className, {
-        open: typeof open === 'undefined' ? !closed : open,
+      className={classNames("pro-menu-item pro-sub-menu", className, {
+        open: typeof open === "undefined" ? !closed : open,
+        darkMode,
       })}
       {...rest}
     >
       <div
         ref={referenceElement}
-        className="pro-inner-item"
+        className={classNames("pro-inner-item", { darkMode })}
         onClick={handleToggleSubMenu}
         onKeyPress={handleToggleSubMenu}
         role="button"
         tabIndex={0}
       >
         {icon ? (
-          <span className="pro-icon-wrapper">
-            <span className="pro-icon">{closed ? closedIcon : openedIcon}</span>
+          <span className={classNames("pro-icon-wrapper", { darkMode })}>
+            <span className={classNames("pro-icon", { darkMode })}>
+              {closed ? closedIcon : openedIcon}
+            </span>
           </span>
         ) : null}
-        {prefix ? <span className="prefix-wrapper">{prefix}</span> : null}
-        <span className="pro-item-content">{title}</span>
-        {suffix ? <span className="suffix-wrapper">{suffix}</span> : null}
-        <span className="pro-arrow-wrapper">
-          <span className="pro-arrow" />
+        {prefix ? (
+          <span className={classNames("prefix-wrapper", { darkMode })}>
+            {prefix}
+          </span>
+        ) : null}
+        <span className={classNames("pro-item-content", { darkMode })}>
+          {title}
+        </span>
+        {suffix ? (
+          <span className={classNames("suffix-wrapper", { darkMode })}>
+            {suffix}
+          </span>
+        ) : null}
+        <span className={classNames("pro-arrow-wrapper", { darkMode })}>
+          <span className={classNames("pro-arrow", { darkMode })} />
         </span>
       </div>
 
       {firstchild && collapsed ? (
         <div
           ref={popperElement}
-          className={classNames('pro-inner-list-item popper-element', {
-            'has-arrow': popperarrow,
+          className={classNames("pro-inner-list-item popper-element", {
+            "has-arrow": popperarrow,
+            darkMode,
           })}
         >
-          <div className="popper-inner" ref={popperElRef}>
+          <div
+            className={classNames("popper-inner", { darkMode })}
+            ref={popperElRef}
+          >
             <ul>{children}</ul>
           </div>
           {popperarrow ? (
-            <div className="popper-arrow" data-popper-arrow />
+            <div
+              className={classNames("popper-arrow", { darkMode })}
+              data-popper-arrow
+            />
           ) : null}
         </div>
       ) : (
         <SlideDown
-          closed={typeof open === 'undefined' ? closed : !open}
-          className="pro-inner-list-item"
+          closed={typeof open === "undefined" ? closed : !open}
+          className={classNames("pro-inner-list-item", { darkMode })}
         >
           <div>
             <ul>{children}</ul>

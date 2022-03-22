@@ -1,6 +1,7 @@
 import "./styles.scss";
 
-import React, { forwardRef, useCallback } from "react";
+import classNames from "classnames";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { Dropdown as BootStrapDropdown, OverlayTrigger } from "react-bootstrap";
 import {
   FaAngleDoubleLeft,
@@ -26,6 +27,7 @@ export interface Props {
   collapsed: boolean;
   rtl: boolean;
   toggled: boolean;
+  darkMode?: boolean;
   list: Array<any>;
   onToggle: (checked: boolean) => void;
   onCollapseChange: (checked: boolean) => void;
@@ -41,12 +43,23 @@ const Sidebar: React.FC<Props> = ({
   collapsed,
   rtl,
   toggled,
+  darkMode = false,
   list,
   onToggle,
   onCollapseChange,
   onMenuOpen,
 }: Props) => {
   const menuList = list;
+  const [darkModeCount, setDarkModeCount] = useState(0);
+
+  // FIXME: DarkMode 상태가 변경됬을 때 강제 렌더링을 위한 hook
+  useEffect(() => {
+    onCollapseChange(!collapsed);
+    setDarkModeCount((previous) => previous + 1);
+  }, [darkMode]);
+  useEffect(() => {
+    onCollapseChange(!collapsed);
+  }, [darkModeCount]);
 
   // NOTE: 커스텀 Overlay Dropdown
   const CustomOverlayDropdown = ({ ...props }: any) => {
@@ -65,34 +78,37 @@ const Sidebar: React.FC<Props> = ({
 
   // NOTE: 커스텀 Dropdown 토글
   // eslint-disable-next-line react/display-name
-  const CustomDropdownToggle = forwardRef(({ ...props }: any, ref: any) => (
-    <div
-      ref={ref}
-      style={{ ...props.style, cursor: "pointer" }}
-      onClick={(event) => {
-        props.onClick(event);
-      }}
-    >
-      {/* <span className="pro-icon-wrapper"> */}
-      <span className="pro-icon">
-        <FaUserAlt />
-      </span>
-      {/* </span> */}
-
-      {!collapsed && (
-        <span
-          style={{
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            marginLeft: "10px",
-          }}
-        >
-          한원석
+  const CustomDropdownToggle = forwardRef(({ ...props }: any, ref: any) => {
+    return (
+      <div
+        ref={ref}
+        className={classNames("sidebar-icon-wrapper", { darkMode })}
+        style={{ ...props.style, cursor: "pointer" }}
+        onClick={(event) => {
+          props.onClick(event);
+        }}
+      >
+        <span className="pro-icon-wrapper">
+          <span className="pro-icon">
+            <FaUserAlt />
+          </span>
         </span>
-      )}
-    </div>
-  ));
+
+        {!collapsed && (
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              marginLeft: "10px",
+            }}
+          >
+            한원석
+          </span>
+        )}
+      </div>
+    );
+  });
 
   // NOTE: 메뉴 클릭시 메뉴를 Open하는 이벤트
   const handleMenuOnClick = useCallback(
@@ -153,6 +169,7 @@ const Sidebar: React.FC<Props> = ({
       toggled={toggled}
       breakPoint="md"
       onToggle={onToggle}
+      darkMode={darkMode}
     >
       <SidebarHeader>
         <div
@@ -185,9 +202,11 @@ const Sidebar: React.FC<Props> = ({
         </div>
       </SidebarHeader>
       <SidebarHeader>
-        <BootStrapDropdown align={"start"} autoClose={"outside"}>
+        <BootStrapDropdown align={"start"} drop={"end"}>
           <div
-            className="sidebar-btn-wrapper"
+            className={classNames("sidebar-btn-wrapper", {
+              darkMode,
+            })}
             style={{
               padding: "8px 35px 8px 30px",
               justifyContent: "left",
@@ -224,7 +243,9 @@ const Sidebar: React.FC<Props> = ({
 
       <SidebarFooter style={{ textAlign: "center" }}>
         <div
-          className="sidebar-btn-wrapper"
+          className={classNames("sidebar-btn-wrapper", {
+            darkMode,
+          })}
           style={{
             padding: "20px 24px",
           }}
@@ -234,8 +255,8 @@ const Sidebar: React.FC<Props> = ({
               cursor: "pointer",
               width: "35px",
               height: "35px",
-              background: "#353535",
-              color: "#fff",
+              background: darkMode ? "#353535" : "#f7f7f7",
+              color: darkMode ? "#fff" : "#353535",
               textAlign: "center",
               borderRadius: "50%",
               display: "flex",

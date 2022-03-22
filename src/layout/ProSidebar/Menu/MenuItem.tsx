@@ -1,5 +1,7 @@
-import classNames from 'classnames';
-import React, { LegacyRef, forwardRef } from 'react';
+import classNames from "classnames";
+import React, { LegacyRef, forwardRef, useContext } from "react";
+
+import { SidebarContext } from "../ProSidebar";
 
 export type Props = React.LiHTMLAttributes<HTMLLIElement> & {
   children?: React.ReactNode;
@@ -28,23 +30,38 @@ const MenuItem: React.ForwardRefRenderFunction<unknown, Props> = (
 ) => {
   const menuItemRef: LegacyRef<HTMLLIElement> =
     (ref as any) || React.createRef<HTMLLIElement>();
+  const { darkMode } = useContext(SidebarContext);
 
   return (
     <li
       ref={menuItemRef}
-      className={classNames('pro-menu-item', className, { active })}
+      className={classNames("pro-menu-item", className, { active, darkMode })}
       {...rest}
     >
-      <div className="pro-inner-item" tabIndex={0} role="button">
+      <div
+        className={classNames("pro-inner-item", { darkMode })}
+        tabIndex={0}
+        role="button"
+      >
         {icon ? (
-          <span className="pro-icon-wrapper">
-            <span className="pro-icon">{icon}</span>
+          <span className={classNames("pro-icon-wrapper", { darkMode })}>
+            <span className={classNames("pro-icon", { darkMode })}>{icon}</span>
           </span>
         ) : null}
 
-        {prefix ? <span className="prefix-wrapper">{prefix}</span> : null}
-        <span className="pro-item-content">{children}</span>
-        {suffix ? <span className="suffix-wrapper">{suffix}</span> : null}
+        {prefix ? (
+          <span className={classNames("prefix-wrapper", { darkMode })}>
+            {prefix}
+          </span>
+        ) : null}
+        <span className={classNames("pro-item-content", { darkMode })}>
+          {children}
+        </span>
+        {suffix ? (
+          <span className={classNames("suffix-wrapper", { darkMode })}>
+            {suffix}
+          </span>
+        ) : null}
       </div>
     </li>
   );

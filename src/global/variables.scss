@@ -1,11 +1,18 @@
-$sidebar-bg-color: #1d1d1d !default;
-$sidebar-color: #adadad !default;
+$sidebar-bg-color-light: #e5e5e5 !default;
+$sidebar-color-light: #1d1d1d !default;
+$highlight-color-light: #06A4FF !default;
+$submenu-bg-color-light: #f7f7f7 !default;
+$submenu-bg-color-collapsed-light: #f7f7f7 !default;
+$icon-bg-color-light: #f7f7f7 !default;
+
+$sidebar-bg-color-dark: #1d1d1d !default;
+$sidebar-color-dark: #adadad !default;
 $sidebar-width: 270px !default;
 $sidebar-collapsed-width: 80px !default;
-$highlight-color: #d8d8d8 !default;
-$submenu-bg-color: #2b2b2b !default;
-$submenu-bg-color-collapsed: #2b2b2b !default;
-$icon-bg-color: #2b2b2b !default;
+$highlight-color-dark: #d8d8d8 !default;
+$submenu-bg-color-dark: #2b2b2b !default;
+$submenu-bg-color-collapsed-dark: #2b2b2b !default;
+$icon-bg-color-dark: #2b2b2b !default;
 $icon-size: 35px !default;
 $submenu-indent: 24px !default;
 
