@@ -1,13 +1,14 @@
 import RenderIndicator from "components/RenderIndicator";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MENU } from "TestLayoutData";
-import useAppContext from "utils/context/Reducer";
+import useAppContext, { useThemeContext } from "utils/context/Reducer";
 
 import Content from "./Content";
 import Sidebar from "./Sidebar";
 
 const Layout: React.FC = () => {
-  const { store } = useAppContext();
+  const { store, dispatch } = useAppContext();
+  const { store: themeStore } = useThemeContext();
   const rtl = false;
   const image = false;
   const [collapsed, setCollapsed] = useState(false);
@@ -47,6 +48,24 @@ const Layout: React.FC = () => {
     },
     [menu]
   );
+
+  // NOTE: Context Action을 통한 메뉴 오픈시 hook
+  useEffect(() => {
+    const openMenu = store?.openMenu;
+
+    if (!openMenu) return;
+
+    openMenu
+      ? setMenu((previous: any) => ({
+          ...previous,
+          ...openMenu,
+          moveItem: undefined,
+        }))
+      : setMenu(undefined);
+    !openMenu && setMenus([...menus]);
+
+    dispatch({ type: "SET_OPEN_MENU", payload: undefined });
+  }, [store?.openMenu]);
 
   // NOTE: Open된 탭메뉴 화면의 Close 이벤트
   const handleMenuClosed = useCallback(
@@ -96,6 +115,7 @@ const Layout: React.FC = () => {
         collapsed={collapsed}
         rtl={rtl}
         toggled={toggled}
+        darkMode={themeStore?.darkMode}
         list={menus}
         onToggle={handleToggleSidebar}
         onCollapseChange={handleCollapsedChange}

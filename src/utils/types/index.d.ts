@@ -4,6 +4,8 @@ import {
   AppContextProps,
   AppProviderProps,
   ActionProps,
+  ThemeStoreProps,
+  ThemeContextProps,
 } from "./context";
 
 export {
@@ -13,4 +15,6 @@ export {
   AppContextProps,
   AppProviderProps,
   ActionProps,
+  ThemeStoreProps,
+  ThemeContextProps,
 };

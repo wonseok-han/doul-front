@@ -25,6 +25,7 @@ const Content: React.FC<Props> = ({
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
   const { dispatch } = useAppContext();
 
+  // NOTE: 일반 메뉴 오픈시 hook
   useEffect(() => {
     if (!menu) {
       setOpenedMenuList([]);

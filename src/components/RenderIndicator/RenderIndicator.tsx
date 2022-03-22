@@ -3,6 +3,7 @@ import "./index.scss";
 import { USE_RENDER_INDICATOR } from "Constants";
 import React from "react";
 import useAppContext from "utils/context/Reducer";
+import { getLocalStorage } from "utils/functions/store";
 
 interface Props {
   style?: any;
@@ -52,7 +53,8 @@ function getTimeLabel(): string {
 }
 
 const RenderIndicatorWrap: React.FC<Props> = ({ style }) => {
-  if (!USE_RENDER_INDICATOR) return null;
+  if (!USE_RENDER_INDICATOR || getLocalStorage("indicator") !== "true")
+    return null;
   return <RenderIndicator style={style} />;
 };
 
