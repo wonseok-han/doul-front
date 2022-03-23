@@ -16,9 +16,9 @@ body {
 .main {
   height: auto;
   min-height: 100%;
-  background-color: $submenu-bg-color-light;
+  background-color: $content-bg-color-light;
   &.darkMode {
-    background-color: $submenu-bg-color-dark;
+    background-color: $content-bg-color-dark;
   }
 }
 
@@ -27,16 +27,9 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 
-  color: $sidebar-color-light;
+  color: $content-color-light;
   &.darkMode {
-    color: $sidebar-color-dark;
-  }
-
-  label {
-    color: $sidebar-color-light;
-    &.darkMode {
-      color: $sidebar-color-light;
-    }
+    color: $content-color-dark;
   }
   
   .check-label {

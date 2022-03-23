@@ -1,7 +1,11 @@
+import "./index.scss";
+
+import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface InputBoxProps extends InputGroupProps {
@@ -36,6 +40,8 @@ const InputBox: React.FC<InputBoxProps> = ({
   style,
   handleChangeField,
 }: InputBoxProps) => {
+  const { store: themeStore } = useThemeContext();
+
   // NOTE: 값 변경 이벤트
   const handleChange = (event: any) => {
     const {
@@ -59,6 +65,9 @@ const InputBox: React.FC<InputBoxProps> = ({
           <InputGroup style={style} hasValidation={true}>
             {prefix && <InputGroup.Text>{prefix}</InputGroup.Text>}
             <FormControl
+              className={classNames("custom-input", {
+                darkMode: themeStore?.darkMode,
+              })}
               name={name}
               type={(isPassword && "password") || ""}
               readOnly={readOnly}

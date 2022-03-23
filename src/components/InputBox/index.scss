@@ -1,0 +1,11 @@
+@import 'global/variables.scss';
+
+.custom-input {
+    background: $content-input-bg-color-light;
+    color: $sidebar-color-light;
+    border: 0px;
+    &.darkMode {
+        background: $content-input-bg-color-dark;
+        color: $sidebar-color-dark;
+    }   
+}

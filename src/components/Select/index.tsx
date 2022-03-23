@@ -1,3 +1,5 @@
+import "./index.scss";
+
 import {
   Checkbox,
   Select as MuiSelect,
@@ -7,9 +9,11 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, styled, useTheme } from "@mui/material/styles";
+import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
+import { useThemeContext } from "utils/context/Reducer";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface SelectProps extends MuiSelectProps {
@@ -24,41 +28,6 @@ export interface SelectProps extends MuiSelectProps {
   displaySize?: number;
   handleChangeField?: (event: any) => void;
 }
-
-// NOTE: Select InputBox Component
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(3),
-  },
-  "& .MuiInputBase-input": {
-    cursor: "auto",
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: theme.palette.background.paper,
-    border: "1px solid #ced4da",
-    fontSize: 16,
-    padding: "6px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-    "&:focus": {
-      borderRadius: 4,
-      borderColor: "#80bdff",
-      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-    },
-  },
-}));
 
 const ITEM_HEIGHT = 36;
 const ITEM_PADDING_TOP = 8;
@@ -98,6 +67,7 @@ const Select: React.FC<SelectProps> = ({
   style,
   handleChangeField,
 }: SelectProps) => {
+  const { store: themeStore } = useThemeContext();
   const theme = useTheme();
   const listItem = ANOTHER_ITEMS.filter((item) => {
     if (selectOption === "choose") return item.code === "";
@@ -119,11 +89,51 @@ const Select: React.FC<SelectProps> = ({
   });
   const [selectedAll, setSelectedAll] = useState(false);
 
+  // NOTE: Select InputBox Component
+  const BootstrapInput = styled(InputBase)(({ theme }) => {
+    console.log("theme::", theme);
+    return {
+      "label + &": {
+        marginTop: theme.spacing(3),
+      },
+      "& .MuiInputBase-input": {
+        cursor: "auto",
+        borderRadius: 4,
+        position: "relative",
+        // backgroundColor: theme.palette.background.paper,
+        // border: "1px solid #ced4da",
+        fontSize: 16,
+        padding: "6px 12px",
+        transition: theme.transitions.create(["border-color", "box-shadow"]),
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(","),
+        "&:focus": {
+          borderRadius: 4,
+          borderColor: "#80bdff",
+          boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+        },
+      },
+    };
+  });
+
   const MenuProps = {
     PaperProps: {
       style: {
         maxHeight: ITEM_HEIGHT * displaySize + ITEM_PADDING_TOP,
         width: 250,
+        backgroundColor: themeStore?.darkMode ? "#373737" : "#f7f7f7",
+        color: themeStore?.darkMode ? "#adadad" : "#1d1d1d",
       },
     },
   };
@@ -228,7 +238,13 @@ const Select: React.FC<SelectProps> = ({
           onChange={handleChange}
           // FIXME: DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
           onMouseDown={(event) => event.stopPropagation()}
-          input={<BootstrapInput />}
+          input={
+            <BootstrapInput
+              className={classNames("custom-select", {
+                darkMode: themeStore?.darkMode,
+              })}
+            />
+          }
           renderValue={setInputRender}
           MenuProps={MenuProps}
           inputProps={{ "aria-label": "Without label" }}

@@ -1,3 +1,4 @@
+import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material";
 import classNames from "classnames";
 import Loading from "components/Loading";
 import React, { Suspense, lazy } from "react";
@@ -25,17 +26,25 @@ const DynamicLoader: React.FC<Props> = ({ path, info }: Props) => {
   const LazyComponent = lazy(() => import(`pages/${path}`));
   const { store: themeStore } = useThemeContext();
 
+  const theme = createTheme({
+    palette: {
+      mode: themeStore?.darkMode ? "dark" : "light",
+    },
+  });
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Suspense fallback={<Loading loading={true} />}>
-        <div
-          className={classNames("dynamic-content", {
-            darkMode: themeStore?.darkMode,
-          })}
-        >
-          <LazyComponent info={info} />
-        </div>
-      </Suspense>
+      <MuiThemeProvider theme={theme}>
+        <Suspense fallback={<Loading loading={true} />}>
+          <div
+            className={classNames("dynamic-content", {
+              darkMode: themeStore?.darkMode,
+            })}
+          >
+            <LazyComponent info={info} />
+          </div>
+        </Suspense>
+      </MuiThemeProvider>
     </ErrorBoundary>
   );
 };

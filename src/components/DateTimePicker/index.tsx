@@ -2,6 +2,7 @@
 
 import "./index.scss";
 
+import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import Select from "components/Select";
@@ -15,6 +16,7 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
+import { useThemeContext } from "utils/context/Reducer";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface DatePickerProps {
@@ -79,6 +81,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
   style,
   handleChangeField,
 }: DatePickerProps) => {
+  const { store: themeStore } = useThemeContext();
   const [parseValue, setParseValue] = useState<Date>();
   const [dateValue, setDateValue] = useState(value);
   const [open, setOpen] = useState(false);
@@ -178,6 +181,9 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
       <RenderIndicator />
 
       <DatePicker
+        className={classNames("custom-datepicker-input", {
+          darkMode: themeStore?.darkMode,
+        })}
         name={name}
         locale={ko}
         showYearDropdown

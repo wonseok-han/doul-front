@@ -1,6 +1,10 @@
+import "./index.scss";
+
+import classNames from "classnames";
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 
 export interface TextareaProps extends InputGroupProps {
   name: string;
@@ -36,12 +40,16 @@ const Textarea: React.FC<TextareaProps> = ({
     };
     handleChangeField?.(fieldValue);
   };
+  const { store: themeStore } = useThemeContext();
 
   return (
     <>
       <RenderIndicator />
       <InputGroup style={style} hasValidation={true}>
         <FormControl
+          className={classNames("custom-textarea", {
+            darkMode: themeStore?.darkMode,
+          })}
           as={"textarea"}
           name={name}
           value={value}

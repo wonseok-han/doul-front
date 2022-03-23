@@ -8,12 +8,15 @@
   }
 
 .title {
-    background: $sidebar-bg-color-light;
     font-weight: bold;
     text-align: center;
     border-radius: 0.2em;
-    border: 1px solid $highlight-color-dark;
+    background: $content-label-bg-color-light;
+    // border: 1px solid $highlight-color-dark;
+    color: $sidebar-color-light;
     &.darkMode {
-      border: 1px solid $highlight-color-dark;
+      background: $content-label-bg-color-dark;
+      // border: 1px solid $highlight-color-dark;
+      color: $sidebar-color-dark;
     }
 }

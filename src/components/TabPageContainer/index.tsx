@@ -54,12 +54,8 @@ const TabPageContainer: React.FC<Props> = ({
             >
               {item.menuName}
               <CloseButton
-                style={{
-                  marginLeft: "5px",
-                  width: "5px",
-                  height: "5px",
-                  verticalAlign: "middle",
-                }}
+                className={classNames("close-icon")}
+                variant={themeStore?.darkMode ? "white" : undefined}
                 onClick={(event) => {
                   event.stopPropagation();
                   handleExtraOnClick(item);
