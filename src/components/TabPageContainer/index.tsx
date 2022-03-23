@@ -1,3 +1,6 @@
+import "./index.scss";
+
+import classNames from "classnames";
 import React, { useCallback } from "react";
 import {
   CloseButton,
@@ -7,6 +10,7 @@ import {
   TabPane,
   TabsProps,
 } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
 export interface Props extends TabsProps {
@@ -29,6 +33,7 @@ const TabPageContainer: React.FC<Props> = ({
     },
     [openedList]
   );
+  const { store: themeStore } = useThemeContext();
 
   return (
     <TabContainer
@@ -38,10 +43,15 @@ const TabPageContainer: React.FC<Props> = ({
         if (handleActivateTab) handleActivateTab(foundItem);
       }}
     >
-      <Nav variant="tabs" navbar={true}>
+      <Nav className={"custom-nav"} variant="tabs" navbar={true}>
         {openedList.map((item) => (
           <Nav.Item key={`Nav${item.menuCode}`} style={{ cursor: "pointer" }}>
-            <Nav.Link eventKey={item.menuCode}>
+            <Nav.Link
+              className={classNames("custom-nav-link", {
+                darkMode: themeStore?.darkMode,
+              })}
+              eventKey={item.menuCode}
+            >
               {item.menuName}
               <CloseButton
                 style={{

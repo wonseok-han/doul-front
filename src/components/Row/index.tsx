@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import classNames from "classnames";
 import React from "react";
 import {
   Row as BootStrapRow,
@@ -26,7 +26,7 @@ const Row: React.FC<RowProps> = ({
       lg={lg}
       xl={xl}
       xxl={xxl}
-      className={classnames(className, "gx-0")}
+      className={classNames(`${className} gx-0`)}
       style={style}
     >
       {children}

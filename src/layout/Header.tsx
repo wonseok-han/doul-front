@@ -1,5 +1,7 @@
+import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { Breadcrumb } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 
 import reactLogo from "./assets/logo.svg";
 
@@ -11,6 +13,7 @@ export interface Props {
 
 const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
   const [breadCrumbList, setBreadCrumbList] = useState<Array<any>>();
+  const { store: themeStore } = useThemeContext();
 
   useEffect(() => {
     const menuList = [...menus];
@@ -45,12 +48,18 @@ const Header: React.FC<Props> = ({ title, menus = [], menu }: Props) => {
     <>
       {title && (
         <div>
-          <h2>
+          <h2 className={`${themeStore?.darkMode ? "darkMode" : ""}`}>
             <img width={80} src={reactLogo} alt="react logo" /> {title}
           </h2>
           <Breadcrumb>
             {breadCrumbList?.map((item) => (
-              <Breadcrumb.Item key={item.menuName} active>
+              <Breadcrumb.Item
+                className={classNames("breadcrumb", {
+                  darkMode: themeStore?.darkMode,
+                })}
+                key={item.menuName}
+                active
+              >
                 {item.menuName}
               </Breadcrumb.Item>
             ))}

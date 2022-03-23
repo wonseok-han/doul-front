@@ -1,6 +1,8 @@
+import classNames from "classnames";
 import Loading from "components/Loading";
 import React, { Suspense, lazy } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+import { useThemeContext } from "utils/context/Reducer";
 
 export type Props = {
   path: string;
@@ -21,11 +23,15 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 // NOTE: 페이지를 Lazy하게 호출하기 위한 DynamicLoader 컴포넌트
 const DynamicLoader: React.FC<Props> = ({ path, info }: Props) => {
   const LazyComponent = lazy(() => import(`pages/${path}`));
+  const { store: themeStore } = useThemeContext();
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <Suspense fallback={<Loading loading={true} />}>
         <div
-          style={{ marginTop: "15px", marginLeft: "10px", marginRight: "10px" }}
+          className={classNames("dynamic-content", {
+            darkMode: themeStore?.darkMode,
+          })}
         >
           <LazyComponent info={info} />
         </div>

@@ -1,8 +1,9 @@
+import classNames from "classnames";
 import TabPageContainer from "components/TabPageContainer";
 import Header from "layout/Header";
 import React, { useEffect, useState } from "react";
 import { FaExchangeAlt } from "react-icons/fa";
-import useAppContext from "utils/context/Reducer";
+import useAppContext, { useThemeContext } from "utils/context/Reducer";
 import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
 export interface Props {
@@ -24,6 +25,7 @@ const Content: React.FC<Props> = ({
 }: Props) => {
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
   const { store, dispatch } = useAppContext();
+  const { store: themeStore } = useThemeContext();
 
   // NOTE: 일반 메뉴 오픈시 hook
   useEffect(() => {
@@ -60,12 +62,7 @@ const Content: React.FC<Props> = ({
   }, [store?.toggledInterface]);
 
   return (
-    <main
-      style={{
-        height: "auto",
-        minHeight: "100%",
-      }}
-    >
+    <main className={classNames("main", { darkMode: themeStore?.darkMode })}>
       {openedMenuList.length > 0 && menu ? (
         <>
           <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>

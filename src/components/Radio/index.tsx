@@ -1,7 +1,9 @@
+import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface RadioProps extends FormCheckProps {
@@ -27,6 +29,7 @@ const Radio: React.FC<RadioProps> = ({
   handleChangeField,
 }: RadioProps) => {
   const [selected, setSelected] = useState(value);
+  const { store: themeStore } = useThemeContext();
 
   // NOTE: 선택 값 변경 이벤트
   const handleChange = (event: any) => {
@@ -76,7 +79,13 @@ const Radio: React.FC<RadioProps> = ({
                 isInvalid={isValid !== undefined ? !isValid : false}
                 onChange={handleChange}
               />
-              <FormCheck.Label>{item.name}</FormCheck.Label>
+              <FormCheck.Label
+                className={classNames("check-label", {
+                  darkMode: themeStore?.darkMode,
+                })}
+              >
+                {item.name}
+              </FormCheck.Label>
             </FormCheck>
           ))}
         </div>

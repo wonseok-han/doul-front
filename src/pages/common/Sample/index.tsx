@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import Check from "components/Check";
+import Col from "components/Col";
 import DateTimePicker from "components/DateTimePicker";
 import FormRow from "components/FormRow";
 import InputBox from "components/InputBox";
@@ -11,7 +12,7 @@ import Row from "components/Row";
 import Select from "components/Select";
 import Textarea from "components/Textarea";
 import React, { useState } from "react";
-import { Col, Form, FormGroup } from "react-bootstrap";
+import { Form, FormGroup } from "react-bootstrap";
 import { getCurrentDate } from "utils/functions/date";
 import useFieldValues from "utils/hooks/useFieldValues";
 import { PageProps } from "utils/types";
@@ -325,6 +326,9 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
                 choices={USE_YN_ITEMS}
                 value={fieldValues.use_yn}
                 handleChangeField={handleChangeField}
+                style={{
+                  marginLeft: 10,
+                }}
               />
             </Col>
           </FormGroup>
@@ -336,6 +340,9 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
                 choices={LOCATION_ITEMS}
                 value={fieldValues.location}
                 handleChangeField={handleChangeField}
+                style={{
+                  marginLeft: 10,
+                }}
               />
             </Col>
           </FormGroup>

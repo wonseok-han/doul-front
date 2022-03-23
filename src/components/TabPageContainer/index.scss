@@ -1,0 +1,24 @@
+@import 'global/variables.scss';
+
+.custom-nav {
+    .custom-nav-link {
+        color: $sidebar-color-light;
+        &.darkMode {
+            color: $sidebar-color-dark;    
+        }
+        &:hover,
+        &:focus {
+            color: $sidebar-color-light;
+            &.darkMode {
+                color: $sidebar-color-dark;    
+            }
+        }
+    }
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+      color: $sidebar-color-light;
+      background-color: $sidebar-bg-color-light;
+      border-color: white;
+    }
+}

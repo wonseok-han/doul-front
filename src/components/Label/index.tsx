@@ -1,9 +1,10 @@
 import "./index.scss";
 
-import classnames from "classnames";
+import classNames from "classnames";
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormLabel } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 
 type ColSizeProps =
   | "1"
@@ -45,6 +46,7 @@ const Label: React.FC<LabelProps> = ({
   column = true,
   children,
 }: LabelProps) => {
+  const { store: themeStore } = useThemeContext();
   return (
     <>
       <RenderIndicator />
@@ -62,10 +64,10 @@ const Label: React.FC<LabelProps> = ({
           justifyContent: "center",
           ...style,
         }}
-        className={classnames("title")}
+        className={classNames("title", { darkMode: themeStore?.darkMode })}
       >
         <label>
-          {required && <span className={classnames("required")}>*</span>}
+          {required && <span className={classNames("required")}>*</span>}
           {children}
         </label>
       </FormLabel>

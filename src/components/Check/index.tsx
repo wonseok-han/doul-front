@@ -1,7 +1,9 @@
+import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
+import { useThemeContext } from "utils/context/Reducer";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface CheckProps extends FormCheckProps {
@@ -33,6 +35,7 @@ const Check: React.FC<CheckProps> = ({
   const [isChecked, setIsChecked] = useState(
     value === trueValue ? true : false
   );
+  const { store: themeStore } = useThemeContext();
 
   // NOTE: 체크 값 변경 이벤트
   const handleChange = (event: any) => {
@@ -78,7 +81,11 @@ const Check: React.FC<CheckProps> = ({
               isInvalid={isValid !== undefined ? !isValid : false}
               onChange={handleChange}
             />
-            <FormCheck.Label>
+            <FormCheck.Label
+              className={classNames("check-label", {
+                darkMode: themeStore?.darkMode,
+              })}
+            >
               {choices.find((item) => item.code === value)?.name}
             </FormCheck.Label>
           </FormCheck>

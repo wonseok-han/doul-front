@@ -1,9 +1,10 @@
+import Col from "components/Col";
 import Label from "components/Label";
 import Row from "components/Row";
 import Switch from "components/Switch";
 import { USE_RENDER_INDICATOR } from "Constants";
 import { useCallback } from "react";
-import { Col, Form, FormGroup } from "react-bootstrap";
+import { Form, FormGroup } from "react-bootstrap";
 import useAppContext, { useThemeContext } from "utils/context/Reducer";
 import { setLocalStorage } from "utils/functions/store";
 
