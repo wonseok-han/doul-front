@@ -7,5 +7,12 @@
     &.darkMode {
         background: $content-input-bg-color-dark;
         color: $sidebar-color-dark;
-    }   
+    }
+
+    &:focus {
+        background: $content-bg-color-light;
+        &.darkMode {
+            background: $content-bg-color-dark;
+        }
+    }
 }
