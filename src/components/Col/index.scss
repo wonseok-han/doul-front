@@ -1,0 +1,9 @@
+@import 'global/variables.scss';
+
+.form-col {
+    border-radius: 0.2em;
+    border: 1px solid $highlight-color-dark;
+    &.darkMode {
+      border: 1px solid $highlight-color-dark;
+    }
+}
