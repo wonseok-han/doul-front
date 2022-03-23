@@ -180,11 +180,9 @@ body {
       }
     }
     .sidebar-btn-wrapper {
-      .sidebar-btn {
-        span {
-          margin-left: 0;
-          margin-right: 5px;
-        }
+      span {
+        margin-left: 0;
+        margin-right: 5px;
       }
     }
   }
@@ -200,6 +198,12 @@ body {
   @media (max-width: $breakpoint-md) {
     .btn-toggle {
       display: flex;
+      color: $sidebar-toggle-btn-color-color-light;
+      background-color: $sidebar-toggle-btn-bg-color-light;
+      &.darkMode {
+        color: $sidebar-toggle-btn-color-color-dark;
+        background-color: $sidebar-toggle-btn-bg-color-dark;
+      }
     }
 
     &.rtl {

@@ -65,7 +65,12 @@ const Content: React.FC<Props> = ({
     <main className={classNames("main", { darkMode: themeStore?.darkMode })}>
       {openedMenuList.length > 0 && menu ? (
         <>
-          <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
+          <div
+            className={classNames("btn-toggle", {
+              darkMode: themeStore?.darkMode,
+            })}
+            onClick={() => handleToggleSidebar(true)}
+          >
             <FaExchangeAlt />
           </div>
 

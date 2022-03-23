@@ -251,19 +251,22 @@ const Sidebar: React.FC<Props> = ({
           }}
         >
           <div
-            style={{
-              cursor: "pointer",
-              width: "35px",
-              height: "35px",
-              background: darkMode ? "#353535" : "#f7f7f7",
-              color: darkMode ? "#fff" : "#353535",
-              textAlign: "center",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "15px",
-            }}
+            className={classNames("sidebar-btn-icon", {
+              darkMode,
+            })}
+            // style={{
+            //   cursor: "pointer",
+            //   width: "35px",
+            //   height: "35px",
+            //   background: darkMode ? "#353535" : "#f7f7f7",
+            //   color: darkMode ? "#fff" : "#353535",
+            //   textAlign: "center",
+            //   borderRadius: "50%",
+            //   display: "flex",
+            //   alignItems: "center",
+            //   justifyContent: "center",
+            //   fontSize: "15px",
+            // }}
             onClick={() => onCollapseChange(!collapsed)}
           >
             {collapsed ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}

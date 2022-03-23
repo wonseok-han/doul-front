@@ -9,8 +9,10 @@
         &:hover,
         &:focus {
             color: $sidebar-color-light;
+            border: 1px solid $highlight-color-light;
             &.darkMode {
-                color: $sidebar-color-dark;    
+                color: $sidebar-color-dark;
+                border: 1px solid $highlight-color-dark;
             }
         }
 
