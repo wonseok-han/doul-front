@@ -1,6 +1,9 @@
 import React from "react";
 import { Dropdown as BootStrapDropdown } from "react-bootstrap";
+import { FaCog, FaSignOutAlt } from "react-icons/fa";
 import useAppContext, { useThemeContext } from "utils/context/Reducer";
+// FaBahai
+// FaCog
 
 const Dropdown: React.FC = () => {
   const { dispatch } = useAppContext();
@@ -23,9 +26,11 @@ const Dropdown: React.FC = () => {
           })
         }
       >
+        <FaCog style={{ marginRight: 5 }} />
         Settings
       </BootStrapDropdown.Item>
       <BootStrapDropdown.Item onClick={() => window.location.reload()}>
+        <FaSignOutAlt style={{ marginRight: 5 }} />
         로그아웃
       </BootStrapDropdown.Item>
     </BootStrapDropdown.Menu>
