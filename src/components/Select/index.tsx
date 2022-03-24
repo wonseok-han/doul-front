@@ -91,7 +91,6 @@ const Select: React.FC<SelectProps> = ({
 
   // NOTE: Select InputBox Component
   const BootstrapInput = styled(InputBase)(({ theme }) => {
-    console.log("theme::", theme);
     return {
       "label + &": {
         marginTop: theme.spacing(3),
