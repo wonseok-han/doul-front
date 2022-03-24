@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Check from "components/Check";
 import Col from "components/Col";
 import DateTimePicker from "components/DateTimePicker";
-import FormRow from "components/FormRow";
+import FormRow from "components/Form/FormRow";
 import InputBox from "components/InputBox";
 import Label from "components/Label";
 import Loading from "components/Loading";
