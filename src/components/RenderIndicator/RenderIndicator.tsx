@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./styles.scss";
 
 import { USE_RENDER_INDICATOR } from "Constants";
 import React from "react";

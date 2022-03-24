@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./styles.scss";
 
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";

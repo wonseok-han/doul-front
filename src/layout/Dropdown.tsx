@@ -2,8 +2,6 @@ import React from "react";
 import { Dropdown as BootStrapDropdown } from "react-bootstrap";
 import { FaCog, FaSignOutAlt } from "react-icons/fa";
 import useAppContext, { useThemeContext } from "utils/context/Reducer";
-// FaBahai
-// FaCog
 
 const Dropdown: React.FC = () => {
   const { dispatch } = useAppContext();
