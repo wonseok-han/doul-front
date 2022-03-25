@@ -10,17 +10,6 @@ export type Props = {
   info?: any;
 };
 
-// NOTE: ErrorFallback 컴포넌트
-const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
-  return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
-  );
-};
-
 // NOTE: 페이지를 Lazy하게 호출하기 위한 DynamicLoader 컴포넌트
 const DynamicLoader: React.FC<Props> = ({ path, info }: Props) => {
   const LazyComponent = lazy(() => import(`pages/${path}`));
@@ -31,6 +20,22 @@ const DynamicLoader: React.FC<Props> = ({ path, info }: Props) => {
       mode: themeStore?.darkMode ? "dark" : "light",
     },
   });
+
+  // NOTE: ErrorFallback 컴포넌트
+  const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
+    return (
+      <div
+        role="alert"
+        className={classNames("dynamic-content", {
+          darkMode: themeStore?.darkMode,
+        })}
+      >
+        <p>Something went wrong:</p>
+        <pre>{error.message}</pre>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </div>
+    );
+  };
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
