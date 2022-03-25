@@ -112,7 +112,13 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   prefix,
   postfix,
-  textAlign,
+  textAlign = type === "string"
+    ? "left"
+    : type === "number"
+    ? "right"
+    : type === "date"
+    ? "center"
+    : "left",
   isValid,
   style,
   handleChangeField,
@@ -130,6 +136,7 @@ const FormField: React.FC<FormFieldProps> = ({
             {/* 문자 타입 */}
             {type === "string" && typeof value === "string" ? (
               // Masking 문자
+              // TODO: mask 속성을 가진 컴포넌트 추가
               widgetType === "mask" ? (
                 <div>string-mask</div>
               ) : // TextArea 문자
@@ -138,6 +145,7 @@ const FormField: React.FC<FormFieldProps> = ({
               ) : (
                 // 일반 문자
                 <InputBox
+                  type={type}
                   name={name}
                   value={value}
                   isPassword={isPassword}
@@ -153,13 +161,29 @@ const FormField: React.FC<FormFieldProps> = ({
                 />
               )
             ) : // 숫자 타입
-            type === "number" && typeof value === "number" ? (
+            (type === "number" && typeof value === "number") ||
+              typeof value === "string" ? (
               // Masking 숫자
+              // TODO: mask 속성을 가진 컴포넌트 추가
               widgetType === "mask" ? (
                 <div>number-mask</div>
               ) : (
                 // 일반 숫자
-                <div>number</div>
+                <InputBox
+                  type={type}
+                  name={name}
+                  value={value}
+                  isPassword={isPassword}
+                  placeholder={placeholder}
+                  readOnly={readOnly}
+                  disabled={disabled}
+                  isValid={isValid}
+                  prefix={prefix}
+                  postfix={postfix}
+                  textAlign={textAlign}
+                  style={style}
+                  handleChangeField={handleChangeField}
+                />
               ) // Boolean 타입
             ) : // 날짜 타입
             type === "date" && typeof value === "string" ? (

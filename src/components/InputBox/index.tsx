@@ -9,9 +9,10 @@ import { useThemeContext } from "utils/context/Reducer";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface InputBoxProps extends InputGroupProps {
+  type?: string;
   name: string;
   isPassword?: boolean;
-  value?: string;
+  value?: string | number;
   readOnly?: boolean;
   disabled?: boolean;
   placeholder?: string | undefined;
@@ -28,6 +29,7 @@ const STYLE = {
 };
 
 const InputBox: React.FC<InputBoxProps> = ({
+  type = "string",
   name,
   isPassword = false,
   value,
@@ -71,7 +73,7 @@ const InputBox: React.FC<InputBoxProps> = ({
                 darkMode: themeStore?.darkMode,
               })}
               name={name}
-              type={(isPassword && "password") || ""}
+              type={isPassword ? "password" : type}
               readOnly={readOnly}
               disabled={disabled}
               placeholder={placeholder}

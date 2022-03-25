@@ -57,7 +57,7 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
     <FormRow xs={xs} sm={sm} md={md} lg={lg} xl={xl} xxl={xxl}>
       {meta.map((item: any, index: number) => (
         <FormField
-          key={`form-${index}`}
+          key={`form-field-${index}`}
           type={item.type}
           widgetType={item.widgetType}
           choices={item.choices}

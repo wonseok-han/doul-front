@@ -14,7 +14,6 @@ const META = [
     // choices: [{}],
     readOnly: false,
     disabled: false,
-    textAlign: "center",
     required: true,
     rules: {
       required: true,
@@ -25,13 +24,12 @@ const META = [
   },
   {
     name: "test2",
-    type: "string",
+    type: "number",
     widgetType: "string",
     label: "TEST2",
     // choices: [{}],
     readOnly: false,
     disabled: false,
-    textAlign: "center",
     required: true,
     rules: {
       required: true,
@@ -108,7 +106,7 @@ const META = [
 
 const DATA = {
   test: "1",
-  test2: "2",
+  test2: 2,
   test3: "3",
   test4: "4",
   test5: "5",
@@ -122,6 +120,7 @@ const Sample1: React.FC<PageProps> = ({ info }: PageProps) => {
 
   return (
     <>
+      {JSON.stringify(fieldValues)}
       <h4>FormContainer</h4>
       <FormContainer
         meta={META}
