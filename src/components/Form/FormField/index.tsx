@@ -1,7 +1,9 @@
 import Col from "components/Col";
+import InputBox from "components/InputBox";
 import Label from "components/Label";
+import Row from "components/Row";
 import React from "react";
-import { FormGroup, Row } from "react-bootstrap";
+import { FormGroup } from "react-bootstrap";
 
 export interface FormFieldProps {
   /**
@@ -32,7 +34,7 @@ export interface FormFieldProps {
   /**
    * 필드명
    */
-  name?: string;
+  name: string;
   /**
    * 필드 값
    */
@@ -44,7 +46,7 @@ export interface FormFieldProps {
   /**
    * ReadOnly 여부
    */
-  readonly?: boolean;
+  readOnly?: boolean;
   /**
    * Disable 여부
    */
@@ -58,6 +60,22 @@ export interface FormFieldProps {
    */
   labelHidden?: boolean;
   /**
+   * InputBox에 사용되는 password 사용여부
+   */
+  isPassword?: boolean;
+  /**
+   * InputBox에 사용되는 placeholder
+   */
+  placeholder?: string;
+  /**
+   * Field 앞쪽에 위치할 String
+   */
+  prefix?: string;
+  /**
+   * Field 뒤쪽에 위치할 String
+   */
+  postfix?: string;
+  /**
    * 필드 유효성검사 Rule
    */
   rules?: any;
@@ -65,6 +83,14 @@ export interface FormFieldProps {
    * 필드 정렬
    */
   textAlign?: "left" | "right" | "center";
+  /**
+   * 유효성 여부
+   */
+  isValid?: boolean;
+  /**
+   * Filed별 Style
+   */
+  style?: any;
   /**
    * 필드 Change Event
    */
@@ -75,9 +101,21 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   widgetType,
   label,
+  name,
+  value,
   required = false,
+  readOnly = false,
+  disabled = false,
   hidden = false,
   labelHidden = false,
+  isPassword = false,
+  placeholder,
+  prefix,
+  postfix,
+  textAlign,
+  isValid,
+  style,
+  handleChangeField,
 }: FormFieldProps) => {
   return (
     <>
@@ -90,7 +128,7 @@ const FormField: React.FC<FormFieldProps> = ({
           )}
           <Col sm={"7"}>
             {/* 문자 타입 */}
-            {type === "string" ? (
+            {type === "string" && typeof value === "string" ? (
               // Masking 문자
               widgetType === "mask" ? (
                 <div>string-mask</div>
@@ -99,10 +137,23 @@ const FormField: React.FC<FormFieldProps> = ({
                 <div>string-textarea</div>
               ) : (
                 // 일반 문자
-                <div>string</div>
+                <InputBox
+                  name={name}
+                  value={value}
+                  isPassword={isPassword}
+                  placeholder={placeholder}
+                  readOnly={readOnly}
+                  disabled={disabled}
+                  isValid={isValid}
+                  prefix={prefix}
+                  postfix={postfix}
+                  textAlign={textAlign}
+                  style={style}
+                  handleChangeField={handleChangeField}
+                />
               )
             ) : // 숫자 타입
-            type === "number" ? (
+            type === "number" && typeof value === "number" ? (
               // Masking 숫자
               widgetType === "mask" ? (
                 <div>number-mask</div>
@@ -111,7 +162,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 <div>number</div>
               ) // Boolean 타입
             ) : // 날짜 타입
-            type === "date" ? (
+            type === "date" && typeof value === "string" ? (
               // 년도 타입
               widgetType === "year" ? (
                 <div>date-year</div>
@@ -124,16 +175,21 @@ const FormField: React.FC<FormFieldProps> = ({
               ) : (
                 // 일반 날짜 타입
                 <div>date</div>
-              ) // 선택 타입
-            ) : // Radio 선택 타입
-            widgetType === "radio" ? (
-              <div>select-radio</div>
-            ) : // Check 선택 타입
-            widgetType === "check" ? (
-              <div>select-check</div>
+              )
+            ) : // 선택 타입
+            type === "select" && typeof value === "string" ? (
+              // Radio 선택 타입
+              widgetType === "radio" ? (
+                <div>select-radio</div>
+              ) : // Check 선택 타입
+              widgetType === "check" ? (
+                <div>select-check</div>
+              ) : (
+                // 일반 선택 타입
+                <div>select</div>
+              )
             ) : (
-              // 일반 선택 타입
-              <div>select</div>
+              <div>type is undefined</div>
             )}
           </Col>
         </FormGroup>

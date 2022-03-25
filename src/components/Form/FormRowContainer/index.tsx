@@ -9,6 +9,10 @@ export interface FormRowContainerProps {
   // TODO: meta 타입 구체화하기
   meta: Array<any>;
   /**
+   * meta data를 통해 만들어진 Form의 데이터
+   */
+  data?: any;
+  /**
    * < 576px
    */
   xs?: "1" | "2" | "3" | "4" | 1 | 2 | 3 | 4;
@@ -32,16 +36,22 @@ export interface FormRowContainerProps {
    * >= 1400px
    */
   xxl?: "1" | "2" | "3" | "4" | 1 | 2 | 3 | 4;
+  /**
+   * 필드 Change Event
+   */
+  handleChangeField: (event: any) => void;
 }
 
 const FormRowContainer: React.FC<FormRowContainerProps> = ({
   meta,
+  data,
   xs,
   sm,
   md,
   lg,
   xl,
   xxl,
+  handleChangeField,
 }: FormRowContainerProps) => {
   return (
     <FormRow xs={xs} sm={sm} md={md} lg={lg} xl={xl} xxl={xxl}>
@@ -53,12 +63,15 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
           choices={item.choices}
           label={item.label}
           name={item.name}
-          value={""}
-          readonly={item.readOnly}
+          value={data[item.name]}
+          required={item.required}
+          readOnly={item.readOnly}
           disabled={item.disabled}
+          placeholder={item.placeholder}
           textAlign={item.textAlign}
           rules={item.rules}
-          handleChangeField={(event) => console.log(event)}
+          style={item.style}
+          handleChangeField={handleChangeField}
         />
       ))}
     </FormRow>

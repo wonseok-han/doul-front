@@ -11,13 +11,14 @@ import { renderTooltip } from "utils/tooltip/Tooltip";
 export interface InputBoxProps extends InputGroupProps {
   name: string;
   isPassword?: boolean;
-  value?: string | undefined;
+  value?: string;
   readOnly?: boolean;
   disabled?: boolean;
   placeholder?: string | undefined;
   prefix?: string | undefined;
   postfix?: string | undefined;
   hidden?: boolean;
+  textAlign?: "left" | "right" | "center";
   isValid?: boolean | undefined;
   handleChangeField?: (event: any) => void;
 }
@@ -36,6 +37,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   prefix,
   postfix,
   hidden = false,
+  textAlign,
   isValid,
   style,
   handleChangeField,
@@ -77,7 +79,7 @@ const InputBox: React.FC<InputBoxProps> = ({
               isValid={isValid}
               isInvalid={isValid !== undefined ? !isValid : false}
               onChange={handleChange}
-              style={STYLE}
+              style={{ ...STYLE, textAlign: textAlign }}
             />
             {postfix && <InputGroup.Text>{postfix}</InputGroup.Text>}
           </InputGroup>

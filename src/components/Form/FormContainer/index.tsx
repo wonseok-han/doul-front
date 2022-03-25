@@ -9,6 +9,10 @@ export interface FormContainerProps {
   // TODO: meta 타입 구체화하기
   meta: Array<any>;
   /**
+   * meta data를 통해 만들어진 Form의 데이터
+   */
+  data?: any;
+  /**
    * Form을 구성하는 1개 Row에 들어갈 Column 개수
    */
   column?: 1 | 2 | 3 | 4;
@@ -39,11 +43,12 @@ export interface FormContainerProps {
   /**
    * 필드 Change Event
    */
-  //    handleChangeField: (event: any) => void;
+  handleChangeField: (event: any) => void;
 }
 
 const FormContainer: React.FC<FormContainerProps> = ({
   meta,
+  data,
   column = 4,
   xs,
   sm,
@@ -51,6 +56,7 @@ const FormContainer: React.FC<FormContainerProps> = ({
   lg,
   xl,
   xxl,
+  handleChangeField,
 }: FormContainerProps) => {
   const rowMeta = new Array(Math.round(meta.length / column))
     .fill(0)
@@ -66,12 +72,14 @@ const FormContainer: React.FC<FormContainerProps> = ({
           <FormRowContainer
             key={`form-row-container-${index}`}
             meta={item}
+            data={data}
             xs={xs}
             sm={sm}
             md={md}
             lg={lg}
             xl={xl}
             xxl={xxl}
+            handleChangeField={handleChangeField}
           />
         ))}
     </Form>
