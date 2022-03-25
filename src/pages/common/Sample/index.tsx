@@ -245,7 +245,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
             <Col sm={"8"}>
               <Select
                 name={"position"}
-                items={POSITION_ITEMS}
+                choices={POSITION_ITEMS}
                 selectOption={"choose"}
                 value={fieldValues.position}
                 handleChangeField={handleChangeField}
@@ -257,7 +257,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
             <Col sm={"8"}>
               <Select
                 name={"skills"}
-                items={SKILL_ITEMS}
+                choices={SKILL_ITEMS}
                 selectOption={"all"}
                 multiple
                 value={fieldValues.skills}

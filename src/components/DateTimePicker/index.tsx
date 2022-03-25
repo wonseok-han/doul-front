@@ -34,6 +34,8 @@ export interface DatePickerProps {
   readOnly?: boolean;
   /** Date 포맷 */
   format?: string;
+  /** 텍스트 정렬 */
+  textAlign?: "left" | "right" | "center";
   /** 유효성여부 */
   isValid?: boolean;
   /** 스타일 */
@@ -77,6 +79,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
     : type === "year"
     ? "yyyy"
     : "yyyy-MM-dd",
+  textAlign,
   isValid,
   style,
   handleChangeField,
@@ -97,7 +100,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
           autoFocus={open}
           isValid={isValid}
           isInvalid={isValid !== undefined ? !isValid : false}
-          style={{ ...style, textOverflow: "ellipsis" }}
+          style={{ ...style, textOverflow: "ellipsis", textAlign: textAlign }}
         />
       </OverlayTrigger>
     );
@@ -248,7 +251,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                   YEARS.find((item: any) => item.code == date.getFullYear())
                     ?.code
                 }
-                items={YEARS}
+                choices={YEARS}
                 onChange={({ target: { value } }) => {
                   changeYear(Number(value));
                 }}
@@ -267,7 +270,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                     MONTHS.find((item: any) => item.code == date.getMonth())
                       ?.code
                   }
-                  items={MONTHS}
+                  choices={MONTHS}
                   onChange={({ target: { value } }) =>
                     changeMonth(Number(value))
                   }

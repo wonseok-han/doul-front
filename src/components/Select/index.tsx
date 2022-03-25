@@ -14,11 +14,12 @@ import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
 import { useThemeContext } from "utils/context/Reducer";
+import { isNull } from "utils/functions/data";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface SelectProps extends MuiSelectProps {
   name: string;
-  items: Array<{
+  choices: Array<{
     code: string;
     name: string;
   }>;
@@ -26,6 +27,7 @@ export interface SelectProps extends MuiSelectProps {
   value?: string | undefined;
   selectOption?: "choose" | "all";
   displaySize?: number;
+  textAlign?: "left" | "right" | "center";
   handleChangeField?: (event: any) => void;
 }
 
@@ -58,12 +60,15 @@ const getStyles = (
 
 const Select: React.FC<SelectProps> = ({
   name,
-  items,
+  choices,
   defaultValue,
   value,
   selectOption,
   multiple = false,
   displaySize = 5,
+  readOnly = false,
+  disabled = false,
+  textAlign,
   style,
   handleChangeField,
 }: SelectProps) => {
@@ -72,10 +77,10 @@ const Select: React.FC<SelectProps> = ({
   const listItem = ANOTHER_ITEMS.filter((item) => {
     if (selectOption === "choose") return item.code === "";
     else if (selectOption === "all") return item.code === "all";
-  }).concat([...items]);
+  }).concat([...choices]);
   const [selectValues, setSelectValues] = useState<string[]>(() => {
     const defaultSelectValues =
-      defaultValue !== undefined
+      defaultValue != undefined
         ? [defaultValue]
         : selectOption === "all" && multiple
         ? undefined
@@ -85,7 +90,11 @@ const Select: React.FC<SelectProps> = ({
         ? [""]
         : [listItem[0].code];
 
-    return value?.split(",") || defaultSelectValues || [];
+    return (
+      (!isNull(value) && typeof value === "string" && value?.split(",")) ||
+      defaultSelectValues ||
+      []
+    );
   });
   const [selectedAll, setSelectedAll] = useState(false);
 
@@ -171,7 +180,7 @@ const Select: React.FC<SelectProps> = ({
           setSelectValues(listItem.map((item) => item.code));
         }
         // 전체이외에 모든 항목을 선택할 경우
-        else if (value.indexOf("all") < 0 && value.length === items.length) {
+        else if (value.indexOf("all") < 0 && value.length === choices.length) {
           setSelectValues(listItem.map((item) => item.code));
         } else {
           setSelectValues(typeof value === "string" ? value.split(",") : value);
@@ -212,7 +221,7 @@ const Select: React.FC<SelectProps> = ({
   }, [selectValues]);
 
   useEffect(() => {
-    value && setSelectValues(value.split(","));
+    value && typeof value === "string" && setSelectValues(value.split(","));
   }, [value]);
 
   return (
@@ -233,6 +242,8 @@ const Select: React.FC<SelectProps> = ({
           name={name}
           displayEmpty
           multiple={multiple}
+          readOnly={readOnly}
+          disabled={disabled}
           value={selectValues}
           onChange={handleChange}
           // FIXME: DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
@@ -247,7 +258,7 @@ const Select: React.FC<SelectProps> = ({
           renderValue={setInputRender}
           MenuProps={MenuProps}
           inputProps={{ "aria-label": "Without label" }}
-          SelectDisplayProps={{ style: { ...style } }}
+          SelectDisplayProps={{ style: { ...style, textAlign: textAlign } }}
           style={STYLE}
         >
           {selectOption === "choose" && (
@@ -266,7 +277,7 @@ const Select: React.FC<SelectProps> = ({
               {"전체"}
             </MenuItem>
           )}
-          {items?.map((item) => (
+          {choices?.map((item) => (
             <MenuItem
               key={item.code}
               value={item.code}

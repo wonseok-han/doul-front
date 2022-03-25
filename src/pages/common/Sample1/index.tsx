@@ -4,13 +4,44 @@ import React from "react";
 import useFieldValues from "utils/hooks/useFieldValues";
 import { PageProps } from "utils/types";
 
+const POSITION_ITEMS = [
+  {
+    code: "00",
+    name: "사원",
+  },
+  {
+    code: "01",
+    name: "대리",
+  },
+  {
+    code: "02",
+    name: "과장",
+  },
+  {
+    code: "03",
+    name: "차장",
+  },
+  {
+    code: "04",
+    name: "부장",
+  },
+  {
+    code: "05",
+    name: "이사",
+  },
+  {
+    code: "06",
+    name: "사장",
+  },
+];
+
 // 메타속성
 const META = [
   {
     name: "test",
     type: "string",
     widgetType: "string",
-    label: "TEST",
+    label: "일반문자",
     // choices: [{}],
     readOnly: false,
     disabled: false,
@@ -26,7 +57,7 @@ const META = [
     name: "test2",
     type: "number",
     widgetType: "string",
-    label: "TEST2",
+    label: "일반숫자",
     // choices: [{}],
     readOnly: false,
     disabled: false,
@@ -40,13 +71,12 @@ const META = [
   },
   {
     name: "test3",
-    type: "string",
-    widgetType: "string",
-    label: "TEST3",
+    type: "date",
+    widgetType: "date",
+    label: "날짜",
     // choices: [{}],
     readOnly: false,
     disabled: false,
-    textAlign: "left",
     rules: {
       required: true,
       maxLength: 0,
@@ -57,12 +87,11 @@ const META = [
   {
     name: "test4",
     type: "string",
-    widgetType: "string",
-    label: "TEST4",
+    widgetType: "textarea",
+    label: "TextArea",
     // choices: [{}],
     readOnly: false,
     disabled: false,
-    textAlign: "right",
     rules: {
       required: true,
       maxLength: 0,
@@ -72,10 +101,9 @@ const META = [
   },
   {
     name: "test5",
-    type: "string",
-    widgetType: "string",
-    label: "TEST5",
-    // choices: [{}],
+    type: "select",
+    label: "Default Select",
+    choices: POSITION_ITEMS,
     readOnly: false,
     disabled: false,
     textAlign: "center",
@@ -107,9 +135,9 @@ const META = [
 const DATA = {
   test: "1",
   test2: 2,
-  test3: "3",
+  test3: "2022-03-25",
   test4: "4",
-  test5: "5",
+  test5: "",
   test6: "6",
 };
 

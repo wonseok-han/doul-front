@@ -1,7 +1,10 @@
 import Col from "components/Col";
+import DateTimePicker from "components/DateTimePicker";
 import InputBox from "components/InputBox";
 import Label from "components/Label";
 import Row from "components/Row";
+import Select from "components/Select";
+import Textarea from "components/Textarea";
 import React from "react";
 import { FormGroup } from "react-bootstrap";
 
@@ -24,10 +27,6 @@ export interface FormFieldProps {
     | "radio"
     | "check";
   /**
-   * select, radio
-   */
-  choices?: Array<any>;
-  /**
    * 라벨
    */
   label?: string;
@@ -35,6 +34,10 @@ export interface FormFieldProps {
    * 필드명
    */
   name: string;
+  /**
+   * 필드 초기값
+   */
+  defaultValue?: string | number | Date | boolean;
   /**
    * 필드 값
    */
@@ -76,6 +79,29 @@ export interface FormFieldProps {
    */
   postfix?: string;
   /**
+   * date 타입일 경우 date format
+   */
+  format?: string;
+  /**
+   * type이 select일 때 항목 리스트
+   */
+  choices?: Array<{
+    code: string;
+    name: string;
+  }>;
+  /**
+   * type이 select일 때 '선택'/'전체' 옵션
+   */
+  selectOption?: "choose" | "all";
+  /**
+   * type이 select일 때 다중선택 여부
+   */
+  multiple?: boolean;
+  /**
+   * type이 select일 때 dropdown display 개수
+   */
+  displaySize?: number;
+  /**
    * 필드 유효성검사 Rule
    */
   rules?: any;
@@ -102,6 +128,7 @@ const FormField: React.FC<FormFieldProps> = ({
   widgetType,
   label,
   name,
+  defaultValue,
   value,
   required = false,
   readOnly = false,
@@ -112,6 +139,11 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   prefix,
   postfix,
+  format,
+  choices = [],
+  selectOption,
+  multiple,
+  displaySize,
   textAlign = type === "string"
     ? "left"
     : type === "number"
@@ -123,6 +155,144 @@ const FormField: React.FC<FormFieldProps> = ({
   style,
   handleChangeField,
 }: FormFieldProps) => {
+  // NOTE: type 속성값에 따른 Field 컴포넌트
+  const FieldComponent = () => {
+    // 문자타입
+    if (type === "string" && typeof value === "string") {
+      // Masking 문자
+      // TODO: mask 속성을 가진 컴포넌트 추가
+      if (widgetType === "mask") {
+        return <div>string-mask</div>;
+      }
+      // TextArea 문자
+      else if (widgetType === "textarea") {
+        return (
+          <Textarea
+            name={name}
+            value={value}
+            readOnly={readOnly}
+            disabled={disabled}
+            placeholder={placeholder}
+            isValid={isValid}
+            style={style}
+            handleChangeField={handleChangeField}
+          />
+        );
+      }
+      // Default 문자
+      else {
+        return (
+          <InputBox
+            type={type}
+            name={name}
+            value={value}
+            isPassword={isPassword}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            disabled={disabled}
+            isValid={isValid}
+            prefix={prefix}
+            postfix={postfix}
+            textAlign={textAlign}
+            style={style}
+            handleChangeField={handleChangeField}
+          />
+        );
+      }
+    }
+    // 숫자타입
+    else if (type === "number" && typeof value === "number") {
+      // Masking 숫자
+      // TODO: mask 속성을 가진 컴포넌트 추가
+      if (widgetType === "mask") {
+        return <div>number-mask</div>;
+      }
+      // Default 숫자
+      else {
+        return (
+          <InputBox
+            type={type}
+            name={name}
+            value={value}
+            isPassword={isPassword}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            disabled={disabled}
+            isValid={isValid}
+            prefix={prefix}
+            postfix={postfix}
+            textAlign={textAlign}
+            style={style}
+            handleChangeField={handleChangeField}
+          />
+        );
+      }
+    }
+    // 날짜타입
+    else if (type === "date" && typeof value === "string") {
+      const dateType =
+        widgetType === "year" ||
+        widgetType === "yearMonth" ||
+        widgetType === "datetime"
+          ? widgetType
+          : type;
+
+      return (
+        <DateTimePicker
+          name={name}
+          type={dateType}
+          value={value}
+          readOnly={readOnly}
+          disabled={disabled}
+          format={format}
+          isValid={isValid}
+          textAlign={textAlign}
+          style={style}
+          handleChangeField={handleChangeField}
+        />
+      );
+    }
+    // 선택타입
+    else if (
+      type === "select" &&
+      typeof value === "string" &&
+      choices?.length > 0
+    ) {
+      // Radio 선택타입
+      if (widgetType === "radio") {
+        return <div>select-radio</div>;
+      }
+      // Check 선택타입
+      else if (widgetType === "check") {
+        return <div>select-check</div>;
+      }
+      // Default 선택타입
+      else {
+        return (
+          <Select
+            name={name}
+            value={value}
+            choices={choices}
+            defaultValue={
+              typeof defaultValue === "string" ? defaultValue : undefined
+            }
+            selectOption={selectOption}
+            multiple={multiple}
+            displaySize={displaySize}
+            readOnly={readOnly}
+            disabled={disabled}
+            textAlign={textAlign}
+            handleChangeField={handleChangeField}
+          />
+        );
+      }
+    }
+    // undefined
+    else {
+      <div>type is undefined</div>;
+    }
+  };
+
   return (
     <>
       {!hidden && (
@@ -132,90 +302,7 @@ const FormField: React.FC<FormFieldProps> = ({
               {label}
             </Label>
           )}
-          <Col sm={"7"}>
-            {/* 문자 타입 */}
-            {type === "string" && typeof value === "string" ? (
-              // Masking 문자
-              // TODO: mask 속성을 가진 컴포넌트 추가
-              widgetType === "mask" ? (
-                <div>string-mask</div>
-              ) : // TextArea 문자
-              widgetType === "textarea" ? (
-                <div>string-textarea</div>
-              ) : (
-                // 일반 문자
-                <InputBox
-                  type={type}
-                  name={name}
-                  value={value}
-                  isPassword={isPassword}
-                  placeholder={placeholder}
-                  readOnly={readOnly}
-                  disabled={disabled}
-                  isValid={isValid}
-                  prefix={prefix}
-                  postfix={postfix}
-                  textAlign={textAlign}
-                  style={style}
-                  handleChangeField={handleChangeField}
-                />
-              )
-            ) : // 숫자 타입
-            (type === "number" && typeof value === "number") ||
-              typeof value === "string" ? (
-              // Masking 숫자
-              // TODO: mask 속성을 가진 컴포넌트 추가
-              widgetType === "mask" ? (
-                <div>number-mask</div>
-              ) : (
-                // 일반 숫자
-                <InputBox
-                  type={type}
-                  name={name}
-                  value={value}
-                  isPassword={isPassword}
-                  placeholder={placeholder}
-                  readOnly={readOnly}
-                  disabled={disabled}
-                  isValid={isValid}
-                  prefix={prefix}
-                  postfix={postfix}
-                  textAlign={textAlign}
-                  style={style}
-                  handleChangeField={handleChangeField}
-                />
-              ) // Boolean 타입
-            ) : // 날짜 타입
-            type === "date" && typeof value === "string" ? (
-              // 년도 타입
-              widgetType === "year" ? (
-                <div>date-year</div>
-              ) : // 년월 타입
-              widgetType === "yearMonth" ? (
-                <div>date-yearMonth</div>
-              ) : // 일시 타입
-              widgetType === "datetime" ? (
-                <div>date-datetime</div>
-              ) : (
-                // 일반 날짜 타입
-                <div>date</div>
-              )
-            ) : // 선택 타입
-            type === "select" && typeof value === "string" ? (
-              // Radio 선택 타입
-              widgetType === "radio" ? (
-                <div>select-radio</div>
-              ) : // Check 선택 타입
-              widgetType === "check" ? (
-                <div>select-check</div>
-              ) : (
-                // 일반 선택 타입
-                <div>select</div>
-              )
-            ) : (
-              <div>type is undefined</div>
-            )}
-          </Col>
+          <Col sm={"7"}>{FieldComponent()}</Col>
         </FormGroup>
       )}
     </>
