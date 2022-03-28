@@ -220,7 +220,11 @@ const FormField: React.FC<FormFieldProps> = ({
       }
     }
     // 숫자타입
-    else if (type === "number" && typeof value === "number") {
+    else if (
+      type === "number" &&
+      (typeof value === "number" || typeof value === "string") &&
+      !Number.isNaN(value)
+    ) {
       // Masking 숫자
       // TODO: mask 속성을 가진 컴포넌트 추가
       if (widgetType === "mask") {
