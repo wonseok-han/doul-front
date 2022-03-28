@@ -186,9 +186,7 @@ const Sample1: React.FC<PageProps> = ({ info }: PageProps) => {
       <FormContainer
         meta={META}
         data={fieldValues}
-        lg={"3"}
-        xl={"3"}
-        xxl={"3"}
+        column={3}
         handleChangeField={handleChangeField}
       />
       <br />

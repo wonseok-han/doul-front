@@ -58,7 +58,7 @@ const FormContainer: React.FC<FormContainerProps> = ({
   xxl,
   handleChangeField,
 }: FormContainerProps) => {
-  const rowMeta = new Array(Math.round(meta.length / column))
+  const rowMeta = new Array(Math.ceil(meta.length / column))
     .fill(0)
     .map((item, index) => {
       const metaData = [...meta];
@@ -77,8 +77,8 @@ const FormContainer: React.FC<FormContainerProps> = ({
             sm={sm}
             md={md}
             lg={lg}
-            xl={xl}
-            xxl={xxl}
+            xl={column || xl}
+            xxl={column || xxl}
             handleChangeField={handleChangeField}
           />
         ))}
