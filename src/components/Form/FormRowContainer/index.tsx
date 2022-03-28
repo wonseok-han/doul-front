@@ -13,6 +13,10 @@ export interface FormRowContainerProps {
    */
   data?: any;
   /**
+   * Form을 구성하는 1개 Row에 들어갈 Column 개수
+   */
+  column?: 1 | 2 | 3 | 4;
+  /**
    * < 576px
    */
   xs?: "1" | "2" | "3" | "4" | 1 | 2 | 3 | 4;
@@ -45,6 +49,7 @@ export interface FormRowContainerProps {
 const FormRowContainer: React.FC<FormRowContainerProps> = ({
   meta,
   data,
+  column,
   xs,
   sm,
   md,
@@ -54,7 +59,14 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
   handleChangeField,
 }: FormRowContainerProps) => {
   return (
-    <FormRow xs={xs} sm={sm} md={md} lg={lg} xl={xl} xxl={xxl}>
+    <FormRow
+      xs={xs}
+      sm={sm}
+      md={md}
+      lg={lg}
+      xl={column || xl}
+      xxl={column || xxl}
+    >
       {meta.map((item: any, index: number) => (
         <FormField
           key={`form-field-${index}`}
