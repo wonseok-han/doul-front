@@ -4,6 +4,7 @@ import RenderIndicator from "components/RenderIndicator";
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
 import { useThemeContext } from "utils/context/Reducer";
+import { makeGuid } from "utils/functions/common";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface CheckProps extends FormCheckProps {
@@ -78,7 +79,7 @@ const Check: React.FC<CheckProps> = ({
             verticalAlign: "sub",
           }}
         >
-          <FormCheck name={name} id={name}>
+          <FormCheck name={name} id={makeGuid()}>
             <FormCheck.Input
               checked={isChecked}
               value={value}
