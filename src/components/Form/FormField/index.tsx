@@ -1,14 +1,16 @@
+import Check from "components/Check";
 import Col from "components/Col";
 import DateTimePicker from "components/DateTimePicker";
 import InputBox from "components/InputBox";
 import Label from "components/Label";
+import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
 import Textarea from "components/Textarea";
 import React from "react";
 import { FormGroup } from "react-bootstrap";
 
-export interface FormFieldProps {
+export interface FormMetaProps {
   /**
    * Field 타입
    */
@@ -102,6 +104,18 @@ export interface FormFieldProps {
    */
   displaySize?: number;
   /**
+   * type이 select, widgetType이 radio일 때 항목의 수평(true), 수직(false) 배치
+   */
+  inline?: boolean;
+  /**
+   * 체크될 때의 값
+   */
+  trueValue?: string | boolean;
+  /**
+   *  체크되지 않을 때의 값
+   */
+  falseValue?: string | boolean;
+  /**
    * 필드 유효성검사 Rule
    */
   rules?: any;
@@ -117,6 +131,8 @@ export interface FormFieldProps {
    * Filed별 Style
    */
   style?: any;
+}
+export interface FormFieldProps extends FormMetaProps {
   /**
    * 필드 Change Event
    */
@@ -144,6 +160,9 @@ const FormField: React.FC<FormFieldProps> = ({
   selectOption,
   multiple,
   displaySize,
+  inline,
+  trueValue,
+  falseValue,
   textAlign = type === "string"
     ? "left"
     : type === "number"
@@ -260,11 +279,34 @@ const FormField: React.FC<FormFieldProps> = ({
     ) {
       // Radio 선택타입
       if (widgetType === "radio") {
-        return <div>select-radio</div>;
+        return (
+          <Radio
+            name={name}
+            value={value}
+            choices={choices}
+            inline={inline}
+            disabled={disabled}
+            isValid={isValid}
+            style={{ marginLeft: 10, ...style }}
+            handleChangeField={handleChangeField}
+          />
+        );
       }
       // Check 선택타입
       else if (widgetType === "check") {
-        return <div>select-check</div>;
+        return (
+          <Check
+            name={name}
+            value={value}
+            choices={choices}
+            trueValue={trueValue}
+            falseValue={falseValue}
+            disabled={disabled}
+            isValid={isValid}
+            style={{ marginLeft: 10, ...style }}
+            handleChangeField={handleChangeField}
+          />
+        );
       }
       // Default 선택타입
       else {

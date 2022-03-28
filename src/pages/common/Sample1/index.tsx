@@ -35,6 +35,22 @@ const POSITION_ITEMS = [
   },
 ];
 
+const USE_YN_ITEMS = [
+  { code: "Y", name: "사용" },
+  { code: "N", name: "미사용" },
+];
+
+const LOCATION_ITEMS = [
+  {
+    code: "00",
+    name: "부산",
+  },
+  {
+    code: "01",
+    name: "서울",
+  },
+];
+
 // 메타속성
 const META = [
   {
@@ -116,10 +132,26 @@ const META = [
   },
   {
     name: "test6",
-    type: "string",
-    widgetType: "string",
-    label: "TEST6",
-    // choices: [{}],
+    type: "select",
+    widgetType: "radio",
+    label: "라디오",
+    choices: LOCATION_ITEMS,
+    readOnly: false,
+    disabled: false,
+    textAlign: "center",
+    rules: {
+      required: true,
+      maxLength: 0,
+      minLength: 0,
+      regex: "",
+    },
+  },
+  {
+    name: "test7",
+    type: "select",
+    widgetType: "check",
+    label: "체크",
+    choices: USE_YN_ITEMS,
     readOnly: false,
     disabled: false,
     textAlign: "center",
@@ -138,7 +170,8 @@ const DATA = {
   test3: "2022-03-25",
   test4: "4",
   test5: "",
-  test6: "6",
+  test6: "",
+  test7: "",
 };
 
 const Sample1: React.FC<PageProps> = ({ info }: PageProps) => {

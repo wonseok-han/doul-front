@@ -1,20 +1,31 @@
 import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
 import { useThemeContext } from "utils/context/Reducer";
+import { makeGuid } from "utils/functions/common";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface RadioProps extends FormCheckProps {
-  /** 컴포넌트명 */
+  /**
+   * 컴포넌트명
+   */
   name: string;
-  /** 값 리스트 */
+  /**
+   *  값 리스트
+   */
   choices: Array<{
     code: string;
     name: string;
   }>;
-  /** Form Data 값 변경 */
+  /**
+   * 없음값 추가
+   */
+  none?: boolean;
+  /**
+   * Form Data 값 변경
+   */
   handleChangeField?: (value: any) => void;
 }
 
@@ -22,14 +33,20 @@ const Radio: React.FC<RadioProps> = ({
   name,
   choices = [],
   value,
-  inline = true,
+  inline = true, // 항목의 수평(true), 수직(false) 배치
   disabled = false,
+  none = true,
   isValid,
   style,
   handleChangeField,
 }: RadioProps) => {
   const [selected, setSelected] = useState(value);
+  const itemList = none ? [{ code: "", name: "없음" }, ...choices] : choices;
   const { store: themeStore } = useThemeContext();
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
 
   // NOTE: 선택 값 변경 이벤트
   const handleChange = (event: any) => {
@@ -60,14 +77,15 @@ const Radio: React.FC<RadioProps> = ({
       <RenderIndicator />
       <OverlayTrigger
         render={renderTooltip}
-        renderChildren={choices.find((item) => item.code === value)?.name}
+        renderChildren={itemList.find((item) => item.code === value)?.name}
       >
         <div>
-          {choices.map((item) => (
+          {itemList.map((item) => (
             <FormCheck
               inline={inline}
               key={`radio-${item.code}`}
-              id={`radio-${item.code}`}
+              name={name}
+              id={`${makeGuid()}`}
               type={"radio"}
             >
               <FormCheck.Input

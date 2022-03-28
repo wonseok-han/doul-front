@@ -37,11 +37,21 @@ const Check: React.FC<CheckProps> = ({
   );
   const { store: themeStore } = useThemeContext();
 
+  // NOTE: 초기값 셋팅
+  useEffect(() => {
+    handleChange({ target: { checked: isChecked } });
+  }, []);
+
+  useEffect(() => {
+    setIsChecked(value === trueValue ? true : false);
+  }, [value]);
+
   // NOTE: 체크 값 변경 이벤트
   const handleChange = (event: any) => {
     const {
       target: { checked },
     } = event;
+
     setIsChecked(checked);
 
     const fieldValue = {
@@ -52,10 +62,6 @@ const Check: React.FC<CheckProps> = ({
     };
     handleChangeField?.(fieldValue);
   };
-
-  useEffect(() => {
-    setIsChecked(value === trueValue ? true : false);
-  }, [value]);
 
   return (
     <>
