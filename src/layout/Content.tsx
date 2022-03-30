@@ -56,9 +56,7 @@ const Content: React.FC<Props> = ({
 
   // NOTE: 인터페이스모드가 SDI로 설정될 경우 열린 열린 페이지 삭제
   useEffect(() => {
-    if (store?.toggledInterface === "SDI") {
-      setOpenedMenuList([menu]);
-    }
+    menu && setOpenedMenuList([menu]);
   }, [store?.toggledInterface]);
 
   return (
