@@ -5,9 +5,12 @@
   .sidebar-icon-wrapper {
     &:hover {
       color: $highlight-color-light;
-      animation: swing ease-in-out 0.5s 1 alternate;
       &.darkMode {
         color: $highlight-color-dark;
+      }
+        
+      .sidebar-user-icon {
+        animation: swing ease-in-out 0.5s 1 alternate;
       }
     }
   }
