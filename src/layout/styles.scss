@@ -31,5 +31,16 @@
       background: $icon-bg-color-dark;
       color: $sidebar-color-dark;
     }
+
+    &:hover {
+      color: $highlight-color-light;
+      &.darkMode {
+        color: $highlight-color-dark;
+      }
+        
+      .sidebar-collapse-icon {
+        animation: swing ease-in-out 0.5s 1 alternate;
+      }
+    }
   }
 }

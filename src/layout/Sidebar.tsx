@@ -252,7 +252,11 @@ const Sidebar: React.FC<Props> = ({
             })}
             onClick={() => onCollapseChange(!collapsed)}
           >
-            {collapsed ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}
+            {collapsed ? (
+              <FaAngleDoubleRight className="sidebar-collapse-icon" />
+            ) : (
+              <FaAngleDoubleLeft className="sidebar-collapse-icon" />
+            )}
           </div>
         </div>
       </SidebarFooter>
