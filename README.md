@@ -8,7 +8,7 @@
 ## Settings
 1. ***n*** Package Install
     ```shell
-    npm install -g n
+    npm install -g n # Window는 n 패키지가 없음.
     n 16.13.2
     n   # 엔터 후 ο node/16.13.2 선택
     ```
@@ -50,9 +50,14 @@
     REACT_APP_REPORT_HOST="127.0.0.1"
     ```
 
-## Project Start
+## Project Local Start
 ```shell
 yarn start
+```
+
+## Project Build
+```shell
+yarn build
 ```
 
 ## 배포서버
