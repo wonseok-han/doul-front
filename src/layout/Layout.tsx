@@ -20,9 +20,22 @@ const Layout: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!store?.userInfo && !getSessionStorage("USER_ID")) {
+    const user_id = getSessionStorage("USER_ID");
+    const user_name = getSessionStorage("USER_NAME");
+
+    if (!store?.userInfo && !user_id) {
       alert("로그인정보 없음.");
       navigate("/");
+    } else {
+      if (!store?.userInfo && user_id && user_name) {
+        dispatch({
+          type: "SET_USER_INFO",
+          payload: {
+            id: user_id,
+            name: user_name,
+          },
+        });
+      }
     }
   }, []);
 

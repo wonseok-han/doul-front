@@ -34,6 +34,7 @@ const Dropdown: React.FC = () => {
         onClick={() => {
           dispatch({ type: "SET_USER_INFO", payload: undefined });
           removeSessionStorage("USER_ID");
+          removeSessionStorage("USER_NAME");
 
           alert("로그아웃되었습니다.");
 

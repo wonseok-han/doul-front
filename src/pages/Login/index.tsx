@@ -37,6 +37,7 @@ const Login: React.FC = () => {
       });
 
       setSessionStorage("USER_ID", id);
+      setSessionStorage("USER_NAME", id === "admin" ? "관리자" : "Unknown");
 
       navigate("/main");
     } else {
