@@ -5,7 +5,7 @@ import Switch from "components/Switch";
 import { USE_RENDER_INDICATOR } from "Constants";
 import { useCallback } from "react";
 import { Form, FormGroup } from "react-bootstrap";
-import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { actions, useAppContext, useThemeContext } from "utils/context";
 import { setLocalStorage } from "utils/functions/store";
 
 const INTERFACE_ITEMS = [
@@ -26,6 +26,8 @@ const INDICATOR_ITEMS = [
 const Settings: React.FC = () => {
   const { store, dispatch } = useAppContext();
   const { store: themeStore, dispatch: themeDispatch } = useThemeContext();
+  const { setToggledInterface, setActiveIndicator, setActiveDarkMode } =
+    actions;
 
   // NOTE: SDI/MDI 전환 이벤트
   const handleToggledInterface = useCallback(
@@ -34,10 +36,7 @@ const Settings: React.FC = () => {
         target: { value },
       } = event;
 
-      dispatch({
-        type: "SET_TOGGLED_INTERFACE",
-        payload: value,
-      });
+      dispatch(setToggledInterface(value));
     },
     [store?.toggledInterface]
   );
@@ -49,10 +48,7 @@ const Settings: React.FC = () => {
         target: { value },
       } = event;
 
-      themeDispatch({
-        type: "SET_ACTIVE_DARKMODE",
-        payload: value === "activate" ? true : false,
-      });
+      themeDispatch(setActiveDarkMode(value === "activate" ? true : false));
 
       setLocalStorage("darkMode", value === "activate" ? "true" : "false");
     },
@@ -66,10 +62,7 @@ const Settings: React.FC = () => {
         target: { value },
       } = event;
 
-      dispatch({
-        type: "SET_ACTIVE_INDICATOR",
-        payload: value === "activate" ? true : false,
-      });
+      dispatch(setActiveIndicator(value === "activate" ? true : false));
 
       setLocalStorage("indicator", value === "activate" ? "true" : "false");
     },

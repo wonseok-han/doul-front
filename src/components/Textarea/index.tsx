@@ -4,7 +4,7 @@ import classNames from "classnames";
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 
 export interface TextareaProps extends InputGroupProps {
   name: string;

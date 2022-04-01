@@ -6,7 +6,7 @@ import {
   Col as BootStrapCol,
   ColProps as BootStrapColProps,
 } from "react-bootstrap";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 
 export type ColProps = BootStrapColProps;
 

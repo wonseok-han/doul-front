@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { Breadcrumb } from "react-bootstrap";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 
 import reactLogo from "./assets/logo.svg";
 

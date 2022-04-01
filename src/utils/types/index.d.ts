@@ -3,7 +3,6 @@ import {
   AppStoreProps,
   AppContextProps,
   AppProviderProps,
-  ActionProps,
   ThemeStoreProps,
   ThemeContextProps,
 } from "./context";
@@ -14,7 +13,6 @@ export {
   AppStoreProps,
   AppContextProps,
   AppProviderProps,
-  ActionProps,
   ThemeStoreProps,
   ThemeContextProps,
 };

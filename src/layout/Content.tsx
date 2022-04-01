@@ -3,7 +3,7 @@ import TabPageContainer from "components/TabPageContainer";
 import Header from "layout/Header";
 import React, { useEffect, useState } from "react";
 import { FaExchangeAlt } from "react-icons/fa";
-import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { actions, useAppContext, useThemeContext } from "utils/context";
 import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
 export interface Props {
@@ -26,6 +26,7 @@ const Content: React.FC<Props> = ({
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
   const { store, dispatch } = useAppContext();
   const { store: themeStore } = useThemeContext();
+  const { setActiveMenu } = actions;
 
   // NOTE: 일반 메뉴 오픈시 hook
   useEffect(() => {
@@ -34,7 +35,7 @@ const Content: React.FC<Props> = ({
       return;
     }
 
-    dispatch({ type: "SET_ACTIVE_MENU", payload: menu?.moveItem || menu });
+    dispatch(setActiveMenu(menu?.moveItem || menu));
 
     const openItem = openedMenuList.find(
       (item) => item.menuCode === menu.menuCode

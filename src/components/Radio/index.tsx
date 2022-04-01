@@ -3,7 +3,7 @@ import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 import { makeGuid } from "utils/functions/common";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 

@@ -10,7 +10,7 @@ import {
   TabPane,
   TabsProps,
 } from "react-bootstrap";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 import DynamicLoader from "utils/dynamicLoader/DynamicLoader";
 
 export interface Props extends TabsProps {

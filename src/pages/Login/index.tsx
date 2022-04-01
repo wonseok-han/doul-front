@@ -1,12 +1,13 @@
 import "./styles.scss";
 
 import classNames from "classnames";
+import Alert from "components/Alert";
 import Button from "components/Button";
 import FormContainer from "components/Form/FormContainer";
 import FormRow from "components/Form/FormRow";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { actions, useAppContext, useThemeContext } from "utils/context";
 import { setSessionStorage } from "utils/functions/store";
 import useFieldValues from "utils/hooks/useFieldValues";
 
@@ -15,7 +16,8 @@ import { DATA, META } from "./meta";
 const Login: React.FC = () => {
   const [fieldValues, handleChangeField] = useFieldValues(DATA);
   const { store: themeStore } = useThemeContext();
-  const { dispatch } = useAppContext();
+  const { store, dispatch } = useAppContext();
+  const { setUserInfo, showAlert } = actions;
   const navigate = useNavigate();
 
   // NOTE: 로그인 버튼 클릭 handler
@@ -28,20 +30,19 @@ const Login: React.FC = () => {
     const { id, password } = fieldValues;
 
     if (id === "admin" && password === "admin") {
-      await dispatch({
-        type: "SET_USER_INFO",
-        payload: {
+      await dispatch(
+        setUserInfo({
           id,
           name: id === "admin" ? "관리자" : "Unknown",
-        },
-      });
+        })
+      );
 
       setSessionStorage("USER_ID", id);
       setSessionStorage("USER_NAME", id === "admin" ? "관리자" : "Unknown");
 
       navigate("/main");
     } else {
-      alert("로그인에 실패했습니다.");
+      dispatch(showAlert({ body: "로그인에 실패했습니다." }));
     }
   };
 
@@ -67,6 +68,12 @@ const Login: React.FC = () => {
           <Button onClick={handleClick}>로그인</Button>
         </FormRow>
       </div>
+      <Alert
+        show={store?.showAlert?.show || false}
+        header={store?.showAlert?.header}
+        body={store?.showAlert?.body}
+        callBack={store?.showAlert?.callBack}
+      />
     </main>
   );
 };

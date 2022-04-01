@@ -1,18 +1,31 @@
 import { createContext, useContext, useReducer } from "react";
 import {
-  ActionProps,
   AppContextProps,
   AppProviderProps,
   AppStoreProps,
   ThemeContextProps,
   ThemeStoreProps,
 } from "utils/types";
+import { ActionProps } from "utils/types/context";
+
+import {
+  SET_ACTIVE_DARKMODE,
+  SET_ACTIVE_INDICATOR,
+  SET_ACTIVE_MENU,
+  SET_OPEN_MENU,
+  SET_TOGGLED_INTERFACE,
+  SET_USER_INFO,
+  SHOW_ALERT,
+} from "./actions";
 
 /**
  * userInfo: 사용자정보
  * activeMenu: 선택된 메뉴
+ * openMenu: 활성화 할 메뉴
  * activeIndicator: RenderIndicator 활성화 여부
  * toggledInterface: SDI/MDI 여부
+ * darkMode: 다크모드 활성화 여부
+ * showAlert: Alert 호출
  */
 const AppContext = createContext<AppContextProps>({
   store: undefined,
@@ -32,23 +45,26 @@ const reducer = (state: any, action: ActionProps) => {
   const { type, payload } = action;
   switch (type) {
     // 유저정보
-    case "SET_USER_INFO":
+    case SET_USER_INFO:
       return { ...state, userInfo: payload };
     // 선택 메뉴
-    case "SET_ACTIVE_MENU":
+    case SET_ACTIVE_MENU:
       return { ...state, activeMenu: payload };
     // 활성화 할 메뉴
-    case "SET_OPEN_MENU":
+    case SET_OPEN_MENU:
       return { ...state, openMenu: payload };
     // 인디케이터 활성화 여부
-    case "SET_ACTIVE_INDICATOR":
+    case SET_ACTIVE_INDICATOR:
       return { ...state, activeIndicator: payload };
     // SDI/MDI 여부
-    case "SET_TOGGLED_INTERFACE":
+    case SET_TOGGLED_INTERFACE:
       return { ...state, toggledInterface: payload };
     // 다크모드 여부
-    case "SET_ACTIVE_DARKMODE":
+    case SET_ACTIVE_DARKMODE:
       return { ...state, darkMode: payload };
+    // Alert 호출
+    case SHOW_ALERT:
+      return { ...state, showAlert: payload };
     default:
       throw new Error("Unsupported action type:" + type);
   }

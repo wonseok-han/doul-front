@@ -13,7 +13,7 @@ import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 import { isNull } from "utils/functions/data";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 

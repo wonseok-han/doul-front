@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Loading from "components/Loading";
 import React, { Suspense, lazy } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 
 export type Props = {
   path: string;

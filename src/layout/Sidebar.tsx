@@ -11,7 +11,7 @@ import {
   FaPager,
   FaUserAlt,
 } from "react-icons/fa";
-import useAppContext from "utils/context/Reducer";
+import { useAppContext } from "utils/context";
 
 import sidebarBg from "./assets/bg2.jpg";
 import Dropdown from "./Dropdown";

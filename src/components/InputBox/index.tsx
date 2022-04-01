@@ -5,7 +5,7 @@ import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface InputBoxProps extends InputGroupProps {

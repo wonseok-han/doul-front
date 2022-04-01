@@ -16,7 +16,7 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
-import { useThemeContext } from "utils/context/Reducer";
+import { useThemeContext } from "utils/context";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface DatePickerProps {

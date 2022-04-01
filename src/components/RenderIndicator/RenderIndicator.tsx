@@ -2,7 +2,7 @@ import "./styles.scss";
 
 import { USE_RENDER_INDICATOR } from "Constants";
 import React from "react";
-import useAppContext from "utils/context/Reducer";
+import { useAppContext } from "utils/context";
 import { getLocalStorage } from "utils/functions/store";
 
 interface Props {

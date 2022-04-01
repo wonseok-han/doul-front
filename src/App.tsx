@@ -4,7 +4,7 @@ import { USE_RENDER_INDICATOR } from "Constants";
 import Layout from "layout/Layout";
 import Login from "pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AppProvider, ThemeProvider } from "utils/context/Reducer";
+import { AppProvider, ThemeProvider } from "utils/context";
 import { getLocalStorage } from "utils/functions/store";
 
 // NOTE: App Context 초기값

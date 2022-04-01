@@ -1,8 +1,9 @@
+import Alert from "components/Alert";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MENU } from "TestLayoutData";
-import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { actions, useAppContext, useThemeContext } from "utils/context";
 import { getSessionStorage } from "utils/functions/store";
 
 import Content from "./Content";
@@ -18,23 +19,24 @@ const Layout: React.FC = () => {
   const [menus, setMenus] = useState(MENU);
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
+  const { setUserInfo, setOpenMenu, showAlert } = actions;
 
   useEffect(() => {
     const user_id = getSessionStorage("USER_ID");
     const user_name = getSessionStorage("USER_NAME");
 
     if (!store?.userInfo && !user_id) {
-      alert("로그인정보 없음.");
-      navigate("/");
+      dispatch(
+        showAlert({ body: "로그인 정보 없음!!", callBack: () => navigate("/") })
+      );
     } else {
       if (!store?.userInfo && user_id && user_name) {
-        dispatch({
-          type: "SET_USER_INFO",
-          payload: {
+        dispatch(
+          setUserInfo({
             id: user_id,
             name: user_name,
-          },
-        });
+          })
+        );
       }
     }
   }, []);
@@ -87,7 +89,7 @@ const Layout: React.FC = () => {
       : setMenu(undefined);
     !openMenu && setMenus([...menus]);
 
-    dispatch({ type: "SET_OPEN_MENU", payload: undefined });
+    dispatch(setOpenMenu(undefined));
   }, [store?.openMenu]);
 
   // NOTE: Open된 탭메뉴 화면의 Close 이벤트
@@ -151,7 +153,13 @@ const Layout: React.FC = () => {
         menus={menus}
         handleMenuClosed={handleMenuClosed}
         handleActivateTab={handleActivateTab}
-      ></Content>
+      />
+      <Alert
+        show={store?.showAlert?.show || false}
+        header={store?.showAlert?.header}
+        body={store?.showAlert?.body}
+        callBack={store?.showAlert?.callBack}
+      />
     </div>
   );
 };

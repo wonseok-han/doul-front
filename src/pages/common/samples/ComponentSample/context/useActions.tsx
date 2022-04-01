@@ -1,6 +1,11 @@
+import { actions, useAppContext } from "utils/context";
+
 import { StateProperties } from "./initial";
 
 const useActions = ({ state, setState }: StateProperties) => {
+  const { dispatch } = useAppContext();
+  const { showAlert } = actions;
+
   const handleSearchButtonClick = () => {
     console.log("조회", state);
     setState((previous) => ({
@@ -9,8 +14,8 @@ const useActions = ({ state, setState }: StateProperties) => {
     }));
   };
 
-  const handleAddButtonClick = (event: any) => {
-    console.log("추가", event);
+  const handleAddButtonClick = () => {
+    dispatch(showAlert({ body: "개발 중" }));
   };
 
   const handleDeleteButtonClick = (event: any) => {

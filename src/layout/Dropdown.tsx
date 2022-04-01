@@ -2,13 +2,14 @@ import React from "react";
 import { Dropdown as BootStrapDropdown } from "react-bootstrap";
 import { FaCog, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { actions, useAppContext, useThemeContext } from "utils/context";
 import { removeSessionStorage } from "utils/functions/store";
 
 const Dropdown: React.FC = () => {
   const { dispatch } = useAppContext();
   const { store: themeStore } = useThemeContext();
   const navigate = useNavigate();
+  const { setOpenMenu, setUserInfo } = actions;
 
   return (
     <BootStrapDropdown.Menu
@@ -16,15 +17,14 @@ const Dropdown: React.FC = () => {
     >
       <BootStrapDropdown.Item
         onClick={() =>
-          dispatch({
-            type: "SET_OPEN_MENU",
-            payload: {
+          dispatch(
+            setOpenMenu({
               menuCode: "SETTINGS",
               menuName: "설정",
               url: "common/Settings",
               open: true,
-            },
-          })
+            })
+          )
         }
       >
         <FaCog style={{ marginRight: 5 }} />
@@ -32,7 +32,7 @@ const Dropdown: React.FC = () => {
       </BootStrapDropdown.Item>
       <BootStrapDropdown.Item
         onClick={() => {
-          dispatch({ type: "SET_USER_INFO", payload: undefined });
+          dispatch(setUserInfo(undefined));
           removeSessionStorage("USER_ID");
           removeSessionStorage("USER_NAME");
 
