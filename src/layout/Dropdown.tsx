@@ -1,11 +1,14 @@
 import React from "react";
 import { Dropdown as BootStrapDropdown } from "react-bootstrap";
 import { FaCog, FaSignOutAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { removeSessionStorage } from "utils/functions/store";
 
 const Dropdown: React.FC = () => {
   const { dispatch } = useAppContext();
   const { store: themeStore } = useThemeContext();
+  const navigate = useNavigate();
 
   return (
     <BootStrapDropdown.Menu
@@ -27,7 +30,16 @@ const Dropdown: React.FC = () => {
         <FaCog style={{ marginRight: 5 }} />
         Settings
       </BootStrapDropdown.Item>
-      <BootStrapDropdown.Item onClick={() => window.location.reload()}>
+      <BootStrapDropdown.Item
+        onClick={() => {
+          dispatch({ type: "SET_USER_INFO", payload: undefined });
+          removeSessionStorage("USER_ID");
+
+          alert("로그아웃되었습니다.");
+
+          navigate("/");
+        }}
+      >
         <FaSignOutAlt style={{ marginRight: 5 }} />
         로그아웃
       </BootStrapDropdown.Item>

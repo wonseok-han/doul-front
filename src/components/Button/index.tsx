@@ -1,5 +1,5 @@
 import RenderIndicator from "components/RenderIndicator";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button as BootStrapButton,
   ButtonProps as BootStrapButtonProps,
@@ -35,6 +35,11 @@ const Button: React.FC<ButtonProps> = ({
       }, 1000);
     }
   };
+
+  useEffect(() => {
+    // 페이지 이동시 setTimeOut의 비동기 실행으로 인한 memory leak 이슈 픽스를 위한 cleanup
+    return () => setDoubleClick(false);
+  }, []);
 
   return (
     <>

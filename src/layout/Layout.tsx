@@ -1,7 +1,9 @@
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MENU } from "TestLayoutData";
 import useAppContext, { useThemeContext } from "utils/context/Reducer";
+import { getSessionStorage } from "utils/functions/store";
 
 import Content from "./Content";
 import Sidebar from "./Sidebar";
@@ -15,6 +17,14 @@ const Layout: React.FC = () => {
   const [toggled, setToggled] = useState(false);
   const [menus, setMenus] = useState(MENU);
   const [menu, setMenu] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!store?.userInfo && !getSessionStorage("USER_ID")) {
+      alert("로그인정보 없음.");
+      navigate("/");
+    }
+  }, []);
 
   // NOTE: Sidebar 접음/펼침 이벤트
   const handleCollapsedChange = useCallback((checked: boolean) => {

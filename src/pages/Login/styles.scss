@@ -1,0 +1,17 @@
+@import 'global/variables.scss';
+
+.login-main {
+    text-align: center;
+    height: 100%;
+    background-color: $content-bg-color-light;
+    &.darkMode {
+      background-color: $content-bg-color-dark;
+    }
+
+    .login-form {
+        // display: inline-block;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

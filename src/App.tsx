@@ -2,7 +2,8 @@ import "./App.scss";
 
 import { USE_RENDER_INDICATOR } from "Constants";
 import Layout from "layout/Layout";
-import { BrowserRouter } from "react-router-dom";
+import Login from "pages/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppProvider, ThemeProvider } from "utils/context/Reducer";
 import { getLocalStorage } from "utils/functions/store";
 
@@ -23,7 +24,10 @@ const App: React.FC = () => {
     <AppProvider initialStore={APP_CONTEXT_INITIAL}>
       <ThemeProvider initialStore={THEME_CONTEXT_INITIAL}>
         <BrowserRouter>
-          <Layout />
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/main" element={<Layout />} />
+          </Routes>
         </BrowserRouter>
       </ThemeProvider>
     </AppProvider>

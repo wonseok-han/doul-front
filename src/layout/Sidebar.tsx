@@ -11,6 +11,7 @@ import {
   FaPager,
   FaUserAlt,
 } from "react-icons/fa";
+import useAppContext from "utils/context/Reducer";
 
 import sidebarBg from "./assets/bg2.jpg";
 import Dropdown from "./Dropdown";
@@ -51,6 +52,7 @@ const Sidebar: React.FC<Props> = ({
 }: Props) => {
   const menuList = list;
   const [darkModeCount, setDarkModeCount] = useState(0);
+  const { store } = useAppContext();
 
   // FIXME: DarkMode 상태가 변경됬을 때 강제 렌더링을 위한 hook
   useEffect(() => {
@@ -99,7 +101,7 @@ const Sidebar: React.FC<Props> = ({
               marginLeft: "10px",
             }}
           >
-            한원석
+            {store?.userInfo?.name}
           </span>
         )}
       </div>
