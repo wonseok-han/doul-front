@@ -174,7 +174,7 @@ const DATA = {
   test7: "",
 };
 
-const Sample1: React.FC<PageProps> = ({ info }: PageProps) => {
+const FormSample: React.FC<PageProps> = ({ info }: PageProps) => {
   const [fieldValues, handleChangeField] = useFieldValues(DATA);
 
   !info && console.log(info);
@@ -200,4 +200,4 @@ const Sample1: React.FC<PageProps> = ({ info }: PageProps) => {
   );
 };
 
-export default React.memo(Sample1);
+export default React.memo(FormSample);

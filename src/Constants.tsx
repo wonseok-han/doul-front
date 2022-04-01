@@ -24,7 +24,7 @@ export const API_HOST = fixProtocol(
 export const REPORT_HOST = fixProtocol(
   window.REPORT_HOST ||
     process.env.REACT_APP_REPORT_HOST ||
-    "http://164.125.8.21:8080"
+    "http://localhost:8080"
 );
 
 export const USE_SIGNED_TIMESTAMP: boolean = ["t", "true", "1"].includes(

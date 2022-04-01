@@ -93,7 +93,7 @@ const FIELDS = {
   comment: "",
 };
 
-const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
+const ComponentsSample: React.FC<PageProps> = ({ info }: PageProps) => {
   const {
     actions: {
       handleSearchButtonClick,
@@ -357,7 +357,7 @@ const Sample: React.FC<PageProps> = ({ info }: PageProps) => {
 
 const Index: React.FC = (props) => (
   <PageProvider>
-    <Sample {...props} />
+    <ComponentsSample {...props} />
   </PageProvider>
 );
 
