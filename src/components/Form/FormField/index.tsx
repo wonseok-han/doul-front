@@ -128,6 +128,10 @@ export interface FormMetaProps {
    */
   isValid?: boolean;
   /**
+   * Filed별 Label Style
+   */
+  labelStyle?: any;
+  /**
    * Filed별 Style
    */
   style?: any;
@@ -171,6 +175,7 @@ const FormField: React.FC<FormFieldProps> = ({
     ? "center"
     : "left",
   isValid,
+  labelStyle,
   style,
   handleChangeField,
 }: FormFieldProps) => {
@@ -344,7 +349,7 @@ const FormField: React.FC<FormFieldProps> = ({
       {!hidden && (
         <FormGroup as={Row}>
           {!labelHidden && (
-            <Label sm={"5"} required={required}>
+            <Label sm={"5"} required={required} style={labelStyle}>
               {label}
             </Label>
           )}

@@ -78,6 +78,8 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
           required={item.required}
           readOnly={item.readOnly}
           disabled={item.disabled}
+          labelHidden={item.labelHidden}
+          isPassword={item.isPassword}
           placeholder={item.placeholder}
           textAlign={item.textAlign}
           format={item.format}
@@ -89,6 +91,7 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
           trueValue={item.trueValue}
           falseValue={item.falseValue}
           rules={item.rules}
+          labelStyle={item.labelStyle}
           style={item.style}
           handleChangeField={handleChangeField}
         />
