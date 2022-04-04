@@ -9,7 +9,7 @@ const Dropdown: React.FC = () => {
   const { dispatch } = useAppContext();
   const { store: themeStore } = useThemeContext();
   const navigate = useNavigate();
-  const { setOpenMenu, setUserInfo } = actions;
+  const { setOpenMenu, setUserInfo, showAlert } = actions;
 
   return (
     <BootStrapDropdown.Menu
@@ -36,9 +36,12 @@ const Dropdown: React.FC = () => {
           removeSessionStorage("USER_ID");
           removeSessionStorage("USER_NAME");
 
-          alert("로그아웃되었습니다.");
-
-          navigate("/");
+          dispatch(
+            showAlert({
+              body: "로그아웃 되었습니다.",
+              callBack: () => navigate("/"),
+            })
+          );
         }}
       >
         <FaSignOutAlt style={{ marginRight: 5 }} />
