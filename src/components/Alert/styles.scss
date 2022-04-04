@@ -1,0 +1,12 @@
+@import 'global/variables.scss';
+
+.modal {
+    .modal-header, .modal-body, .modal-footer {
+        background-color: $content-bg-color-light;
+        color: black;
+        &.darkMode {
+          background-color: $content-bg-color-dark;
+          color: white;
+        }
+    }
+}
