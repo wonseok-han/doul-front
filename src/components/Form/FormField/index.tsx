@@ -135,6 +135,14 @@ export interface FormMetaProps {
    * Filed별 Style
    */
   style?: any;
+  /**
+   * Key Down Event
+   */
+  handleKeyDown?: (event?: any) => void;
+  /**
+   * Key Up Event
+   */
+  handleKeyUp?: (event?: any) => void;
 }
 export interface FormFieldProps extends FormMetaProps {
   /**
@@ -177,6 +185,8 @@ const FormField: React.FC<FormFieldProps> = ({
   isValid,
   labelStyle,
   style,
+  handleKeyDown,
+  handleKeyUp,
   handleChangeField,
 }: FormFieldProps) => {
   // NOTE: type 속성값에 따른 Field 컴포넌트
@@ -219,6 +229,8 @@ const FormField: React.FC<FormFieldProps> = ({
             postfix={postfix}
             textAlign={textAlign}
             style={style}
+            handleKeyDown={handleKeyDown}
+            handleKeyUp={handleKeyUp}
             handleChangeField={handleChangeField}
           />
         );

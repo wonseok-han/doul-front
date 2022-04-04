@@ -61,6 +61,14 @@ export interface InputBoxProps extends InputGroupProps {
    * 필드 Change Event
    */
   handleChangeField?: (event: any) => void;
+  /**
+   * Key Down Event
+   */
+  handleKeyDown?: (event?: any) => void;
+  /**
+   * Key Up Event
+   */
+  handleKeyUp?: (event?: any) => void;
 }
 
 const STYLE = {
@@ -82,6 +90,8 @@ const InputBox: React.FC<InputBoxProps> = ({
   isValid,
   style,
   handleChangeField,
+  handleKeyDown,
+  handleKeyUp,
 }: InputBoxProps) => {
   const { store: themeStore } = useThemeContext();
 
@@ -98,6 +108,16 @@ const InputBox: React.FC<InputBoxProps> = ({
       },
     };
     handleChangeField?.(fieldValue);
+  };
+
+  // NOTE: Key Down Event
+  const onKeyDown = (event: any) => {
+    handleKeyDown?.(event);
+  };
+
+  // NOTE: Key Up Event
+  const onKeyUp = (event: any) => {
+    handleKeyUp?.(event);
   };
 
   return (
@@ -120,6 +140,8 @@ const InputBox: React.FC<InputBoxProps> = ({
               isValid={isValid}
               isInvalid={isValid !== undefined ? !isValid : false}
               onChange={handleChange}
+              onKeyDown={onKeyDown}
+              onKeyUp={onKeyUp}
               style={{ ...STYLE, textAlign: textAlign }}
             />
             {postfix && <InputGroup.Text>{postfix}</InputGroup.Text>}

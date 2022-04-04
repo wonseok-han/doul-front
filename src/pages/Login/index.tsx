@@ -46,13 +46,24 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleKeyDown = (event: any) => {
+    const { keyCode } = event;
+
+    if (keyCode === 13) {
+      onLogin();
+
+      // Alert으로의 이벤트 전달을 방지하기 위한 코드
+      event.preventDefault();
+    }
+  };
+
   return (
     <main
       className={classNames("login-main", {
         darkMode: themeStore?.darkMode,
       })}
     >
-      <div className="login-form">
+      <div className="login-form" onKeyDown={handleKeyDown}>
         <FormContainer
           meta={META}
           data={fieldValues}
@@ -63,11 +74,18 @@ const Login: React.FC = () => {
           lg={1}
           handleChangeField={handleChangeField}
         />
-        <br />
-        <FormRow xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}>
-          <Button onClick={handleClick}>로그인</Button>
-        </FormRow>
       </div>
+      <FormRow
+        className="login-form"
+        xs={1}
+        sm={1}
+        md={1}
+        lg={1}
+        xl={1}
+        xxl={1}
+      >
+        <Button onClick={handleClick}>로그인</Button>
+      </FormRow>
       <Alert
         show={store?.showAlert?.show || false}
         header={store?.showAlert?.header}

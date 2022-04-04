@@ -29,6 +29,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off", // JSX를 사용할 때 누락된 React 방지
     "no-unsafe-assignment": "off",
     "@typescript-eslint/no-explicit-any": "off",
+
     // 'import/order': [
     //   'error',
     //   {

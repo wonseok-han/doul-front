@@ -1,5 +1,5 @@
 import RenderIndicator from "components/RenderIndicator";
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import {
   Button as BootStrapButton,
   ButtonProps as BootStrapButtonProps,
@@ -9,16 +9,19 @@ export interface ButtonProps extends BootStrapButtonProps {
   hidden?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  disabled = false,
-  size = "sm",
-  type = "button",
-  variant = "primary",
-  hidden = false,
-  style,
-  onClick,
-}: ButtonProps) => {
+const Button = (
+  {
+    children,
+    disabled = false,
+    size = "sm",
+    type = "button",
+    variant = "primary",
+    hidden = false,
+    style,
+    onClick,
+  }: ButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+): JSX.Element => {
   const [doubleClick, setDoubleClick] = useState(false);
 
   // NOTE: 버튼 클릭 이벤트
@@ -46,6 +49,7 @@ const Button: React.FC<ButtonProps> = ({
       <RenderIndicator />
       {!hidden && (
         <BootStrapButton
+          ref={ref}
           disabled={disabled}
           size={size}
           type={type}
@@ -60,4 +64,4 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default React.memo(Button);
+export default React.memo(forwardRef<HTMLButtonElement, ButtonProps>(Button));

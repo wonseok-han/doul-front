@@ -93,6 +93,8 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
           rules={item.rules}
           labelStyle={item.labelStyle}
           style={item.style}
+          handleKeyDown={item.handleKeyDown}
+          handleKeyUp={item.handleKeyUp}
           handleChangeField={handleChangeField}
         />
       ))}
