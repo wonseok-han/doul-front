@@ -2,6 +2,7 @@ import "./App.scss";
 
 import { USE_RENDER_INDICATOR } from "Constants";
 import Layout from "layout/Layout";
+import NotFoundPage from "pages/404";
 import Login from "pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppProvider, ThemeProvider } from "utils/context";
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Layout />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
