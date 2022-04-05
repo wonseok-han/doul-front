@@ -37,6 +37,8 @@ const Settings: React.FC = () => {
       } = event;
 
       dispatch(setToggledInterface(value));
+
+      setLocalStorage("interface", value);
     },
     [store?.toggledInterface]
   );
