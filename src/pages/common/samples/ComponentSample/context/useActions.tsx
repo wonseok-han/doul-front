@@ -2,7 +2,7 @@ import { actions, useAppContext } from "utils/context";
 
 import { StateProperties } from "./initial";
 
-const useActions = ({ state, setState }: StateProperties) => {
+const useActions = ({ state, setState }: StateProperties): any => {
   const { dispatch } = useAppContext();
   const { showAlert } = actions;
 

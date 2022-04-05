@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-const useFieldValues = (initial: any) => {
+const useFieldValues = (initial: any): Array<any> => {
   const [fieldValues, setFieldValues] = useState(initial);
 
   const handleChangeField = useCallback((event) => {

@@ -10,6 +10,6 @@ import { isNull } from "utils/functions/data";
  */
 export const renderTooltip = (
   props: OverlayTriggerProps,
-  value?: any
+  value?: string | number
 ): OverlayChildren =>
   isNull(value) ? <></> : <Tooltip {...props}>{value}</Tooltip>;

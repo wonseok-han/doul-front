@@ -1,6 +1,6 @@
 import { StateProperties } from "./initial";
 
-const useActions = ({ state, setState }: StateProperties) => {
+const useActions = ({ state, setState }: StateProperties): any => {
   const handleSearchButtonClick = () => {
     console.log("조회", state);
     setState((previous) => ({
