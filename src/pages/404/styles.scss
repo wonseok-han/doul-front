@@ -1,0 +1,30 @@
+@import 'global/variables.scss';
+
+.not-found-main {
+    text-align: center;
+    height: 100%;
+    padding: 24px;
+    margin: 0px;
+    min-height: 280px;
+    background-color: $content-bg-color-light;
+    &.darkMode {
+      background-color: $content-bg-color-dark;
+    }
+
+    .not-found-h1 {
+        font-size: 80px;
+        color: $sidebar-color-light;
+        &.darkMode {
+          color: $sidebar-color-dark;
+        }
+    }
+
+    .not-found-p {
+        font-size: 30px;
+        margin-top: 20px;
+        color: $sidebar-color-light;
+        &.darkMode {
+          color: $sidebar-color-dark;
+        }
+    }
+}
