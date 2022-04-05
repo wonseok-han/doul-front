@@ -1,15 +1,35 @@
 import React from "react";
 import { Dropdown as BootStrapDropdown } from "react-bootstrap";
-import { FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaCog, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { actions, useAppContext, useThemeContext } from "utils/context";
 import { removeSessionStorage } from "utils/functions/store";
 
 const Dropdown: React.FC = () => {
-  const { dispatch } = useAppContext();
+  const { store, dispatch } = useAppContext();
   const { store: themeStore } = useThemeContext();
   const navigate = useNavigate();
   const { setOpenMenu, setUserInfo, showAlert } = actions;
+  const hasUserInfo = store?.userInfo ? true : false;
+
+  // NOTE: 로그인
+  const handleSignIn = () => {
+    navigate("/login");
+  };
+
+  // NOTE: 로그아웃
+  const handleSignOut = () => {
+    dispatch(setUserInfo(undefined));
+    removeSessionStorage("USER_ID");
+    removeSessionStorage("USER_NAME");
+
+    dispatch(
+      showAlert({
+        body: "로그아웃 되었습니다.",
+        callBack: () => navigate("/"),
+      })
+    );
+  };
 
   return (
     <BootStrapDropdown.Menu
@@ -31,21 +51,19 @@ const Dropdown: React.FC = () => {
         Settings
       </BootStrapDropdown.Item>
       <BootStrapDropdown.Item
-        onClick={() => {
-          dispatch(setUserInfo(undefined));
-          removeSessionStorage("USER_ID");
-          removeSessionStorage("USER_NAME");
-
-          dispatch(
-            showAlert({
-              body: "로그아웃 되었습니다.",
-              callBack: () => navigate("/"),
-            })
-          );
-        }}
+        onClick={hasUserInfo ? handleSignOut : handleSignIn}
       >
-        <FaSignOutAlt style={{ marginRight: 5 }} />
-        로그아웃
+        {hasUserInfo ? (
+          <>
+            <FaSignOutAlt style={{ marginRight: 5 }} />
+            {"Sign Out"}
+          </>
+        ) : (
+          <>
+            <FaSignInAlt style={{ marginRight: 5 }} />
+            {"Sign In"}
+          </>
+        )}
       </BootStrapDropdown.Item>
     </BootStrapDropdown.Menu>
   );

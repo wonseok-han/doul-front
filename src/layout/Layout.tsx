@@ -1,7 +1,6 @@
 import Alert from "components/Alert";
 import RenderIndicator from "components/RenderIndicator";
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { MENU } from "TestLayoutData";
 import { actions, useAppContext, useThemeContext } from "utils/context";
 import { getSessionStorage } from "utils/functions/store";
@@ -18,26 +17,19 @@ const Layout: React.FC = () => {
   const [toggled, setToggled] = useState(false);
   const [menus, setMenus] = useState(MENU);
   const [menu, setMenu] = useState();
-  const navigate = useNavigate();
-  const { setUserInfo, setOpenMenu, showAlert } = actions;
+  const { setUserInfo, setOpenMenu } = actions;
 
   useEffect(() => {
     const user_id = getSessionStorage("USER_ID");
     const user_name = getSessionStorage("USER_NAME");
 
-    if (!store?.userInfo && !user_id) {
+    if (!store?.userInfo && user_id && user_name) {
       dispatch(
-        showAlert({ body: "로그인 정보 없음!!", callBack: () => navigate("/") })
+        setUserInfo({
+          id: user_id,
+          name: user_name,
+        })
       );
-    } else {
-      if (!store?.userInfo && user_id && user_name) {
-        dispatch(
-          setUserInfo({
-            id: user_id,
-            name: user_name,
-          })
-        );
-      }
     }
   }, []);
 

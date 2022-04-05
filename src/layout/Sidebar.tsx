@@ -53,6 +53,7 @@ const Sidebar: React.FC<Props> = ({
   const menuList = list;
   const [darkModeCount, setDarkModeCount] = useState(0);
   const { store } = useAppContext();
+  const hasUserInfo = store?.userInfo ? true : false;
 
   // FIXME: DarkMode 상태가 변경됬을 때 강제 렌더링을 위한 hook
   useEffect(() => {
@@ -101,7 +102,7 @@ const Sidebar: React.FC<Props> = ({
               marginLeft: "10px",
             }}
           >
-            {store?.userInfo?.name}
+            {hasUserInfo ? store?.userInfo?.name : "Sign In"}
           </span>
         )}
       </div>

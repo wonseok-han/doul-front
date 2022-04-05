@@ -25,8 +25,8 @@ const App: React.FC = () => {
       <ThemeProvider initialStore={THEME_CONTEXT_INITIAL}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/main" element={<Layout />} />
+            <Route path="/" element={<Layout />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

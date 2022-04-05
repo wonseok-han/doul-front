@@ -40,7 +40,7 @@ const Login: React.FC = () => {
       setSessionStorage("USER_ID", id);
       setSessionStorage("USER_NAME", id === "admin" ? "관리자" : "Unknown");
 
-      navigate("/main");
+      navigate("/");
     } else {
       dispatch(showAlert({ body: "로그인에 실패했습니다." }));
     }
