@@ -73,3 +73,14 @@ export const parseDateToString = (
     return undefined;
   }
 };
+
+/**
+ * NOTE: 주일을 구하는 함수
+ * @param date Date 타입 값
+ * @returns 주일 -> true, 주말 -> false
+ */
+export const isWeekDay = (date: Date): boolean => {
+  const day = date.getDay();
+
+  return day !== 0 && day !== 6;
+};
