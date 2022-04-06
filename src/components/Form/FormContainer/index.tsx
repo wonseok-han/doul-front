@@ -1,6 +1,5 @@
 import FormRowContainer from "components/Form/FormRowContainer";
 import React from "react";
-import { Form } from "react-bootstrap";
 
 export interface FormContainerProps {
   /**
@@ -66,7 +65,7 @@ const FormContainer: React.FC<FormContainerProps> = ({
     });
 
   return (
-    <Form>
+    <>
       {rowMeta.length > 0 &&
         rowMeta.map((item, index) => (
           <FormRowContainer
@@ -82,7 +81,7 @@ const FormContainer: React.FC<FormContainerProps> = ({
             handleChangeField={handleChangeField}
           />
         ))}
-    </Form>
+    </>
   );
 };
 

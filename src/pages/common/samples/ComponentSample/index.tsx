@@ -11,8 +11,8 @@ import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
 import Textarea from "components/Textarea";
-import React, { useState } from "react";
-import { Form, FormGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { FormGroup } from "react-bootstrap";
 import { getCurrentDate } from "utils/functions/date";
 import useFieldValues from "utils/hooks/useFieldValues";
 import { PageProps } from "utils/types";
@@ -109,6 +109,10 @@ const ComponentsSample: React.FC<PageProps> = ({ info }: PageProps) => {
 
   setTimeout(() => setLoading(false), 2000);
 
+  useEffect(() => {
+    return () => setLoading(false);
+  }, []);
+
   return (
     <>
       <h4>공통버튼그룹</h4>
@@ -184,170 +188,170 @@ const ComponentsSample: React.FC<PageProps> = ({ info }: PageProps) => {
       <Row>{JSON.stringify(fieldValues)}</Row>
       <hr />
       <h4>InputBox</h4>
-      <Form>
-        <FormRow>
-          <FormGroup as={Row}>
-            <Label sm={"4"} required>
-              성명
-            </Label>
-            <Col sm={"8"}>
-              <InputBox
-                name={"name"}
-                placeholder={"성명"}
-                isValid={false}
-                value={fieldValues.name}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>이메일</Label>
-            <Col sm={"8"}>
-              <InputBox
-                name={"email"}
-                prefix={"pre"}
-                postfix={"post"}
-                value={fieldValues.email}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>패스워드</Label>
-            <Col sm={"8"}>
-              <InputBox name={"password"} isPassword placeholder={"Password"} />
-            </Col>
-          </FormGroup>
-        </FormRow>
-      </Form>
+
+      <FormRow>
+        <FormGroup as={Row}>
+          <Label sm={"4"} required>
+            성명
+          </Label>
+          <Col sm={"8"}>
+            <InputBox
+              name={"name"}
+              placeholder={"성명"}
+              isValid={false}
+              value={fieldValues.name}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>이메일</Label>
+          <Col sm={"8"}>
+            <InputBox
+              name={"email"}
+              prefix={"pre"}
+              postfix={"post"}
+              value={fieldValues.email}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>패스워드</Label>
+          <Col sm={"8"}>
+            <InputBox name={"password"} isPassword placeholder={"Password"} />
+          </Col>
+        </FormGroup>
+      </FormRow>
+
       <hr />
       <h4>Textarea</h4>
-      <Form>
-        <FormRow xs={"1"} sm={"2"} md={"2"} lg={"2"} xl={"2"} xxl={"2"}>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>비고</Label>
-            <Col sm={"8"}>
-              <Textarea
-                name={"comment"}
-                value={fieldValues.comment}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-        </FormRow>
-      </Form>
+
+      <FormRow xs={"1"} sm={"2"} md={"2"} lg={"2"} xl={"2"} xxl={"2"}>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>비고</Label>
+          <Col sm={"8"}>
+            <Textarea
+              name={"comment"}
+              value={fieldValues.comment}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+      </FormRow>
+
       <hr />
       <h4>SelectBox</h4>
-      <Form>
-        <FormRow>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>직위</Label>
-            <Col sm={"8"}>
-              <Select
-                name={"position"}
-                choices={POSITION_ITEMS}
-                selectOption={"choose"}
-                value={fieldValues.position}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>언어</Label>
-            <Col sm={"8"}>
-              <Select
-                name={"skills"}
-                choices={SKILL_ITEMS}
-                selectOption={"all"}
-                multiple
-                value={fieldValues.skills}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-        </FormRow>
-      </Form>
+
+      <FormRow>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>직위</Label>
+          <Col sm={"8"}>
+            <Select
+              name={"position"}
+              choices={POSITION_ITEMS}
+              selectOption={"choose"}
+              value={fieldValues.position}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>언어</Label>
+          <Col sm={"8"}>
+            <Select
+              name={"skills"}
+              choices={SKILL_ITEMS}
+              selectOption={"all"}
+              multiple
+              value={fieldValues.skills}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+      </FormRow>
+
       <hr />
       <h5>Date/TimePicker</h5>
-      <Form>
-        <FormRow>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>입사일자</Label>
-            <Col sm={"8"}>
-              <DateTimePicker
-                name={"join_date"}
-                value={fieldValues.join_date}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>현재년도</Label>
-            <Col sm={"8"}>
-              <DateTimePicker
-                name={"year"}
-                type={"year"}
-                value={getCurrentDate("year")}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>현재년월</Label>
-            <Col sm={"8"}>
-              <DateTimePicker
-                name={"yearMonth"}
-                type={"yearMonth"}
-                value={getCurrentDate("yearMonth")}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>등록일시</Label>
-            <Col sm={"8"}>
-              <DateTimePicker
-                name={"register_date"}
-                type={"datetime"}
-                value={fieldValues.register_date}
-                handleChangeField={handleChangeField}
-              />
-            </Col>
-          </FormGroup>
-        </FormRow>
-      </Form>
+
+      <FormRow>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>입사일자</Label>
+          <Col sm={"8"}>
+            <DateTimePicker
+              name={"join_date"}
+              value={fieldValues.join_date}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>현재년도</Label>
+          <Col sm={"8"}>
+            <DateTimePicker
+              name={"year"}
+              type={"year"}
+              value={getCurrentDate("year")}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>현재년월</Label>
+          <Col sm={"8"}>
+            <DateTimePicker
+              name={"yearMonth"}
+              type={"yearMonth"}
+              value={getCurrentDate("yearMonth")}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>등록일시</Label>
+          <Col sm={"8"}>
+            <DateTimePicker
+              name={"register_date"}
+              type={"datetime"}
+              value={fieldValues.register_date}
+              handleChangeField={handleChangeField}
+            />
+          </Col>
+        </FormGroup>
+      </FormRow>
+
       <hr />
       <h5>Check/Radio Box</h5>
-      <Form>
-        <FormRow>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>사용여부</Label>
-            <Col sm={"8"}>
-              <Check
-                name={"use_yn"}
-                choices={USE_YN_ITEMS}
-                value={fieldValues.use_yn}
-                handleChangeField={handleChangeField}
-                style={{
-                  marginLeft: 10,
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row}>
-            <Label sm={"4"}>지역</Label>
-            <Col sm={"8"}>
-              <Radio
-                name={"location"}
-                choices={LOCATION_ITEMS}
-                value={fieldValues.location}
-                handleChangeField={handleChangeField}
-                style={{
-                  marginLeft: 10,
-                }}
-              />
-            </Col>
-          </FormGroup>
-        </FormRow>
-      </Form>
+
+      <FormRow>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>사용여부</Label>
+          <Col sm={"8"}>
+            <Check
+              name={"use_yn"}
+              choices={USE_YN_ITEMS}
+              value={fieldValues.use_yn}
+              handleChangeField={handleChangeField}
+              style={{
+                marginLeft: 10,
+              }}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup as={Row}>
+          <Label sm={"4"}>지역</Label>
+          <Col sm={"8"}>
+            <Radio
+              name={"location"}
+              choices={LOCATION_ITEMS}
+              value={fieldValues.location}
+              handleChangeField={handleChangeField}
+              style={{
+                marginLeft: 10,
+              }}
+            />
+          </Col>
+        </FormGroup>
+      </FormRow>
+
       <hr />
       <h5>Loading</h5>
       <Loading loading={loading} />

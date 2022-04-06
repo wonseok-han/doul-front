@@ -6,8 +6,10 @@ import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
 import Select from "components/Select";
+import { getMonth, getYear } from "date-fns";
 import { ko } from "date-fns/esm/locale";
-import React, { forwardRef, useEffect, useState } from "react";
+import _ from "lodash";
+import React, { forwardRef, useState } from "react";
 import { FormControl } from "react-bootstrap";
 import DatePicker, { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import {
@@ -17,6 +19,7 @@ import {
   FaAngleRight,
 } from "react-icons/fa";
 import { useThemeContext } from "utils/context";
+import { isWeekDay, parseDateToString } from "utils/functions/date";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
 export interface DatePickerProps {
@@ -44,27 +47,14 @@ export interface DatePickerProps {
   handleChangeField?: (value: any) => void;
 }
 
-// NOTE: 시작년도, 종료년도, 증가값을 받아 시작년도~종료년도까지의 모든 년도를 Array로 리턴
-const getYeaRange = (start: number, end: number, value: number) => {
-  return new Array(end - start)
-    .fill(0)
-    .reduce(
-      (previous, current, index) => [
-        ...previous,
-        {
-          code: previous[index].code + value,
-          name: previous[index].name + value,
-        },
-      ],
-      [{ code: start, name: start }]
-    )
-    .map((item: any) => ({ code: String(item.code), name: String(item.name) }));
-};
-
-const YEARS = getYeaRange(1990, new Date().getFullYear() + 1, 1);
-const MONTHS = new Array(12).fill(0).map((item, index) => {
-  return { code: String(index), name: index + 1 + "월" };
-});
+const YEARS = _.map(_.range(1990, new Date().getFullYear() + 2, 1), (item) => ({
+  code: `${item}`,
+  name: `${item}`,
+}));
+const MONTHS = _.map(_.range(0, 12, 1), (item) => ({
+  code: `${item}`,
+  name: `${item + 1}월`,
+}));
 
 const DateTimePicker: React.FC<DatePickerProps> = ({
   name,
@@ -85,18 +75,15 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
   handleChangeField,
 }: DatePickerProps) => {
   const { store: themeStore } = useThemeContext();
-  const [parseValue, setParseValue] = useState<Date>();
-  const [dateValue, setDateValue] = useState(value);
   const [open, setOpen] = useState(false);
 
   // TODO: Input 뒤에 Calendar 아이콘 추가
-  // eslint-disable-next-line react/display-name
-  const CustomInput = forwardRef(({ ...props }: any, ref: any) => {
+  const CustomInput = forwardRef(({ ...props }: any, ref: any): JSX.Element => {
     return (
       <OverlayTrigger render={renderTooltip} renderChildren={value}>
         <FormControl
-          ref={ref}
           {...props}
+          ref={ref}
           autoFocus={open}
           isValid={isValid}
           isInvalid={isValid !== undefined ? !isValid : false}
@@ -105,46 +92,14 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
       </OverlayTrigger>
     );
   });
-
-  // NOTE: Date -> String 변환 함수
-  const parseDateToString = (dateValue: Date) => {
-    if (dateValue) {
-      const year = dateValue.getFullYear();
-      const month = dateValue.getMonth() + 1;
-      const date = dateValue.getDate();
-      const hour = dateValue.getHours();
-      const minute = dateValue.getMinutes();
-
-      const stringValue =
-        type === "datetime"
-          ? `${year}-${month >= 10 ? month : "0" + month}-${
-              date >= 10 ? date : "0" + date
-            } ${hour >= 10 ? hour : "0" + hour}:${
-              minute >= 10 ? minute : "0" + minute
-            }`
-          : type === "yearMonth"
-          ? `${year}-${month >= 10 ? month : "0" + month}`
-          : type === "year"
-          ? `${year}`
-          : `${year}-${month >= 10 ? month : "0" + month}-${
-              date >= 10 ? date : "0" + date
-            }`;
-
-      return stringValue;
-    } else {
-      return undefined;
-    }
-  };
+  CustomInput.displayName = "CustomInput";
 
   // NOTE: Date Value 변경 이벤트
   const handleChange = (changedValue: any) => {
-    const parsedDateValue = parseDateToString(changedValue);
-    setDateValue(parsedDateValue);
-
     const fieldValue = {
       target: {
         name,
-        value: parsedDateValue,
+        value: parseDateToString(changedValue, type),
       },
     };
     handleChangeField?.(fieldValue);
@@ -160,25 +115,6 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (value) {
-      if (typeof value == "string") {
-        setParseValue(new Date(value));
-      } else {
-        setParseValue(value);
-      }
-      setDateValue(value);
-    }
-  }, [value]);
-
-  useEffect(() => {
-    if (dateValue) {
-      setParseValue(new Date(dateValue));
-    } else {
-      setParseValue(undefined);
-    }
-  }, [dateValue]);
-
   return (
     <>
       <RenderIndicator />
@@ -189,8 +125,8 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
         })}
         name={name}
         locale={ko}
-        showYearDropdown
-        showMonthDropdown
+        showDisabledMonthNavigation
+        disabledKeyboardNavigation
         showPopperArrow={false}
         dropdownMode="select"
         dateFormat={format}
@@ -200,13 +136,16 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
         showMonthYearPicker={type === "yearMonth"}
         showYearPicker={type === "year"}
         maxDate={new Date("9999-12-31")}
-        selected={parseValue}
+        selected={
+          value && typeof value === "string" ? new Date(value) : undefined
+        }
         onChange={handleChange}
         onInputClick={handleInputClick}
         onClickOutside={handleInputOutClick}
         isClearable={true}
         open={open}
         customInput={<CustomInput />}
+        dayClassName={(date) => (!isWeekDay(date) ? "custom-week-day" : null)}
         renderCustomHeader={({
           date,
           changeYear,
@@ -235,7 +174,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
               >
                 <FaAngleDoubleLeft size={15} color={"white"} />
               </button>
-              {type != "year" && (
+              {type !== "year" && (
                 <button
                   onClick={decreaseMonth}
                   disabled={prevMonthButtonDisabled}
@@ -247,12 +186,9 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
 
               <Select
                 name={"datepicker_year"}
-                value={
-                  YEARS.find((item: any) => item.code == date.getFullYear())
-                    ?.code
-                }
+                value={`${getYear(date)}`}
                 choices={YEARS}
-                onChange={({ target: { value } }) => {
+                handleChangeField={({ target: { value } }) => {
                   changeYear(Number(value));
                 }}
                 style={{
@@ -267,13 +203,13 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                 <Select
                   name={"datepicker_month"}
                   value={
-                    MONTHS.find((item: any) => item.code == date.getMonth())
+                    MONTHS.find((item: any) => item.code == getMonth(date))
                       ?.code
                   }
                   choices={MONTHS}
-                  onChange={({ target: { value } }) =>
-                    changeMonth(Number(value))
-                  }
+                  handleChangeField={({ target: { value } }) => {
+                    changeMonth(Number(value));
+                  }}
                   style={{
                     paddingTop: 2,
                     paddingBottom: 2,
@@ -284,7 +220,7 @@ const DateTimePicker: React.FC<DatePickerProps> = ({
                 />
               )}
 
-              {type != "year" && (
+              {type !== "year" && (
                 <button
                   onClick={increaseMonth}
                   disabled={nextMonthButtonDisabled}

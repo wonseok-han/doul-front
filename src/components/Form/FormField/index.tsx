@@ -39,11 +39,11 @@ export interface FormMetaProps {
   /**
    * 필드 초기값
    */
-  defaultValue?: string | number | Date | boolean;
+  defaultValue?: string | number | boolean;
   /**
    * 필드 값
    */
-  value: string | number | Date | boolean;
+  value: string | number | boolean;
   /**
    * 필수값 여부
    */
@@ -269,7 +269,10 @@ const FormField: React.FC<FormFieldProps> = ({
       }
     }
     // 날짜타입
-    else if (type === "date" && typeof value === "string") {
+    else if (
+      type === "date" &&
+      (typeof value === "string" || value == undefined)
+    ) {
       const dateType =
         widgetType === "year" ||
         widgetType === "yearMonth" ||
