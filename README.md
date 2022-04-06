@@ -5,6 +5,9 @@
 * bootstrap5
 * material ui5
 
+## Sidebar
+* [react-pro-sidebar](https://github.com/azouaoui-med/react-pro-sidebar)
+
 ## Settings
 1. ***n*** Package Install
     ```shell
