@@ -104,7 +104,7 @@ const Content: React.FC<Props> = ({
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://github.com/wonseok-han/doul-front"
+                href="https://github.com/wonseok-han/react-front"
               >
                 wonseok-han
               </a>
