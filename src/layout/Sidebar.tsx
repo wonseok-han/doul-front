@@ -174,13 +174,13 @@ const Sidebar: React.FC<Props> = ({
         <div
           style={{
             padding: "24px",
-            textTransform: "uppercase",
             fontWeight: "bold",
             fontSize: 14,
             letterSpacing: "1px",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
+            textAlign: "center",
           }}
         >
           <span
@@ -196,7 +196,7 @@ const Sidebar: React.FC<Props> = ({
               );
             }}
           >
-            {!collapsed && <h2>테스트 시스템</h2>}
+            {!collapsed && <h2>react-front</h2>}
           </span>
         </div>
       </SidebarHeader>
