@@ -88,6 +88,7 @@ const Login: React.FC = () => {
       </FormRow>
       <Alert
         show={store?.showAlert?.show || false}
+        confirm={store?.showAlert?.confirm || false}
         header={store?.showAlert?.header}
         body={store?.showAlert?.body}
         callBack={store?.showAlert?.callBack}

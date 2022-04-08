@@ -46,6 +46,7 @@ export interface ActionProps {
 // NOTE: Alert Props
 export interface AlertProps {
   show?: boolean;
+  confirm?: boolean;
   header?: string;
   body?: string;
   callBack?: any;

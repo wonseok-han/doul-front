@@ -8,6 +8,7 @@ import { actions, useAppContext, useThemeContext } from "utils/context";
 
 export interface AlertProps {
   show?: boolean;
+  confirm?: boolean;
   header?: string;
   body?: string;
   callBack?: any;
@@ -15,6 +16,7 @@ export interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({
   show,
+  confirm,
   header,
   body,
   callBack,
@@ -24,18 +26,27 @@ const Alert: React.FC<AlertProps> = ({
   const { showAlert } = actions;
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // NOTE: Confirm 기능으로 동작할시 OK 이벤트
+  const handleOk = () => {
+    dispatch(showAlert({ show: false }));
+    callBack?.();
+  };
+
   // NOTE: Alert Close 이벤트
   const handleClose = () => {
     dispatch(showAlert({ show: false }));
-    callBack?.();
+    !confirm && callBack?.();
   };
 
   // NOTE: Ref 버튼 컴포넌트
   const RefButton = forwardRef<HTMLButtonElement>((props, ref) => {
     return (
-      <Button ref={ref} onClick={handleClose}>
-        닫기
-      </Button>
+      <>
+        {confirm && <Button onClick={handleOk}>확인</Button>}
+        <Button ref={ref} onClick={handleClose}>
+          닫기
+        </Button>
+      </>
     );
   });
   RefButton.displayName = "RefButton";
