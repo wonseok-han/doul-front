@@ -64,13 +64,12 @@ export const META: Array<FieldMetaProps> = [
   {
     name: "number",
     type: "number",
-    widgetType: "string",
     label: "일반숫자",
     required: true,
     rules: {
       required: true,
-      maxLength: 0,
-      minLength: 0,
+      max: 10,
+      min: 1,
     },
   },
   {
