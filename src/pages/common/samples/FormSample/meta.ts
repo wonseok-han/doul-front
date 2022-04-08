@@ -84,8 +84,8 @@ export const META: Array<FieldMetaProps> = [
     required: true,
     rules: {
       required: true,
-      maxLength: 0,
-      minLength: 0,
+      max: "2022-04-30",
+      min: "2022-01-01",
     },
   },
   {
@@ -109,8 +109,6 @@ export const META: Array<FieldMetaProps> = [
     selectOption: "choose",
     rules: {
       required: true,
-      maxLength: 0,
-      minLength: 0,
     },
   },
   {
@@ -123,8 +121,6 @@ export const META: Array<FieldMetaProps> = [
     required: true,
     rules: {
       required: true,
-      maxLength: 0,
-      minLength: 0,
     },
   },
   {
@@ -137,8 +133,6 @@ export const META: Array<FieldMetaProps> = [
     required: true,
     rules: {
       required: true,
-      maxLength: 0,
-      minLength: 0,
     },
   },
 ];
