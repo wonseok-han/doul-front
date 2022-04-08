@@ -7,6 +7,7 @@ import React from "react";
 import { FormControl, InputGroup, InputGroupProps } from "react-bootstrap";
 import { useThemeContext } from "utils/context";
 import { renderTooltip } from "utils/tooltip/Tooltip";
+import { ValidateProps } from "utils/types/pages";
 
 export interface InputBoxProps extends InputGroupProps {
   /**
@@ -58,6 +59,10 @@ export interface InputBoxProps extends InputGroupProps {
    */
   isValid?: boolean | undefined;
   /**
+   * 유효성 검사 결과값
+   */
+  validate?: ValidateProps;
+  /**
    * 필드 Change Event
    */
   handleChangeField?: (event: any) => void;
@@ -88,6 +93,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   hidden = false,
   textAlign,
   isValid,
+  validate,
   style,
   handleChangeField,
   handleKeyDown,
@@ -124,7 +130,11 @@ const InputBox: React.FC<InputBoxProps> = ({
     <>
       <RenderIndicator />
       {!hidden && (
-        <OverlayTrigger render={renderTooltip} renderChildren={value}>
+        <OverlayTrigger
+          render={renderTooltip}
+          renderChildren={validate?.message || value}
+          invalid={validate?.invalid}
+        >
           <InputGroup style={style} hasValidation={true}>
             {prefix && <InputGroup.Text>{prefix}</InputGroup.Text>}
             <FormControl

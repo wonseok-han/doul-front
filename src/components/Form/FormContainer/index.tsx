@@ -1,12 +1,12 @@
 import FormRowContainer from "components/Form/FormRowContainer";
 import React from "react";
+import { FieldMetaProps } from "utils/types/pages";
 
 export interface FormContainerProps {
   /**
-   * Form을 구성할 메타데이터
+   * Field Meta 정보
    */
-  // TODO: meta 타입 구체화하기
-  meta: Array<any>;
+  meta: Array<FieldMetaProps>;
   /**
    * meta data를 통해 만들어진 Form의 데이터
    */

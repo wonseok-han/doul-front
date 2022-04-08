@@ -6,20 +6,32 @@ import { FormCheck, FormCheckProps } from "react-bootstrap";
 import { useThemeContext } from "utils/context";
 import { makeGuid } from "utils/functions/common";
 import { renderTooltip } from "utils/tooltip/Tooltip";
+import { ChoiceProps, ValidateProps } from "utils/types/pages";
 
 export interface CheckProps extends FormCheckProps {
-  /** 컴포넌트명 */
+  /**
+   * 컴포넌트명
+   */
   name: string;
-  /** 값 리스트 */
-  choices: Array<{
-    code: string;
-    name: string;
-  }>;
-  /** 체크될 때의 값 */
+  /**
+   *  값 리스트
+   */
+  choices: Array<ChoiceProps>;
+  /**
+   *  체크될 때의 값
+   */
   trueValue?: string | boolean;
-  /** 체크되지 않을 때의 값 */
+  /**
+   *  체크되지 않을 때의 값
+   */
   falseValue?: string | boolean;
-  /** Form Data 값 변경 */
+  /**
+   * 유효성 검사 결과값
+   */
+  validate?: ValidateProps;
+  /**
+   *  Form Data 값 변경
+   */
   handleChangeField?: (value: any) => void;
 }
 const Check: React.FC<CheckProps> = ({
@@ -30,6 +42,7 @@ const Check: React.FC<CheckProps> = ({
   falseValue = choices?.length > 1 ? choices[1].code : false,
   disabled = false,
   isValid,
+  validate,
   style,
   handleChangeField,
 }: CheckProps) => {
@@ -67,9 +80,13 @@ const Check: React.FC<CheckProps> = ({
   return (
     <>
       <RenderIndicator />
+
       <OverlayTrigger
         render={renderTooltip}
-        renderChildren={choices.find((item) => item.code === value)?.name}
+        renderChildren={
+          validate?.message || choices.find((item) => item.code === value)?.name
+        }
+        invalid={validate?.invalid}
       >
         <div
           style={{

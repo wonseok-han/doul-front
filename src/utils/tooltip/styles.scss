@@ -1,0 +1,45 @@
+$tooltip-bg-color: red;
+$tooltip-opacity: 100%;
+
+.custom-tooltip {
+    &.validate {
+        .tooltip-inner {
+            width: auto;
+            opacity: $tooltip-opacity;
+            background-color: $tooltip-bg-color;
+        }
+
+        &.placement-top {
+            .tooltip-arrow {
+                &::before {
+                    border-top-color: $tooltip-bg-color;
+                }
+            }
+        }
+    
+        &.placement-bottom {
+            .tooltip-arrow {
+                &::before {
+                    opacity: $tooltip-opacity;
+                    border-bottom-color: $tooltip-bg-color;
+                }
+            }
+        }
+    
+        &.placement-left {
+            .tooltip-arrow {
+                &::before {
+                    border-left-color: $tooltip-bg-color;
+                }
+            }
+        }
+    
+        &.placement-right {
+            .tooltip-arrow {
+                &::before {
+                    border-right-color: $tooltip-bg-color;
+                }
+            }
+        }
+    }
+}

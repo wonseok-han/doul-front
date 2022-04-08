@@ -7,144 +7,24 @@ import Radio from "components/Radio";
 import Row from "components/Row";
 import Select from "components/Select";
 import Textarea from "components/Textarea";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormGroup } from "react-bootstrap";
+import { checkValidate } from "utils/functions/validator";
+import { FieldMetaProps, ValidateProps } from "utils/types/pages";
 
-export interface FormMetaProps {
+export interface FormFieldProps extends FieldMetaProps {
   /**
-   * Field 타입
+   * Field Meta 정보
    */
-  type: "string" | "number" | "date" | "select";
-  /**
-   * 위젯 타입
-   */
-  widgetType?:
-    | "mask"
-    | "textarea"
-    | "date"
-    | "year"
-    | "yearMonth"
-    | "datetime"
-    | "select"
-    | "radio"
-    | "check";
-  /**
-   * 라벨
-   */
-  label?: string;
-  /**
-   * 필드명
-   */
-  name: string;
-  /**
-   * 필드 초기값
-   */
-  defaultValue?: string | number | boolean;
-  /**
-   * 필드 값
-   */
-  value: string | number | boolean;
-  /**
-   * 필수값 여부
-   */
-  required?: boolean;
-  /**
-   * ReadOnly 여부
-   */
-  readOnly?: boolean;
-  /**
-   * Disable 여부
-   */
-  disabled?: boolean;
-  /**
-   * Hidden 여부
-   */
-  hidden?: boolean;
-  /**
-   * Label Hidden 여부
-   */
-  labelHidden?: boolean;
-  /**
-   * InputBox에 사용되는 password 사용여부
-   */
-  isPassword?: boolean;
-  /**
-   * InputBox에 사용되는 placeholder
-   */
-  placeholder?: string;
-  /**
-   * Field 앞쪽에 위치할 String
-   */
-  prefix?: string;
-  /**
-   * Field 뒤쪽에 위치할 String
-   */
-  postfix?: string;
-  /**
-   * date 타입일 경우 date format
-   */
-  format?: string;
-  /**
-   * type이 select일 때 항목 리스트
-   */
-  choices?: Array<{
-    code: string;
-    name: string;
-  }>;
-  /**
-   * type이 select일 때 '선택'/'전체' 옵션
-   */
-  selectOption?: "choose" | "all";
-  /**
-   * type이 select일 때 다중선택 여부
-   */
-  multiple?: boolean;
-  /**
-   * type이 select일 때 dropdown display 개수
-   */
-  displaySize?: number;
-  /**
-   * type이 select, widgetType이 radio일 때 항목의 수평(true), 수직(false) 배치
-   */
-  inline?: boolean;
-  /**
-   * 체크될 때의 값
-   */
-  trueValue?: string | boolean;
-  /**
-   *  체크되지 않을 때의 값
-   */
-  falseValue?: string | boolean;
-  /**
-   * 필드 유효성검사 Rule
-   */
-  rules?: any;
-  /**
-   * 필드 정렬
-   */
-  textAlign?: "left" | "right" | "center";
+  meta: FieldMetaProps;
   /**
    * 유효성 여부
    */
   isValid?: boolean;
   /**
-   * Filed별 Label Style
+   * 필드 값
    */
-  labelStyle?: any;
-  /**
-   * Filed별 Style
-   */
-  style?: any;
-  /**
-   * Key Down Event
-   */
-  handleKeyDown?: (event?: any) => void;
-  /**
-   * Key Up Event
-   */
-  handleKeyUp?: (event?: any) => void;
-}
-export interface FormFieldProps extends FormMetaProps {
+  value: string | number | boolean;
   /**
    * 필드 Change Event
    */
@@ -152,6 +32,7 @@ export interface FormFieldProps extends FormMetaProps {
 }
 
 const FormField: React.FC<FormFieldProps> = ({
+  meta,
   type,
   widgetType,
   label,
@@ -189,6 +70,18 @@ const FormField: React.FC<FormFieldProps> = ({
   handleKeyUp,
   handleChangeField,
 }: FormFieldProps) => {
+  const [validate, setValidate] = useState<ValidateProps>({
+    invalid: "",
+    message: "",
+  });
+
+  useEffect(() => {
+    const invalid = checkValidate(meta, value);
+    setValidate({
+      ...invalid,
+    });
+  }, [value]);
+
   // NOTE: type 속성값에 따른 Field 컴포넌트
   const FieldComponent = () => {
     // 문자타입
@@ -208,6 +101,7 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             placeholder={placeholder}
             isValid={isValid}
+            validate={validate}
             style={style}
             handleChangeField={handleChangeField}
           />
@@ -228,6 +122,7 @@ const FormField: React.FC<FormFieldProps> = ({
             prefix={prefix}
             postfix={postfix}
             textAlign={textAlign}
+            validate={validate}
             style={style}
             handleKeyDown={handleKeyDown}
             handleKeyUp={handleKeyUp}
@@ -262,6 +157,7 @@ const FormField: React.FC<FormFieldProps> = ({
             prefix={prefix}
             postfix={postfix}
             textAlign={textAlign}
+            validate={validate}
             style={style}
             handleChangeField={handleChangeField}
           />
@@ -290,6 +186,7 @@ const FormField: React.FC<FormFieldProps> = ({
           format={format}
           isValid={isValid}
           textAlign={textAlign}
+          validate={validate}
           style={style}
           handleChangeField={handleChangeField}
         />
@@ -312,6 +209,7 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             isValid={isValid}
             style={{ marginLeft: 10, ...style }}
+            validate={validate}
             handleChangeField={handleChangeField}
           />
         );
@@ -327,6 +225,7 @@ const FormField: React.FC<FormFieldProps> = ({
             falseValue={falseValue}
             disabled={disabled}
             isValid={isValid}
+            validate={validate}
             style={{ marginLeft: 10, ...style }}
             handleChangeField={handleChangeField}
           />
@@ -348,6 +247,7 @@ const FormField: React.FC<FormFieldProps> = ({
             readOnly={readOnly}
             disabled={disabled}
             textAlign={textAlign}
+            validate={validate}
             handleChangeField={handleChangeField}
           />
         );

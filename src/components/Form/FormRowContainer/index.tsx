@@ -1,13 +1,13 @@
 import FormField from "components/Form/FormField";
 import FormRow from "components/Form/FormRow";
 import React from "react";
+import { FieldMetaProps } from "utils/types/pages";
 
 export interface FormRowContainerProps {
   /**
-   * Form을 구성할 메타데이터
+   * Field Meta 정보
    */
-  // TODO: meta 타입 구체화하기
-  meta: Array<any>;
+  meta: Array<FieldMetaProps>;
   /**
    * meta data를 통해 만들어진 Form의 데이터
    */
@@ -70,6 +70,7 @@ const FormRowContainer: React.FC<FormRowContainerProps> = ({
       {meta.map((item: any, index: number) => (
         <FormField
           key={`form-field-${index}`}
+          meta={item}
           type={item.type}
           widgetType={item.widgetType}
           label={item.label}

@@ -3,15 +3,13 @@ import RenderIndicator from "components/RenderIndicator";
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormCheckProps } from "react-bootstrap";
 import { renderTooltip } from "utils/tooltip/Tooltip";
+import { ChoiceProps } from "utils/types/pages";
 
 export interface SwitchProps extends FormCheckProps {
   /** 컴포넌트명 */
   name: string;
   /** 값 리스트 */
-  choices: Array<{
-    code: string;
-    name: string;
-  }>;
+  choices: Array<ChoiceProps>;
   /** 체크될 때의 값 */
   trueValue?: string | boolean;
   /** 체크되지 않을 때의 값 */

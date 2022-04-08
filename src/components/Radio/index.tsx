@@ -6,6 +6,7 @@ import { FormCheck, FormCheckProps } from "react-bootstrap";
 import { useThemeContext } from "utils/context";
 import { makeGuid } from "utils/functions/common";
 import { renderTooltip } from "utils/tooltip/Tooltip";
+import { ChoiceProps, ValidateProps } from "utils/types/pages";
 
 export interface RadioProps extends FormCheckProps {
   /**
@@ -15,14 +16,15 @@ export interface RadioProps extends FormCheckProps {
   /**
    *  값 리스트
    */
-  choices: Array<{
-    code: string;
-    name: string;
-  }>;
+  choices: Array<ChoiceProps>;
   /**
    * 없음값 추가
    */
   none?: boolean;
+  /**
+   * 유효성 검사 결과값
+   */
+  validate?: ValidateProps;
   /**
    * Form Data 값 변경
    */
@@ -38,6 +40,7 @@ const Radio: React.FC<RadioProps> = ({
   none = true,
   isValid,
   style,
+  validate,
   handleChangeField,
 }: RadioProps) => {
   const [selected, setSelected] = useState(value);
@@ -77,7 +80,11 @@ const Radio: React.FC<RadioProps> = ({
       <RenderIndicator />
       <OverlayTrigger
         render={renderTooltip}
-        renderChildren={itemList.find((item) => item.code === value)?.name}
+        renderChildren={
+          validate?.message ||
+          itemList.find((item) => item.code === value)?.name
+        }
+        invalid={validate?.invalid}
       >
         <div>
           {itemList.map((item) => (

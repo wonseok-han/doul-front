@@ -12,22 +12,48 @@ import { Theme, styled, useTheme } from "@mui/material/styles";
 import classNames from "classnames";
 import OverlayTrigger from "components/OverlayTrigger";
 import RenderIndicator from "components/RenderIndicator";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { useThemeContext } from "utils/context";
 import { isNull } from "utils/functions/data";
 import { renderTooltip } from "utils/tooltip/Tooltip";
+import { ChoiceProps, ValidateProps } from "utils/types/pages";
 
 export interface SelectProps extends MuiSelectProps {
+  /**
+   * 필드명
+   */
   name: string;
-  choices: Array<{
-    code: string;
-    name: string;
-  }>;
+  /**
+   * Display List
+   */
+  choices: Array<ChoiceProps>;
+  /**
+   * 초기값
+   */
   defaultValue?: string;
+  /**
+   * 필드 값
+   */
   value?: string | undefined;
+  /**
+   * 선택옵션("선택"|"전체")
+   */
   selectOption?: "choose" | "all";
+  /**
+   * Display List Size
+   */
   displaySize?: number;
+  /**
+   * 텍스트정렬
+   */
   textAlign?: "left" | "right" | "center";
+  /**
+   * 유효성 검사 결과값
+   */
+  validate?: ValidateProps;
+  /**
+   * 필드 Change Event
+   */
   handleChangeField?: (event: any) => void;
 }
 
@@ -58,20 +84,24 @@ const getStyles = (
   };
 };
 
-const Select: React.FC<SelectProps> = ({
-  name,
-  choices,
-  defaultValue,
-  value,
-  selectOption,
-  multiple = false,
-  displaySize = 5,
-  readOnly = false,
-  disabled = false,
-  textAlign,
-  style,
-  handleChangeField,
-}: SelectProps) => {
+const Select = (
+  {
+    name,
+    choices,
+    defaultValue,
+    value,
+    selectOption,
+    multiple = false,
+    displaySize = 5,
+    readOnly = false,
+    disabled = false,
+    textAlign,
+    style,
+    validate,
+    handleChangeField,
+  }: SelectProps,
+  ref: any
+): JSX.Element => {
   const { store: themeStore } = useThemeContext();
   const theme = useTheme();
   const listItem = ANOTHER_ITEMS.filter((item) => {
@@ -221,7 +251,7 @@ const Select: React.FC<SelectProps> = ({
   }, [selectValues]);
 
   useEffect(() => {
-    value && typeof value === "string" && setSelectValues(value.split(","));
+    typeof value === "string" && setSelectValues(value.split(","));
   }, [value]);
 
   return (
@@ -229,16 +259,21 @@ const Select: React.FC<SelectProps> = ({
       <RenderIndicator />
       <OverlayTrigger
         render={renderTooltip}
-        renderChildren={listItem
-          .filter((item) => {
-            return multiple && selectOption === "all"
-              ? selectValues?.indexOf(item.code) > -1 && item.code !== "all"
-              : selectValues?.indexOf(item.code) > -1;
-          })
-          .map((item) => item.name)
-          .join(", ")}
+        renderChildren={
+          validate?.message ||
+          listItem
+            .filter((item) => {
+              return multiple && selectOption === "all"
+                ? selectValues?.indexOf(item.code) > -1 && item.code !== "all"
+                : selectValues?.indexOf(item.code) > -1;
+            })
+            .map((item) => item.name)
+            .join(", ")
+        }
+        invalid={validate?.invalid}
       >
         <MuiSelect
+          ref={ref}
           name={name}
           displayEmpty
           multiple={multiple}
@@ -246,7 +281,7 @@ const Select: React.FC<SelectProps> = ({
           disabled={disabled}
           value={selectValues}
           onChange={handleChange}
-          // FIXME: DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
+          // DatePicker 컴포넌트의 onMouseDown 이벤트의 버블링으로 인해 추가
           onMouseDown={(event) => event.stopPropagation()}
           input={
             <BootstrapInput
@@ -295,4 +330,4 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-export default React.memo(Select);
+export default React.memo(forwardRef<any, SelectProps>(Select));

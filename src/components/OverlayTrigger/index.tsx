@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { OverlayTrigger as BootStrapOverlayTrigger } from "react-bootstrap";
 import { OverlayChildren } from "react-bootstrap/esm/Overlay";
+import { isNull } from "utils/functions/data";
 
 export interface OverlayTriggerProps {
   placement?:
@@ -19,23 +20,28 @@ export interface OverlayTriggerProps {
     | "left-end"
     | "left"
     | "left-start";
-  render: (props: any, children: any) => OverlayChildren;
+  render: (props: any, children: any, validate?: string) => OverlayChildren;
   renderChildren: any;
-  children: ReactElement;
+  invalid?: string;
+  children: ReactElement | any;
 }
 
 const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
-  placement = "top-end",
   children,
   render,
   renderChildren,
+  invalid,
+  placement = !isNull(invalid) ? "bottom-end" : "top-end",
 }: OverlayTriggerProps) => {
   return (
     <BootStrapOverlayTrigger
       placement={placement}
-      overlay={(props) => render(props, renderChildren)}
+      show={!isNull(invalid) && !isNull(renderChildren) ? true : undefined}
+      overlay={(props) => render(props, renderChildren, invalid)}
     >
-      {children}
+      {({ ref, ...props }) => {
+        return React.createElement("div", { ref: ref, ...props }, children);
+      }}
     </BootStrapOverlayTrigger>
   );
 };

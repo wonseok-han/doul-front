@@ -1,4 +1,6 @@
-export const META = [
+import { FieldMetaProps } from "utils/types/pages";
+
+export const META: Array<FieldMetaProps> = [
   {
     name: "id",
     type: "string",
