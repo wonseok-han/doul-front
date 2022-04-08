@@ -57,8 +57,12 @@ export const META: Array<FieldMetaProps> = [
     required: true,
     rules: {
       required: true,
-      maxLength: 2,
+      maxLength: 10,
       minLength: 1,
+      regex: {
+        pattern: "^[ㄱ-ㅎ|가-힣]",
+        message: "한글만 입력가능합니다.",
+      },
     },
   },
   {
