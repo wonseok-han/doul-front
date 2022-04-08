@@ -4,7 +4,9 @@ $tooltip-opacity: 100%;
 .custom-tooltip {
     &.validate {
         .tooltip-inner {
-            width: auto;
+            max-width: 100%;
+            font-size: 0.9em;
+            white-space: nowrap;
             opacity: $tooltip-opacity;
             background-color: $tooltip-bg-color;
         }
