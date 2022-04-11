@@ -71,7 +71,7 @@ const Sidebar: React.FC<Props> = ({
         style={{
           ...props.style,
           position: "absolute",
-          zIndex: 9999,
+          zIndex: 9998,
         }}
       >
         <Dropdown />

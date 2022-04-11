@@ -6,9 +6,13 @@ import { Modal, Spinner } from "react-bootstrap";
 
 export interface LoadingProps {
   loading?: boolean;
+  onClick?: (event: any) => void;
 }
 
-const Loading: React.FC<LoadingProps> = ({ loading = false }: LoadingProps) => {
+const Loading: React.FC<LoadingProps> = ({
+  loading = false,
+  onClick,
+}: LoadingProps) => {
   return (
     <Modal
       show={loading}
@@ -16,6 +20,10 @@ const Loading: React.FC<LoadingProps> = ({ loading = false }: LoadingProps) => {
       contentClassName={"ModalLoading"}
       aria-labelledby="contained-modal-title-vcenter"
       fullscreen={"sm-down"}
+      onClick={onClick}
+      style={{
+        zIndex: 9999,
+      }}
     >
       <Modal.Body
         style={{

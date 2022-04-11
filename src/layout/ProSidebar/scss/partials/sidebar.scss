@@ -37,7 +37,7 @@
   text-align: left;
   transition: width, left, right, 0.3s;
   position: relative;
-  z-index: 9999;
+  z-index: 1050;
   > .pro-sidebar-inner {
     background: $sidebar-bg-color-light;
     &.darkMode {
