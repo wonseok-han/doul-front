@@ -18,7 +18,6 @@ import {
 import { useAppContext } from "utils/context";
 import { renderTooltip } from "utils/tooltip/Tooltip";
 
-import sidebarBg from "./assets/bg2.jpg";
 import Dropdown from "./Dropdown";
 import { ProSidebar } from "./ProSidebar";
 import {
@@ -175,7 +174,7 @@ const Sidebar: React.FC<Props> = ({
 
   return (
     <ProSidebar
-      image={image ? sidebarBg : ""}
+      image={image ? "" : ""}
       rtl={rtl}
       collapsed={collapsed}
       toggled={toggled}

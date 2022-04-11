@@ -12,15 +12,36 @@ import {
 import { useThemeContext } from "utils/context";
 
 export interface NavInfoProps {
+  /**
+   * Tab Page 고유 키
+   */
   key: string;
+  /**
+   * Tab Page 명
+   */
   name: string;
+  /**
+   * Tab Page Children Element
+   */
   element: React.ReactElement;
 }
 
 export interface Props extends TabsProps {
+  /**
+   * Navigation 정보
+   */
   navInfo: Array<NavInfoProps>;
+  /**
+   * 활성화할 탭
+   */
   activeKey?: string;
+  /**
+   * Tab Page 활성화 전 이벤트
+   */
   handleBeforeActivateTab?: (item: any) => boolean;
+  /**
+   * Tab Page 활성화 이벤트
+   */
   handleActivateTab?: (item: any) => void;
 }
 
