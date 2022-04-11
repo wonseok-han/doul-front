@@ -141,7 +141,7 @@ const Sidebar: React.FC<Props> = ({
       );
 
       return filteredList.map((menuItem) => {
-        return (
+        return menuItem?.url != undefined ? (
           <OverlayTrigger
             key={menuItem.menuCode}
             render={renderTooltip}
@@ -150,24 +150,23 @@ const Sidebar: React.FC<Props> = ({
               zIndex: "1051",
             }}
           >
-            {menuItem?.url != undefined ? (
-              <MenuItem
-                icon={<FaPager />}
-                onClick={() => handleMenuOnClick(menuItem)}
-              >
-                {menuItem.menuName}
-              </MenuItem>
-            ) : (
-              <SubMenu
-                title={menuItem.menuName}
-                icon={true}
-                openedIcon={<FaFolderOpen />}
-                closedIcon={<FaFolder />}
-              >
-                {recursiveChildMenu(menuItem)}
-              </SubMenu>
-            )}
+            <MenuItem
+              icon={<FaPager />}
+              onClick={() => handleMenuOnClick(menuItem)}
+            >
+              {menuItem.menuName}
+            </MenuItem>
           </OverlayTrigger>
+        ) : (
+          <SubMenu
+            key={menuItem.menuCode}
+            title={menuItem.menuName}
+            icon={true}
+            openedIcon={<FaFolderOpen />}
+            closedIcon={<FaFolder />}
+          >
+            {recursiveChildMenu(menuItem)}
+          </SubMenu>
         );
       });
     },
