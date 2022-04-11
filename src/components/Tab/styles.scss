@@ -1,0 +1,37 @@
+@import 'global/variables.scss';
+
+.custom-nav {
+    .custom-nav-link {
+        color: $sidebar-color-light;
+        &.darkMode {
+            color: $sidebar-color-dark;    
+        }
+        &:hover,
+        &:focus {
+            color: $sidebar-color-light;
+            border: 1px solid $highlight-color-light;
+            &.darkMode {
+                color: $sidebar-color-dark;
+                border: 1px solid $highlight-color-dark;
+            }
+        }
+
+        .close-icon {
+            margin-left: 5px;
+            width: 5px;
+            height: 5px;
+            vertical-align: middle;
+        }
+    }
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+      color: $content-color-light;
+      background-color: $content-tab-link-active-bg-color-light;
+      &.darkMode {
+        color: white;
+        background-color: $content-tab-link-active-bg-color-dark;
+      }
+      border-color: white;
+    }
+}

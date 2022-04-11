@@ -87,6 +87,13 @@ export const MENU = [
     open: false,
   },
   {
+    menuCode: "0110",
+    menuName: "Tab Sample",
+    parentMenu: "0100",
+    url: "common/samples/TabSample",
+    open: false,
+  },
+  {
     menuCode: "0201",
     menuName: "Form Sample",
     parentMenu: "0200",
