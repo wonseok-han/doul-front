@@ -27,7 +27,7 @@ const Row: React.FC<RowProps> = ({
       xl={xl}
       xxl={xxl}
       className={classNames(`${className} gx-0`)}
-      style={style}
+      style={{ marginBottom: "3px", ...style }}
     >
       {children}
     </BootStrapRow>

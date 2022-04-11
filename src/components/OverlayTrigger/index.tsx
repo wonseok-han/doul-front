@@ -37,7 +37,7 @@ const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
   render,
   renderChildren,
   invalid,
-  placement = !isNull(invalid) ? "bottom-start" : "top-end",
+  placement = !isNull(invalid) ? "left" : "top-end",
   style,
 }: OverlayTriggerProps) => {
   return (

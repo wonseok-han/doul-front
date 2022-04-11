@@ -2,8 +2,8 @@ $tooltip-bg-color: red;
 $tooltip-opacity: 100%;
 
 .custom-tooltip {
-    z-index: 1049;
-    
+    // z-index: 1049;
+
     &.validate {
         .tooltip-inner {
             max-width: 100%;
