@@ -5,6 +5,10 @@ import { OverlayTriggerProps, Tooltip } from "react-bootstrap";
 import { OverlayChildren } from "react-bootstrap/esm/Overlay";
 import { isNull } from "utils/functions/data";
 
+interface TooltipOverlayTriggerProps extends OverlayTriggerProps {
+  style?: any;
+}
+
 /**
  *
  * @param props OverlayTrigger 속성
@@ -12,9 +16,10 @@ import { isNull } from "utils/functions/data";
  * @returns
  */
 export const renderTooltip = (
-  props: OverlayTriggerProps,
+  props: TooltipOverlayTriggerProps,
   value?: string | number,
-  validate?: string
+  validate?: string,
+  style?: any
 ): OverlayChildren => {
   return isNull(value) ? (
     <></>
@@ -25,6 +30,7 @@ export const renderTooltip = (
         [`placement-${props.placement?.split("-").shift()}`]: true,
         validate: !isNull(validate) ? true : false,
       })}
+      style={{ ...props.style, ...style }}
     >
       {value}
     </Tooltip>

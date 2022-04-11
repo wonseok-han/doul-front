@@ -20,10 +20,16 @@ export interface OverlayTriggerProps {
     | "left-end"
     | "left"
     | "left-start";
-  render: (props: any, children: any, validate?: string) => OverlayChildren;
+  render: (
+    props: any,
+    children: any,
+    validate?: string,
+    style?: any
+  ) => OverlayChildren;
   renderChildren: any;
   invalid?: string;
   children: ReactElement | any;
+  style?: any;
 }
 
 const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
@@ -32,12 +38,13 @@ const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
   renderChildren,
   invalid,
   placement = !isNull(invalid) ? "bottom-start" : "top-end",
+  style,
 }: OverlayTriggerProps) => {
   return (
     <BootStrapOverlayTrigger
       placement={placement}
       show={!isNull(invalid) && !isNull(renderChildren) ? true : undefined}
-      overlay={(props) => render(props, renderChildren, invalid)}
+      overlay={(props) => render(props, renderChildren, invalid, style)}
     >
       {({ ref, ...props }) => {
         return React.createElement("div", { ref: ref, ...props }, children);

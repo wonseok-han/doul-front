@@ -1,8 +1,12 @@
 import "./styles.scss";
 
 import classNames from "classnames";
+import OverlayTrigger from "components/OverlayTrigger";
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Dropdown as BootStrapDropdown, OverlayTrigger } from "react-bootstrap";
+import {
+  Dropdown as BootStrapDropdown,
+  OverlayTrigger as BootstrapOverlayTrigger,
+} from "react-bootstrap";
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -12,6 +16,7 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import { useAppContext } from "utils/context";
+import { renderTooltip } from "utils/tooltip/Tooltip";
 
 import sidebarBg from "./assets/bg2.jpg";
 import Dropdown from "./Dropdown";
@@ -136,24 +141,33 @@ const Sidebar: React.FC<Props> = ({
       );
 
       return filteredList.map((menuItem) => {
-        return menuItem?.url != undefined ? (
-          <MenuItem
+        return (
+          <OverlayTrigger
             key={menuItem.menuCode}
-            icon={<FaPager />}
-            onClick={() => handleMenuOnClick(menuItem)}
+            render={renderTooltip}
+            renderChildren={menuItem.menuName}
+            style={{
+              zIndex: "1051",
+            }}
           >
-            {menuItem.menuName}
-          </MenuItem>
-        ) : (
-          <SubMenu
-            key={menuItem.menuCode}
-            title={menuItem.menuName}
-            icon={true}
-            openedIcon={<FaFolderOpen />}
-            closedIcon={<FaFolder />}
-          >
-            {recursiveChildMenu(menuItem)}
-          </SubMenu>
+            {menuItem?.url != undefined ? (
+              <MenuItem
+                icon={<FaPager />}
+                onClick={() => handleMenuOnClick(menuItem)}
+              >
+                {menuItem.menuName}
+              </MenuItem>
+            ) : (
+              <SubMenu
+                title={menuItem.menuName}
+                icon={true}
+                openedIcon={<FaFolderOpen />}
+                closedIcon={<FaFolder />}
+              >
+                {recursiveChildMenu(menuItem)}
+              </SubMenu>
+            )}
+          </OverlayTrigger>
         );
       });
     },
@@ -211,13 +225,13 @@ const Sidebar: React.FC<Props> = ({
               justifyContent: "left",
             }}
           >
-            <OverlayTrigger
+            <BootstrapOverlayTrigger
               placement={"right-end"}
               overlay={(props) => CustomOverlayDropdown(props)}
               show
             >
               <BootStrapDropdown.Toggle as={CustomDropdownToggle} />
-            </OverlayTrigger>
+            </BootstrapOverlayTrigger>
           </div>
         </BootStrapDropdown>
       </SidebarHeader>

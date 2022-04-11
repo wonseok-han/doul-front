@@ -110,7 +110,8 @@ const Check: React.FC<CheckProps> = ({
                 darkMode: themeStore?.darkMode,
               })}
             >
-              {choices.find((item) => item.code === value)?.name}
+              {isChecked ? choices[0].name : choices[1].name}
+              {/* {choices.find((item) => item.code === value)?.name} */}
             </FormCheck.Label>
           </FormCheck>
         </div>
