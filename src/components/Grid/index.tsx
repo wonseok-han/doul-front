@@ -1,6 +1,7 @@
 // import "tui-grid/dist/tui-grid.css";
 import "./styles.scss";
 
+import RenderIndicator from "components/RenderIndicator";
 import React, { forwardRef, useEffect, useState } from "react";
 import TuiGrid from "tui-grid";
 import { useAppContext } from "utils/context";
@@ -26,13 +27,6 @@ TuiGrid.applyTheme("default", {
       background: "#2b2b2b",
       text: "#adadad",
     },
-    focused: {
-      background: "red",
-      // border: "white",
-    },
-  },
-  selection: {
-    background: "red",
   },
   area: {
     header: {
@@ -61,8 +55,8 @@ const Grid = (
     columnOptions,
     keyColumnName,
     width,
-    bodyHeight,
-    heightResizable,
+    bodyHeight = "auto",
+    heightResizable = true,
     minBodyHeight,
     rowHeight,
     minRowHeight,
@@ -70,7 +64,7 @@ const Grid = (
     scrollY,
     editingEvent,
     tabMode,
-    rowHeaders,
+    rowHeaders = [],
     summary,
     useClientSort,
     selectionUnit,
@@ -80,8 +74,8 @@ const Grid = (
     treeColumnOptions,
     header,
     usageStatistics,
-    disabled,
-    draggable,
+    disabled = false,
+    draggable = true,
     contextMenu,
   }: GridProps,
   ref: any
@@ -95,12 +89,14 @@ const Grid = (
 
   return (
     <>
+      <RenderIndicator />
+
       {rendering === store?.renderCount && (
         <ToastUIGrid
           ref={ref}
           data={data}
           columns={columns}
-          columnOptions={columnOptions}
+          columnOptions={{ resizable: true, ...columnOptions }}
           keyColumnName={keyColumnName}
           width={width}
           bodyHeight={bodyHeight}
@@ -112,15 +108,15 @@ const Grid = (
           scrollY={scrollY}
           editingEvent={editingEvent}
           tabMode={tabMode}
-          rowHeaders={rowHeaders}
+          rowHeaders={rowHeaders || ["rowNum", "draggable"]}
           summary={summary}
           useClientSort={useClientSort}
           selectionUnit={selectionUnit}
           showDummyRows={showDummyRows}
-          copyOptions={copyOptions}
+          copyOptions={{ useListItemText: true, ...copyOptions }}
           pageOptions={pageOptions}
           treeColumnOptions={treeColumnOptions}
-          header={header}
+          header={{ align: "center", ...header }}
           usageStatistics={usageStatistics}
           disabled={disabled}
           draggable={draggable}
