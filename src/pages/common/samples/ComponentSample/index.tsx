@@ -107,7 +107,7 @@ const ComponentsSample: React.FC<PageProps> = ({ info }: PageProps) => {
   const [fieldValues, handleChangeField] = useFieldValues(FIELDS);
   const [loading, setLoading] = useState(true);
 
-  setTimeout(() => setLoading(false), 2000);
+  setTimeout(() => setLoading(false), 1000);
 
   useEffect(() => {
     return () => setLoading(false);

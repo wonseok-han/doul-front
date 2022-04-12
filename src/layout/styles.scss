@@ -1,6 +1,15 @@
 @import 'global/variables.scss';
 @import 'layout/ProSidebar/scss/partials/animation.scss';
 
+.sidebar-content {
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.sidebar-content::-webkit-scrollbar {
+  display: none;
+}
+
 .sidebar-btn-wrapper {
   .sidebar-icon-wrapper {
     &:hover {

@@ -234,7 +234,7 @@ const Sidebar: React.FC<Props> = ({
         </BootStrapDropdown>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="sidebar-content">
         <Menu iconShape="circle">
           {menuList
             .filter((menuItem) => !menuItem.parentMenu)
