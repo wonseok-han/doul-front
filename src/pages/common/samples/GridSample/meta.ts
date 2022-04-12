@@ -147,7 +147,12 @@ export const COLUMN_META: ColumnOptionsProps = [
   {
     header: "Name",
     name: "name",
-    editor: "text",
+    editor: {
+      type: "text",
+    },
+    validation: {
+      required: true,
+    },
   },
   {
     header: "Artist",

@@ -27,6 +27,10 @@ TuiGrid.applyTheme("default", {
       background: "#2b2b2b",
       text: "#adadad",
     },
+    required: {
+      background: "#2b2b2b",
+      text: "#adadad",
+    },
   },
   area: {
     header: {
@@ -121,7 +125,7 @@ const Grid = (
           disabled={disabled}
           draggable={draggable}
           contextMenu={contextMenu}
-          // oneTimeBindingProps={["data", "columns"]}
+          oneTimeBindingProps={["data", "columns"]}
         />
       )}
     </>
