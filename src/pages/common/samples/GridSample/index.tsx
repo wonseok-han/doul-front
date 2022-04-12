@@ -10,11 +10,6 @@ const TableSample: React.FC<PageProps> = () => {
 
   return (
     <>
-      <button
-        onClick={() => console.log(gridRef.current?.getInstance().getData())}
-      >
-        버튼
-      </button>
       <Grid
         ref={gridRef}
         data={DATA}
