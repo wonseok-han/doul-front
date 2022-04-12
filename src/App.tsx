@@ -10,6 +10,7 @@ import { getLocalStorage } from "utils/functions/store";
 
 // NOTE: App Context 초기값
 const APP_CONTEXT_INITIAL = {
+  renderCount: 0,
   toggledInterface: getLocalStorage("interface") || "MDI",
   activeIndicator:
     (USE_RENDER_INDICATOR && getLocalStorage("indicator") === "true") || false,

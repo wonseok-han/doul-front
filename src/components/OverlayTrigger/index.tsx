@@ -1,6 +1,7 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { OverlayTrigger as BootStrapOverlayTrigger } from "react-bootstrap";
 import { OverlayChildren } from "react-bootstrap/esm/Overlay";
+import { useAppContext } from "utils/context";
 import { isNull } from "utils/functions/data";
 
 export interface OverlayTriggerProps {
@@ -40,10 +41,23 @@ const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
   placement = !isNull(invalid) ? "left" : "top-end",
   style,
 }: OverlayTriggerProps) => {
+  const { store } = useAppContext();
+  const [rendering, setRendering] = useState(store?.renderCount);
+
+  useEffect(() => {
+    setRendering(store?.renderCount);
+  }, [store?.renderCount]);
+
   return (
     <BootStrapOverlayTrigger
       placement={placement}
-      show={!isNull(invalid) && !isNull(renderChildren) ? true : undefined}
+      show={
+        rendering === store?.renderCount &&
+        !isNull(invalid) &&
+        !isNull(renderChildren)
+          ? true
+          : undefined
+      }
       overlay={(props) => render(props, renderChildren, invalid, style)}
     >
       {({ ref, ...props }) => {

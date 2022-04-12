@@ -1,8 +1,9 @@
 // import "tui-grid/dist/tui-grid.css";
 import "./styles.scss";
 
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import TuiGrid from "tui-grid";
+import { useAppContext } from "utils/context";
 
 import { GridProps, ToastUIGrid } from "./type.d";
 
@@ -85,39 +86,48 @@ const Grid = (
   }: GridProps,
   ref: any
 ): JSX.Element => {
+  const { store } = useAppContext();
+  const [rendering, setRendering] = useState(store?.renderCount);
+
+  useEffect(() => {
+    setRendering(store?.renderCount);
+  }, [store?.renderCount]);
+
   return (
     <>
-      <ToastUIGrid
-        ref={ref}
-        data={data}
-        columns={columns}
-        columnOptions={columnOptions}
-        keyColumnName={keyColumnName}
-        width={width}
-        bodyHeight={bodyHeight}
-        heightResizable={heightResizable}
-        minBodyHeight={minBodyHeight}
-        rowHeight={rowHeight}
-        minRowHeight={minRowHeight}
-        scrollX={scrollX}
-        scrollY={scrollY}
-        editingEvent={editingEvent}
-        tabMode={tabMode}
-        rowHeaders={rowHeaders}
-        summary={summary}
-        useClientSort={useClientSort}
-        selectionUnit={selectionUnit}
-        showDummyRows={showDummyRows}
-        copyOptions={copyOptions}
-        pageOptions={pageOptions}
-        treeColumnOptions={treeColumnOptions}
-        header={header}
-        usageStatistics={usageStatistics}
-        disabled={disabled}
-        draggable={draggable}
-        contextMenu={contextMenu}
-        // oneTimeBindingProps={["data", "columns"]}
-      />
+      {rendering === store?.renderCount && (
+        <ToastUIGrid
+          ref={ref}
+          data={data}
+          columns={columns}
+          columnOptions={columnOptions}
+          keyColumnName={keyColumnName}
+          width={width}
+          bodyHeight={bodyHeight}
+          heightResizable={heightResizable}
+          minBodyHeight={minBodyHeight}
+          rowHeight={rowHeight}
+          minRowHeight={minRowHeight}
+          scrollX={scrollX}
+          scrollY={scrollY}
+          editingEvent={editingEvent}
+          tabMode={tabMode}
+          rowHeaders={rowHeaders}
+          summary={summary}
+          useClientSort={useClientSort}
+          selectionUnit={selectionUnit}
+          showDummyRows={showDummyRows}
+          copyOptions={copyOptions}
+          pageOptions={pageOptions}
+          treeColumnOptions={treeColumnOptions}
+          header={header}
+          usageStatistics={usageStatistics}
+          disabled={disabled}
+          draggable={draggable}
+          contextMenu={contextMenu}
+          // oneTimeBindingProps={["data", "columns"]}
+        />
+      )}
     </>
   );
 };

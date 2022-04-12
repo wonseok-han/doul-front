@@ -9,6 +9,7 @@ import {
 import { ActionProps } from "utils/types/context";
 
 import {
+  INCREASE_RENDER_COUNT,
   SET_ACTIVE_DARKMODE,
   SET_ACTIVE_INDICATOR,
   SET_ACTIVE_MENU,
@@ -44,6 +45,12 @@ const ThemeContext = createContext<ThemeContextProps>({
 const reducer = (state: any, action: ActionProps) => {
   const { type, payload } = action;
   switch (type) {
+    // 렌더링 카운트 증가
+    case INCREASE_RENDER_COUNT:
+      return {
+        ...state,
+        renderCount: state.renderCount < 100 ? state.renderCount + 1 : 0,
+      };
     // 유저정보
     case SET_USER_INFO:
       return { ...state, userInfo: payload };

@@ -1,5 +1,7 @@
 import { ActionProps, AlertProps, UserInfoProps } from "utils/types/context";
 
+// NOTE: 렌더링 카운트 증가
+export const INCREASE_RENDER_COUNT = "INCREASE_RENDER_COUNT";
 // NOTE: 유저정보 등록
 export const SET_USER_INFO = "SET_USER_INFO";
 // NOTE: 선택 메뉴 정보 등록
@@ -17,6 +19,10 @@ export const SHOW_ALERT = "SHOW_ALERT";
 
 // NOTE: Reduce Actions
 export const actions = {
+  // 렌더링 카운트 증가
+  increaseRenderCount: (): ActionProps => ({
+    type: INCREASE_RENDER_COUNT,
+  }),
   // 유저정보
   setUserInfo: (user: UserInfoProps | undefined): ActionProps => ({
     type: SET_USER_INFO,

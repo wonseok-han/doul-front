@@ -26,7 +26,7 @@ const Content: React.FC<Props> = ({
   const [openedMenuList, setOpenedMenuList] = useState<Array<any>>([]);
   const { store, dispatch } = useAppContext();
   const { store: themeStore } = useThemeContext();
-  const { setActiveMenu } = actions;
+  const { setActiveMenu, increaseRenderCount } = actions;
 
   // NOTE: 일반 메뉴 오픈시 hook
   useEffect(() => {
@@ -36,6 +36,7 @@ const Content: React.FC<Props> = ({
     }
 
     dispatch(setActiveMenu(menu?.moveItem || menu));
+    dispatch(increaseRenderCount());
 
     const openItem = openedMenuList.find(
       (item) => item.menuCode === menu.menuCode

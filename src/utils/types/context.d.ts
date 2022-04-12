@@ -6,6 +6,7 @@ export interface UserInfoProps {
 
 // NOTE: appContext store Props
 export interface AppStoreProps {
+  renderCount?: number;
   userInfo?: UserInfoProps; // NOTE: 사용자정보
   activeMenu?: any; // NOTE: 선택되어 활성화된 메뉴
   openMenu?: any; // NOTE: 활성화 할 메뉴
