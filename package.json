@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@toast-ui/react-grid": "^4.21.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
@@ -34,6 +35,7 @@
     "react-switch": "^6.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.3.3",
+    "tui-grid": "^4.21.0",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },

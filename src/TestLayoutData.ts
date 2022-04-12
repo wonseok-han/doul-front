@@ -94,6 +94,13 @@ export const MENU = [
     open: false,
   },
   {
+    menuCode: "0111",
+    menuName: "Grid Sample",
+    parentMenu: "0100",
+    url: "common/samples/GridSample",
+    open: false,
+  },
+  {
     menuCode: "0201",
     menuName: "Form Sample",
     parentMenu: "0200",
