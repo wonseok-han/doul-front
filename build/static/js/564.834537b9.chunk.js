@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[564],{4564:function(e,n,t){t.r(n);var r=t(2837),a=t(2237),u=t(6417);n.default=function(){return(0,u.jsx)(u.Fragment,{children:(0,u.jsx)(r.Z,{name:"date-time-picker-sample",value:(0,a.Ux)()})})}}}]);

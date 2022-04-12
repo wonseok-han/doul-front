@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[526],{9526:function(t,n,e){e.r(n);var f=e(1413),s=e(7313);n.default=function(t){var n=t.state,e=t.setState;(0,s.useEffect)((function(){e((function(t){return(0,f.Z)((0,f.Z)({},t),{},{masterAxiosConfig:"000"})}))}),[n.detailAxiosConfig])}}}]);

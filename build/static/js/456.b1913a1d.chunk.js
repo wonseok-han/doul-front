@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[456],{2320:function(n,e,c){c.r(e),c.d(e,{CHECK_LIST:function(){return r}});var r=[{code:"Y",name:"YES"},{code:"N",name:"NO"}]}}]);

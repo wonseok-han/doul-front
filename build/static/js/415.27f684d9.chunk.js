@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[415],{9415:function(e,n,t){t.r(n);var r=t(6417);n.default=function(){return(0,r.jsx)("div",{style:{textAlign:"center"},children:"\uc5ec\uae34 \ud648\uc774\ub2e4!"})}}}]);

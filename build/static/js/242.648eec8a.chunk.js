@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[242],{8242:function(n,i,e){e.r(i),e.d(i,{initial:function(){return t}});var t={masterAxiosConfig:"123",detailAxiosConfig:"456"}}}]);
